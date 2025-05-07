@@ -1,4 +1,5 @@
 import 'package:solana_wallet_sample/di/factory/bloc_factory.dart';
+import 'package:solana_wallet_sample/di/factory/database_factory.dart';
 import 'package:solana_wallet_sample/di/factory/dependency_factory.dart';
 import 'package:solana_wallet_sample/di/factory/domain_service_factory.dart';
 import 'package:solana_wallet_sample/di/factory/network_factory.dart';
@@ -15,8 +16,9 @@ class InitializationResult with _$InitializationResult {
     required DependencyFactory dependenciesFactory,
     required BlocFactory blocFactory,
     required RepositoryFactory repositoryFactory,
-    required DomainServiceFactory domainServiceFactory,
+    required ServiceFactory domainServiceFactory,
     required NetworkFactory networkFactory,
+    required DatabaseFactory databaseFactory,
     required bool hasSeedPhrase,
   }) = _InitializationResult;
 }

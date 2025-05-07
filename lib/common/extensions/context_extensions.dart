@@ -13,7 +13,7 @@ extension DependencyExtension on BuildContext {
 
   BlocFactory get blocFactory => DependencyScope.getBlocFactory(this);
 
-  DomainServiceFactory get domainServiceFactory => DependencyScope.getDomainServiceFactory(this);
+  ServiceFactory get domainServiceFactory => DependencyScope.getDomainServiceFactory(this);
 
   NetworkFactory get networkFactory => DependencyScope.getNetworkFactory(this);
 }

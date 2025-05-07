@@ -1,13 +1,13 @@
 import 'package:solana_wallet_sample/di/factory/repository_factory.dart';
 
-abstract interface class DomainServiceFactory {
+abstract interface class ServiceFactory {
   //NameWalletService get nameWalletService;
 }
 
-class DomainServiceFactoryImpl implements DomainServiceFactory {
+class ServiceFactoryImpl implements ServiceFactory {
   final RepositoryFactory _repositoryFactory;
 
-  const DomainServiceFactoryImpl({
+  const ServiceFactoryImpl({
     required RepositoryFactory repositoryFactory,
   }) : _repositoryFactory = repositoryFactory;
 

@@ -1,5 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solana_wallet_sample/di/factory/bloc_factory.dart';
+import 'package:solana_wallet_sample/di/factory/database_factory.dart';
 import 'package:solana_wallet_sample/di/factory/dependency_factory.dart';
 import 'package:solana_wallet_sample/di/factory/domain_service_factory.dart';
 import 'package:solana_wallet_sample/di/factory/network_factory.dart';
@@ -32,11 +33,17 @@ class InitializationHelperImpl extends InitializationHelper {
       dependencyFactory: dependenciesFactory,
     );
 
-    final repositoryFactory = RepositoryFactoryImpl(
+    final databaseFactory = DatabaseFactoryImpl(
       dependencyFactory: dependenciesFactory,
     );
 
-    final domainServiceFactory = DomainServiceFactoryImpl(repositoryFactory: repositoryFactory);
+    final repositoryFactory = RepositoryFactoryImpl(
+      dependencyFactory: dependenciesFactory,
+      networkFactory: networkFactory,
+      databaseFactory: databaseFactory,
+    );
+
+    final domainServiceFactory = ServiceFactoryImpl(repositoryFactory: repositoryFactory);
 
     final blocFactory = BlocFactoryImpl(
       repositoryFactory: repositoryFactory,
@@ -48,6 +55,7 @@ class InitializationHelperImpl extends InitializationHelper {
       repositoryFactory: repositoryFactory,
       domainServiceFactory: domainServiceFactory,
       networkFactory: networkFactory,
+      databaseFactory: databaseFactory,
       hasSeedPhrase: true,
     );
   }

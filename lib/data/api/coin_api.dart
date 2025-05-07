@@ -1,17 +1,21 @@
-import 'package:solana_wallet_sample/data/api/dto/coin_list_data.dart';
 import 'package:solana_wallet_sample/data/http_wrapper/http_wrapper.dart';
+import 'package:solana_wallet_sample/data/model/coin/base_coin_data.dart';
+import 'package:solana_wallet_sample/data/model/coin/coin_type.dart';
+import 'package:solana_wallet_sample/data/model/coin/icon_coin_data.dart';
 
-abstract interface class SolanaApi {
-  Future<List<CoinListData>> getCoinListData();
+abstract interface class CoinApi {
+  Future<List<BaseCoinData>> getBaseCoinData();
+
+  Future<List<IconCoinData>> getCoinIcons(List<String> ids);
 }
 
-class SolanaApiImpl implements SolanaApi {
+class CoinApiImpl implements CoinApi {
   final HttpWrapper _httpWrapper;
 
-  const SolanaApiImpl({required HttpWrapper httpWrapper}) : _httpWrapper = httpWrapper;
+  const CoinApiImpl({required HttpWrapper httpWrapper}) : _httpWrapper = httpWrapper;
 
   @override
-  Future<List<CoinListData>> getCoinListData() async {
+  Future<List<BaseCoinData>> getBaseCoinData() async {
     final response = await _httpWrapper.get(
       'https://api.coingecko.com/api/v3/coins/list',
       queryParams: {
@@ -21,15 +25,43 @@ class SolanaApiImpl implements SolanaApi {
 
     response as List;
 
-    final solanaCoins = <CoinListData>[];
+    final solanaCoins = <BaseCoinData>[];
 
     for (final item in response) {
-      final coin = CoinListData.fromJson(item as Map<String, dynamic>);
-      if (coin.platforms.containsValue('Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB')) {
-        print('object');
+      if (item.platforms.containsKey('solana')) {
+        solanaCoins.add(
+          BaseCoinData(
+            id: item.id,
+            ticker: (item.symbol as String).toUpperCase(),
+            type: CoinType.token,
+            contractAddress: item.platforms['solana'],
+          ),
+        );
       }
     }
 
     return solanaCoins;
+  }
+
+  @override
+  Future<List<IconCoinData>> getCoinIcons(List<String> ids) async {
+    if (ids.isEmpty) return [];
+
+    final response = await _httpWrapper.get(
+      'https://api.coingecko.com/api/v3/coins/markets',
+      queryParams: {
+        'vs_currency': 'usd',
+        'ids': ids.join(','),
+      },
+      // headers: {
+      //   'x-cg-pro-api-key': myApiKey, // если используешь Pro‑ключ
+      // },
+    );
+
+    final result = (response as List<Map<String, Object?>>).map((e) => IconCoinData.fromJson(e)).toList();
+
+    return result;
+
+    //return (response as List<Map<String, Object?>>).map((e) => IconCoinData.fromJson(e)).toList();
   }
 }

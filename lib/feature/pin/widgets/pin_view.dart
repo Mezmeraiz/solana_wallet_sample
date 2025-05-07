@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:solana_wallet_sample/feature/pin/set_pin/view/widgets/pin_box.dart';
+import 'package:solana_wallet_sample/feature/pin/widgets/pin_box.dart';
 
 class PinView extends StatefulWidget {
   final String pin;

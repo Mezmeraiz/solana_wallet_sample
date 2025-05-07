@@ -3,6 +3,7 @@ import 'package:solana_wallet_sample/data/database/app_database.dart';
 import 'package:solana_wallet_sample/data/model/coin/base_coin_data.dart';
 import 'package:solana_wallet_sample/data/model/coin/blockchain_coin_data.dart';
 import 'package:solana_wallet_sample/data/model/coin/coin_type.dart';
+import 'package:solana_wallet_sample/data/model/coin/icon_coin_data.dart';
 
 abstract class CoinDao {
   Future<void> saveBaseCoinData({
@@ -10,12 +11,14 @@ abstract class CoinDao {
   });
 
   Future<List<BaseCoinData>> getBaseCoinData({
-    required int limit,
-    required int offset,
+    int? limit,
+    int offset = 0,
     String? query,
   });
 
   Future<List<BaseCoinData>> getBaseCoinDataByIds({required List<String> ids});
+
+  Future<List<String>> getCoinIdsWithoutIcon({int limit});
 
   Future<void> saveActiveCoins(List<String> ids);
 
@@ -24,6 +27,14 @@ abstract class CoinDao {
   Future<List<BlockchainCoinData>> getBlockchainCoinDataByIds(List<String> ids);
 
   Future<List<String>> getActiveCoins();
+
+  Future<void> updateCoinIcons(List<IconCoinData> list);
+
+  // for testing
+  Future<void> clearAllTables();
+
+  // for testing
+  Future<List<dynamic>> getAllTables();
 }
 
 class CoinDaoImpl implements CoinDao {
@@ -35,7 +46,7 @@ class CoinDaoImpl implements CoinDao {
   Future<void> saveBaseCoinData({required List<BaseCoinData> coins}) => database.batch(
         (batch) {
           batch.deleteAll(database.baseCoinDataTable);
-          batch.insertAllOnConflictUpdate(
+          batch.insertAll(
             database.baseCoinDataTable,
             coins
                 .map(
@@ -53,30 +64,53 @@ class CoinDaoImpl implements CoinDao {
       );
 
   @override
+  Future<void> updateCoinIcons(List<IconCoinData> list) async {
+    if (list.isEmpty) return;
+
+    await database.batch((batch) {
+      for (final data in list) {
+        batch.update(
+          database.baseCoinDataTable,
+          const BaseCoinDataTableCompanion().copyWith(
+            iconUrl: Value(data.image),
+          ),
+          where: (tbl) => tbl.id.equals(data.id),
+        );
+      }
+    });
+  }
+
+  @override
   Future<List<BaseCoinData>> getBaseCoinData({
-    required int limit,
-    required int offset,
+    int? limit,
+    int offset = 0,
     String? query,
   }) async {
-    final stmt = database.select(database.baseCoinDataTable)
-      ..orderBy([(t) => OrderingTerm(expression: t.ticker)])
-      ..limit(limit, offset: offset);
+    final stmt = database.select(database.baseCoinDataTable)..orderBy([(t) => OrderingTerm(expression: t.ticker)]);
 
     if (query != null && query.trim().isNotEmpty) {
       final pattern = '%${query.toLowerCase()}%';
       stmt.where((t) => t.ticker.lower().like(pattern));
     }
 
-    final rows = await stmt.get();
+    if (limit != null) {
+      stmt.limit(
+        limit,
+        offset: offset,
+      );
+    }
 
+    final rows = await stmt.get();
     return rows
-        .map((row) => BaseCoinData(
-              id: row.id,
-              contractAddress: row.contractAddress,
-              ticker: row.ticker,
-              iconUrl: row.iconUrl,
-              type: CoinType.fromString(row.type),
-            ))
+        .map(
+          (row) => BaseCoinData(
+            id: row.id,
+            contractAddress: row.contractAddress,
+            ticker: row.ticker,
+            iconUrl: row.iconUrl,
+            type: CoinType.fromString(row.type),
+          ),
+        )
         .toList();
   }
 
@@ -100,6 +134,16 @@ class CoinDaoImpl implements CoinDao {
   }
 
   @override
+  Future<List<String>> getCoinIdsWithoutIcon({int limit = 250}) async {
+    final query = (database.select(database.baseCoinDataTable)
+      ..where((t) => t.iconUrl.isNull())
+      ..orderBy([(t) => OrderingTerm(expression: t.id)])
+      ..limit(limit));
+
+    return query.map((row) => row.id).get();
+  }
+
+  @override
   Future<void> saveActiveCoins(List<String> ids) async => database.batch((batch) {
         batch.deleteAll(database.activeCoinsTable);
         batch.insertAll(
@@ -118,7 +162,8 @@ class CoinDaoImpl implements CoinDao {
 
   @override
   Future<void> saveBlockchainCoinData(List<BlockchainCoinData> list) async => database.batch((batch) {
-        batch.insertAllOnConflictUpdate(
+        batch.deleteAll(database.blockchainCoinDataTable);
+        batch.insertAll(
           database.blockchainCoinDataTable,
           list
               .map(
@@ -148,4 +193,22 @@ class CoinDaoImpl implements CoinDao {
         )
         .toList();
   }
+
+  // for testing
+  @override
+  Future<void> clearAllTables() async => await database.batch(
+        (batch) {
+          batch.deleteAll(database.baseCoinDataTable);
+          batch.deleteAll(database.blockchainCoinDataTable);
+          batch.deleteAll(database.activeCoinsTable);
+        },
+      );
+
+  // for testing
+  @override
+  Future<List<dynamic>> getAllTables() async => [
+        await database.baseCoinDataTable.select().get(),
+        await database.blockchainCoinDataTable.select().get(),
+        await database.activeCoinsTable.select().get(),
+      ];
 }

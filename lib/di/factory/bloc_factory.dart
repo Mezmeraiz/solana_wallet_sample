@@ -1,6 +1,7 @@
 import 'package:solana_wallet_sample/data/repository/wallet_repository.dart';
 import 'package:solana_wallet_sample/di/factory/repository_factory.dart';
 import 'package:solana_wallet_sample/feature/coin_list/bloc/coin_list_bloc.dart';
+import 'package:solana_wallet_sample/feature/home/bloc/home_bloc.dart';
 import 'package:solana_wallet_sample/feature/pin/set_pin/bloc/set_pin_bloc.dart';
 import 'package:solana_wallet_sample/feature/welcome/bloc/welcome/welcome_bloc.dart';
 
@@ -10,6 +11,8 @@ abstract interface class BlocFactory {
   SetPinBloc setPinBloc({required int pinLength});
 
   CoinListBloc coinListBloc();
+
+  HomeBloc homeBloc();
 }
 
 class BlocFactoryImpl implements BlocFactory {
@@ -34,5 +37,11 @@ class BlocFactoryImpl implements BlocFactory {
   @override
   CoinListBloc coinListBloc() => CoinListBloc(
         walletRepository: _repositoryFactory.walletRepository,
+      );
+
+  @override
+  HomeBloc homeBloc() => HomeBloc(
+        walletRepository: _repositoryFactory.walletRepository,
+        blockchainCoinDataRepository: _repositoryFactory.blockchainCoinDataRepository,
       );
 }

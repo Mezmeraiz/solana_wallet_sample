@@ -7,11 +7,11 @@ import 'package:solana_wallet_sample/common/extensions/wallet_extension.dart';
 import 'package:solana_wallet_sample/ffigen_output/generated_bindings.dart';
 
 abstract class WalletRepository {
-  Pointer<TWHDWallet> walletCreateWithMnemonic(String mnemonic, {String passphrase});
+  Pointer<TWHDWallet> createWithMnemonic(String mnemonic, {String passphrase});
 
   String walletMnemonic({required Pointer<TWHDWallet> wallet});
 
-  String walletGetAddressForCoin({required Pointer<TWHDWallet> wallet, required TWCoinType coinType});
+  String getAddressForCoin({required Pointer<TWHDWallet> wallet, required TWCoinType coinType});
 
   bool mnemonicIsValid(String mnemonic);
 
@@ -32,7 +32,7 @@ class WalletRepositoryImpl implements WalletRepository {
   }) : _core = core;
 
   @override
-  Pointer<TWHDWallet> walletCreateWithMnemonic(String mnemonic, {String passphrase = ''}) {
+  Pointer<TWHDWallet> createWithMnemonic(String mnemonic, {String passphrase = ''}) {
     if (!mnemonicIsValid(mnemonic)) {
       throw ArgumentError.value(mnemonic, 'mnemonic', 'Invalid mnemonic');
     }
@@ -57,11 +57,12 @@ class WalletRepositoryImpl implements WalletRepository {
     final mnemonicPtr = _core.TWHDWalletMnemonic(wallet);
     final mnemonic = _stringFromPtr(mnemonicPtr);
     stringDelete(mnemonicPtr);
+
     return mnemonic;
   }
 
   @override
-  String walletGetAddressForCoin({
+  String getAddressForCoin({
     required Pointer<TWHDWallet> wallet,
     required TWCoinType coinType,
   }) {

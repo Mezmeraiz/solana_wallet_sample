@@ -1,22 +1,26 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:solana_wallet_sample/data/repository/wallet_repository.dart';
 
-part 'set_pin_bloc.freezed.dart';
-part 'set_pin_event.dart';
-part 'set_pin_state.dart';
+part 'enter_pin_bloc.freezed.dart';
+part 'enter_pin_event.dart';
+part 'enter_pin_state.dart';
 
-class SetPinBloc extends Bloc<SetPinEvent, SetPinState> {
+class EnterPinBloc extends Bloc<EnterPinEvent, EnterPinState> {
   final int pinLength;
+  final WalletRepository _walletRepository;
 
-  SetPinBloc({
+  EnterPinBloc({
     required this.pinLength,
-  }) : super(const SetPinState()) {
+    required WalletRepository walletRepository,
+  })  : _walletRepository = walletRepository,
+        super(const EnterPinState()) {
     on<_PinChanged>(_pinChanged);
   }
 
   void _pinChanged(
     _PinChanged event,
-    Emitter<SetPinState> emit,
+    Emitter<EnterPinState> emit,
   ) {
     if (event.pin.length < pinLength) {
       emit(
@@ -35,14 +39,14 @@ class SetPinBloc extends Bloc<SetPinEvent, SetPinState> {
       emit(
         state.copyWith(
           pin: event.pin,
-          action: SetPinAction.pinEntered,
+          action: EnterPinAction.pinEntered,
         ),
       );
     } else {
       emit(
         state.copyWith(
           pin: event.pin,
-          status: SetPinStatus.pinDoesNotMatch,
+          status: EnterPinStatus.pinDoesNotMatch,
         ),
       );
     }
