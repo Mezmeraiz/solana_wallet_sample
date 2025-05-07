@@ -1,0 +1,151 @@
+import 'package:drift/drift.dart';
+import 'package:solana_wallet_sample/data/database/app_database.dart';
+import 'package:solana_wallet_sample/data/model/coin/base_coin_data.dart';
+import 'package:solana_wallet_sample/data/model/coin/blockchain_coin_data.dart';
+import 'package:solana_wallet_sample/data/model/coin/coin_type.dart';
+
+abstract class CoinDao {
+  Future<void> saveBaseCoinData({
+    required List<BaseCoinData> coins,
+  });
+
+  Future<List<BaseCoinData>> getBaseCoinData({
+    required int limit,
+    required int offset,
+    String? query,
+  });
+
+  Future<List<BaseCoinData>> getBaseCoinDataByIds({required List<String> ids});
+
+  Future<void> saveActiveCoins(List<String> ids);
+
+  Future<void> saveBlockchainCoinData(List<BlockchainCoinData> list);
+
+  Future<List<BlockchainCoinData>> getBlockchainCoinDataByIds(List<String> ids);
+
+  Future<List<String>> getActiveCoins();
+}
+
+class CoinDaoImpl implements CoinDao {
+  final AppDatabase database;
+
+  CoinDaoImpl({required this.database});
+
+  @override
+  Future<void> saveBaseCoinData({required List<BaseCoinData> coins}) => database.batch(
+        (batch) {
+          batch.deleteAll(database.baseCoinDataTable);
+          batch.insertAllOnConflictUpdate(
+            database.baseCoinDataTable,
+            coins
+                .map(
+                  (coin) => BaseCoinDataTableCompanion.insert(
+                    id: coin.id,
+                    contractAddress: Value(coin.contractAddress),
+                    ticker: coin.ticker,
+                    iconUrl: Value(coin.iconUrl),
+                    type: coin.type.name,
+                  ),
+                )
+                .toList(),
+          );
+        },
+      );
+
+  @override
+  Future<List<BaseCoinData>> getBaseCoinData({
+    required int limit,
+    required int offset,
+    String? query,
+  }) async {
+    final stmt = database.select(database.baseCoinDataTable)
+      ..orderBy([(t) => OrderingTerm(expression: t.ticker)])
+      ..limit(limit, offset: offset);
+
+    if (query != null && query.trim().isNotEmpty) {
+      final pattern = '%${query.toLowerCase()}%';
+      stmt.where((t) => t.ticker.lower().like(pattern));
+    }
+
+    final rows = await stmt.get();
+
+    return rows
+        .map((row) => BaseCoinData(
+              id: row.id,
+              contractAddress: row.contractAddress,
+              ticker: row.ticker,
+              iconUrl: row.iconUrl,
+              type: CoinType.fromString(row.type),
+            ))
+        .toList();
+  }
+
+  @override
+  Future<List<BaseCoinData>> getBaseCoinDataByIds({required List<String> ids}) async {
+    if (ids.isEmpty) return [];
+
+    final rows = await (database.select(database.baseCoinDataTable)..where((tbl) => tbl.id.isIn(ids))).get();
+
+    return rows
+        .map(
+          (row) => BaseCoinData(
+            id: row.id,
+            contractAddress: row.contractAddress,
+            ticker: row.ticker,
+            iconUrl: row.iconUrl,
+            type: CoinType.fromString(row.type),
+          ),
+        )
+        .toList();
+  }
+
+  @override
+  Future<void> saveActiveCoins(List<String> ids) async => database.batch((batch) {
+        batch.deleteAll(database.activeCoinsTable);
+        batch.insertAll(
+          database.activeCoinsTable,
+          ids.map((id) => ActiveCoinsTableCompanion.insert(id: id)).toList(),
+          mode: InsertMode.insertOrReplace,
+        );
+      });
+
+  @override
+  Future<List<String>> getActiveCoins() async {
+    final rows = await database.select(database.activeCoinsTable).get();
+
+    return rows.map((row) => row.id).toList();
+  }
+
+  @override
+  Future<void> saveBlockchainCoinData(List<BlockchainCoinData> list) async => database.batch((batch) {
+        batch.insertAllOnConflictUpdate(
+          database.blockchainCoinDataTable,
+          list
+              .map(
+                (e) => BlockchainCoinDataTableCompanion.insert(
+                  id: e.id,
+                  decimals: e.decimals,
+                  balance: e.balance.toString(),
+                ),
+              )
+              .toList(),
+        );
+      });
+
+  @override
+  Future<List<BlockchainCoinData>> getBlockchainCoinDataByIds(List<String> ids) async {
+    if (ids.isEmpty) return [];
+
+    final rows = await (database.select(database.blockchainCoinDataTable)..where((tbl) => tbl.id.isIn(ids))).get();
+
+    return rows
+        .map(
+          (row) => BlockchainCoinData(
+            id: row.id,
+            decimals: row.decimals,
+            balance: BigInt.parse(row.balance),
+          ),
+        )
+        .toList();
+  }
+}
