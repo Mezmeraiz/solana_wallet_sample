@@ -14,4 +14,8 @@ class SecureVault {
   Future<String?> loadSeed(String pin) => SecureVaultPlatform.instance.getSeed(pin);
 
   Future<void> resetVault() => SecureVaultPlatform.instance.resetVault();
+
+  Future<int> remainingAttempts() => SecureVaultPlatform.instance.remainingAttempts();
+
+  Future<bool?> hasSeed() => SecureVaultPlatform.instance.hasSeed();
 }

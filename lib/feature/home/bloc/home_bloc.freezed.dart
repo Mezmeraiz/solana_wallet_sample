@@ -59,8 +59,7 @@ mixin _$HomeEvent {
 
 /// @nodoc
 abstract class $HomeEventCopyWith<$Res> {
-  factory $HomeEventCopyWith(
-          HomeEvent value, $Res Function(HomeEvent) then) =
+  factory $HomeEventCopyWith(HomeEvent value, $Res Function(HomeEvent) then) =
       _$HomeEventCopyWithImpl<$Res, HomeEvent>;
   @useResult
   $Res call({String pin});
@@ -246,15 +245,11 @@ mixin _$HomeState {
 
 /// @nodoc
 abstract class $HomeStateCopyWith<$Res> {
-  factory $HomeStateCopyWith(
-          HomeState value, $Res Function(HomeState) then) =
+  factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) then) =
       _$HomeStateCopyWithImpl<$Res, HomeState>;
   @useResult
   $Res call(
-      {String pin,
-      String? enteredPin,
-      HomeStatus status,
-      HomeAction action});
+      {String pin, String? enteredPin, HomeStatus status, HomeAction action});
 }
 
 /// @nodoc
@@ -307,10 +302,7 @@ abstract class _$$HomeStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String pin,
-      String? enteredPin,
-      HomeStatus status,
-      HomeAction action});
+      {String pin, String? enteredPin, HomeStatus status, HomeAction action});
 }
 
 /// @nodoc

@@ -25,4 +25,8 @@ abstract class SecureVaultPlatform extends PlatformInterface {
   Future<String?> getSeed(String pin);
 
   Future<void> resetVault();
+
+  Future<int> remainingAttempts();
+
+  Future<bool?> hasSeed();
 }

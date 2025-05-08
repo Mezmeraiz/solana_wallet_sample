@@ -1,17 +1,16 @@
-import 'package:solana_wallet_sample/data/model/coin/blockchain_coin_data.dart';
 import 'package:solana_wallet_sample/data/repository/blockchain_coin_data_repository.dart';
+import 'package:solana_wallet_sample/data/repository/pin_repository.dart';
 import 'package:solana_wallet_sample/data/repository/wallet_repository.dart';
 import 'package:solana_wallet_sample/di/factory/database_factory.dart';
 import 'package:solana_wallet_sample/di/factory/dependency_factory.dart';
 import 'package:solana_wallet_sample/di/factory/network_factory.dart';
-import 'package:solana_wallet_sample/feature/welcome/data/welcome_repository.dart';
 
 abstract interface class RepositoryFactory {
-  WelcomeRepository get welcomeRepository;
-
   WalletRepository get walletRepository;
 
   BlockchainCoinDataRepository get blockchainCoinDataRepository;
+
+  PinRepository get pinRepository;
 }
 
 class RepositoryFactoryImpl implements RepositoryFactory {
@@ -27,14 +26,7 @@ class RepositoryFactoryImpl implements RepositoryFactory {
         _networkFactory = networkFactory,
         _databaseFactory = databaseFactory;
 
-  WelcomeRepository? _welcomeRepository;
-
   WalletRepository? _walletRepository;
-
-  @override
-  WelcomeRepository get welcomeRepository => _welcomeRepository ??= WelcomeRepositoryImpl(
-        secureVault: _dependencyFactory.secureVault,
-      );
 
   @override
   WalletRepository get walletRepository => _walletRepository ??= WalletRepositoryImpl(
@@ -48,5 +40,10 @@ class RepositoryFactoryImpl implements RepositoryFactory {
         secureVault: _dependencyFactory.secureVault,
         commonStorage: _dependencyFactory.commonStorage,
         walletRepository: walletRepository,
+      );
+
+  @override
+  PinRepository get pinRepository => PinRepositoryImpl(
+        secureVault: _dependencyFactory.secureVault,
       );
 }

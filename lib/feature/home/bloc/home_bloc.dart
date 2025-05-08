@@ -17,40 +17,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   })  : _walletRepository = walletRepository,
         _blockchainCoinDataRepository = blockchainCoinDataRepository,
         super(const HomeState()) {
-    //on<_PinChanged>(_pinChanged);
+    on<_PinChanged>(_pinChanged);
   }
-  //
-  // void _pinChanged(
-  //   _PinChanged event,
-  //   Emitter<HomeState> emit,
-  // ) {
-  //   if (event.pin.length < pinLength) {
-  //     emit(
-  //       state.copyWith(
-  //         pin: event.pin,
-  //       ),
-  //     );
-  //   } else if (state.enteredPin == null) {
-  //     emit(
-  //       state.copyWith(
-  //         pin: '',
-  //         enteredPin: event.pin,
-  //       ),
-  //     );
-  //   } else if (event.pin == state.enteredPin) {
-  //     emit(
-  //       state.copyWith(
-  //         pin: event.pin,
-  //         action: HomeAction.pinEntered,
-  //       ),
-  //     );
-  //   } else {
-  //     emit(
-  //       state.copyWith(
-  //         pin: event.pin,
-  //         status: HomeStatus.pinDoesNotMatch,
-  //       ),
-  //     );
-  //   }
-  // }
+
+  void _pinChanged(
+    _PinChanged event,
+    Emitter<HomeState> emit,
+  ) =>
+      emit(
+        state.copyWith(
+          pin: event.pin,
+        ),
+      );
 }

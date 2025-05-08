@@ -34,4 +34,12 @@ class MethodChannelSecureVault extends SecureVaultPlatform {
 
   @override
   Future<void> resetVault() => _channel.invokeMethod('resetVault');
+
+  @override
+  Future<int> remainingAttempts() async => await _channel.invokeMethod<int>('remainingAttempts') ?? 0;
+
+  @override
+  Future<bool?> hasSeed() => _channel.invokeMethod<bool>(
+        'hasSeed',
+      );
 }

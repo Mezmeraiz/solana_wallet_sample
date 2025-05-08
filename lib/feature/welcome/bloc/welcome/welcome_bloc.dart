@@ -1,20 +1,20 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:solana_wallet_sample/data/repository/pin_repository.dart';
 import 'package:solana_wallet_sample/data/repository/wallet_repository.dart';
-import 'package:solana_wallet_sample/feature/welcome/data/welcome_repository.dart';
 
 part 'welcome_bloc.freezed.dart';
 part 'welcome_event.dart';
 part 'welcome_state.dart';
 
 class WelcomeBloc extends Bloc<WelcomeEvent, WelcomeState> {
-  final WelcomeRepository _welcomeRepository;
+  final PinRepository _pinRepository;
   final WalletRepository _walletRepository;
 
   WelcomeBloc({
-    required WelcomeRepository welcomeRepository,
+    required PinRepository pinRepository,
     required WalletRepository walletRepository,
-  })  : _welcomeRepository = welcomeRepository,
+  })  : _pinRepository = pinRepository,
         _walletRepository = walletRepository,
         super(const WelcomeState()) {
     on<_SeedPhraseChanged>(_seedPhraseChanged);
@@ -39,8 +39,8 @@ class WelcomeBloc extends Bloc<WelcomeEvent, WelcomeState> {
     Emitter<WelcomeState> emit,
   ) {
     try {
-      _welcomeRepository.saveSeedPhrase(
-        seedPhrase: state.seedPhrase!,
+      _pinRepository.firstSetup(
+        seed: state.seedPhrase!,
         pin: event.pin,
       );
 

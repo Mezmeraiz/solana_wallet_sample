@@ -49,6 +49,8 @@ class InitializationHelperImpl extends InitializationHelper {
       repositoryFactory: repositoryFactory,
     );
 
+    final bool hasSeedPhrase = await repositoryFactory.pinRepository.hasSeed() ?? false;
+
     return InitializationResult(
       dependenciesFactory: dependenciesFactory,
       blocFactory: blocFactory,
@@ -56,7 +58,7 @@ class InitializationHelperImpl extends InitializationHelper {
       domainServiceFactory: domainServiceFactory,
       networkFactory: networkFactory,
       databaseFactory: databaseFactory,
-      hasSeedPhrase: true,
+      hasSeedPhrase: hasSeedPhrase,
     );
   }
 }

@@ -12,10 +12,11 @@ class EnterPinState with _$EnterPinState {
 
 enum EnterPinStatus {
   idle,
-  pinDoesNotMatch,
+  wrongPin,
 }
 
 enum EnterPinAction {
   none,
   pinEntered,
+  logout,
 }

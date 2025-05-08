@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:solana_wallet_sample/feature/pin/common/pin_constatnts.dart';
 import 'package:solana_wallet_sample/feature/pin/widgets/pin_box.dart';
 
 class PinView extends StatefulWidget {
@@ -6,13 +7,11 @@ class PinView extends StatefulWidget {
   final String title;
   final String? error;
   final ValueChanged<String> onPinChanged;
-  final int pinLength;
 
   const PinView({
     super.key,
     required this.pin,
     required this.onPinChanged,
-    required this.pinLength,
     required this.title,
     this.error,
   });
@@ -49,7 +48,7 @@ class _PinViewState extends State<PinView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(
-                  widget.pinLength * 2 - 1,
+                  PinConstants.pinLength * 2 - 1,
                   (index) {
                     if (index.isOdd) {
                       return const SizedBox(width: 12);
@@ -73,7 +72,7 @@ class _PinViewState extends State<PinView> {
                   focusNode: _focusNode,
                   autofocus: true,
                   controller: _controller,
-                  maxLength: widget.pinLength,
+                  maxLength: PinConstants.pinLength,
                   keyboardType: TextInputType.number,
                   obscureText: true,
                   decoration: const InputDecoration(counterText: ''),

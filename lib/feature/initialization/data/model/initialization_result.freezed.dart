@@ -16,7 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$InitializationResult {
-  DependencyFactory get dependenciesFactory => throw _privateConstructorUsedError;
+  DependencyFactory get dependenciesFactory =>
+      throw _privateConstructorUsedError;
   BlocFactory get blocFactory => throw _privateConstructorUsedError;
   RepositoryFactory get repositoryFactory => throw _privateConstructorUsedError;
   ServiceFactory get domainServiceFactory => throw _privateConstructorUsedError;
@@ -27,12 +28,14 @@ mixin _$InitializationResult {
   /// Create a copy of InitializationResult
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $InitializationResultCopyWith<InitializationResult> get copyWith => throw _privateConstructorUsedError;
+  $InitializationResultCopyWith<InitializationResult> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $InitializationResultCopyWith<$Res> {
-  factory $InitializationResultCopyWith(InitializationResult value, $Res Function(InitializationResult) then) =
+  factory $InitializationResultCopyWith(InitializationResult value,
+          $Res Function(InitializationResult) then) =
       _$InitializationResultCopyWithImpl<$Res, InitializationResult>;
   @useResult
   $Res call(
@@ -46,7 +49,8 @@ abstract class $InitializationResultCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$InitializationResultCopyWithImpl<$Res, $Val extends InitializationResult>
+class _$InitializationResultCopyWithImpl<$Res,
+        $Val extends InitializationResult>
     implements $InitializationResultCopyWith<$Res> {
   _$InitializationResultCopyWithImpl(this._value, this._then);
 
@@ -102,9 +106,10 @@ class _$InitializationResultCopyWithImpl<$Res, $Val extends InitializationResult
 }
 
 /// @nodoc
-abstract class _$$InitializationResultImplCopyWith<$Res> implements $InitializationResultCopyWith<$Res> {
-  factory _$$InitializationResultImplCopyWith(
-          _$InitializationResultImpl value, $Res Function(_$InitializationResultImpl) then) =
+abstract class _$$InitializationResultImplCopyWith<$Res>
+    implements $InitializationResultCopyWith<$Res> {
+  factory _$$InitializationResultImplCopyWith(_$InitializationResultImpl value,
+          $Res Function(_$InitializationResultImpl) then) =
       __$$InitializationResultImplCopyWithImpl<$Res>;
   @override
   @useResult
@@ -122,8 +127,8 @@ abstract class _$$InitializationResultImplCopyWith<$Res> implements $Initializat
 class __$$InitializationResultImplCopyWithImpl<$Res>
     extends _$InitializationResultCopyWithImpl<$Res, _$InitializationResultImpl>
     implements _$$InitializationResultImplCopyWith<$Res> {
-  __$$InitializationResultImplCopyWithImpl(
-      _$InitializationResultImpl _value, $Res Function(_$InitializationResultImpl) _then)
+  __$$InitializationResultImplCopyWithImpl(_$InitializationResultImpl _value,
+      $Res Function(_$InitializationResultImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of InitializationResult
@@ -212,26 +217,40 @@ class _$InitializationResultImpl extends _InitializationResult {
             other is _$InitializationResultImpl &&
             (identical(other.dependenciesFactory, dependenciesFactory) ||
                 other.dependenciesFactory == dependenciesFactory) &&
-            (identical(other.blocFactory, blocFactory) || other.blocFactory == blocFactory) &&
-            (identical(other.repositoryFactory, repositoryFactory) || other.repositoryFactory == repositoryFactory) &&
+            (identical(other.blocFactory, blocFactory) ||
+                other.blocFactory == blocFactory) &&
+            (identical(other.repositoryFactory, repositoryFactory) ||
+                other.repositoryFactory == repositoryFactory) &&
             (identical(other.domainServiceFactory, domainServiceFactory) ||
                 other.domainServiceFactory == domainServiceFactory) &&
-            (identical(other.networkFactory, networkFactory) || other.networkFactory == networkFactory) &&
-            (identical(other.databaseFactory, databaseFactory) || other.databaseFactory == databaseFactory) &&
-            (identical(other.hasSeedPhrase, hasSeedPhrase) || other.hasSeedPhrase == hasSeedPhrase));
+            (identical(other.networkFactory, networkFactory) ||
+                other.networkFactory == networkFactory) &&
+            (identical(other.databaseFactory, databaseFactory) ||
+                other.databaseFactory == databaseFactory) &&
+            (identical(other.hasSeedPhrase, hasSeedPhrase) ||
+                other.hasSeedPhrase == hasSeedPhrase));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, dependenciesFactory, blocFactory, repositoryFactory,
-      domainServiceFactory, networkFactory, databaseFactory, hasSeedPhrase);
+  int get hashCode => Object.hash(
+      runtimeType,
+      dependenciesFactory,
+      blocFactory,
+      repositoryFactory,
+      domainServiceFactory,
+      networkFactory,
+      databaseFactory,
+      hasSeedPhrase);
 
   /// Create a copy of InitializationResult
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$InitializationResultImplCopyWith<_$InitializationResultImpl> get copyWith =>
-      __$$InitializationResultImplCopyWithImpl<_$InitializationResultImpl>(this, _$identity);
+  _$$InitializationResultImplCopyWith<_$InitializationResultImpl>
+      get copyWith =>
+          __$$InitializationResultImplCopyWithImpl<_$InitializationResultImpl>(
+              this, _$identity);
 }
 
 abstract class _InitializationResult extends InitializationResult {
@@ -264,5 +283,6 @@ abstract class _InitializationResult extends InitializationResult {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$InitializationResultImplCopyWith<_$InitializationResultImpl> get copyWith => throw _privateConstructorUsedError;
+  _$$InitializationResultImplCopyWith<_$InitializationResultImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

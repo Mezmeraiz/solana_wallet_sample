@@ -4,11 +4,8 @@ import 'package:solana_wallet_sample/feature/pin/set_pin/bloc/set_pin_bloc.dart'
 import 'package:solana_wallet_sample/feature/pin/widgets/pin_view.dart';
 
 class SetPinView extends StatefulWidget {
-  final int pinLength;
-
   const SetPinView({
     super.key,
-    required this.pinLength,
   });
 
   @override
@@ -29,7 +26,6 @@ class _SetPinViewState extends State<SetPinView> {
           pin: state.pin,
           title: state.enteredPin == null ? 'Enter password' : 'Confirm password',
           error: state.status == SetPinStatus.pinDoesNotMatch ? 'Passwords do not match' : null,
-          pinLength: widget.pinLength,
           onPinChanged: _onPinChanged,
         ),
       );

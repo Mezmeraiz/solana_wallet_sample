@@ -26,7 +26,9 @@ void main() {
             repositoryFactory: result.repositoryFactory,
             domainServiceFactory: result.domainServiceFactory,
             networkFactory: result.networkFactory,
-            child: const App(),
+            child: App(
+              hasSeedPhrase: result.hasSeedPhrase,
+            ),
           ),
         );
       }
