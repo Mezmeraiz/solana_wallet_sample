@@ -42,6 +42,7 @@ class EnterPinBloc extends Bloc<EnterPinEvent, EnterPinState> {
         emit(
           state.copyWith(
             pin: event.pin,
+            enteredPin: event.pin,
             action: EnterPinAction.pinEntered,
           ),
         );
@@ -60,6 +61,7 @@ class EnterPinBloc extends Bloc<EnterPinEvent, EnterPinState> {
           emit(
             state.copyWith(
               pin: event.pin,
+              remainingAttempts: remainingAttempts,
               status: EnterPinStatus.wrongPin,
             ),
           );

@@ -3,10 +3,13 @@ import FlutterMacOS
 import LocalAuthentication
 import Security
 
-private let loginService    = "com.securevault.login"
-private let seedService     = "com.securevault.seed"
-private let attemptsService = "com.securevault.attempts"
-private let attemptLimit    = 3
+// MARK: - Keychain service identifiers
+private let loginService    = "com.securevault.login"       // random login token
+private let seedService     = "com.securevault.seed"        // encrypted seed phrase
+private let flagService     = "com.securevault.seedFlag"    // plain flag: "seed was stored"
+private let attemptsService = "com.securevault.attempts"    // counter of wrong PINs
+
+private let attemptLimit = 3
 
 public class SecureVaultPlugin: NSObject, FlutterPlugin {
 
@@ -18,11 +21,11 @@ public class SecureVaultPlugin: NSObject, FlutterPlugin {
     registrar.addMethodCallDelegate(SecureVaultPlugin(), channel: channel)
   }
 
-  // MARK: - Method channel handler
+  // MARK: - Method‑channel dispatcher
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
 
-    func arg(_ k: String) -> String? {
-      (call.arguments as? [String: Any])?[k] as? String
+    func arg(_ key: String) -> String? {
+      (call.arguments as? [String: Any])?[key] as? String
     }
 
     do {
@@ -54,67 +57,71 @@ public class SecureVaultPlugin: NSObject, FlutterPlugin {
         result(FlutterMethodNotImplemented)
       }
     } catch Err.locked {
-      result(FlutterError(code: "LOCKED", message: "Vault locked after too many failed attempts", details: nil))
+      result(FlutterError(code: "LOCKED",
+                          message: "Vault locked after too many failed attempts",
+                          details: nil))
     } catch {
       result(FlutterError(code: "ERR", message: error.localizedDescription, details: nil))
     }
   }
 
-  // MARK: - Context helper
+  // MARK: - LAContext helper
   private func ctx(_ pin: String) -> LAContext {
     let c = LAContext()
     c.setCredential(pin.data(using: .utf8)!, type: .applicationPassword)
     return c
   }
 
-  // MARK: - Setup / reset
+  // MARK: - Setup & Reset
   private func setup(seed: String, pin: String) throws {
     let access = SecAccessControlCreateWithFlags(nil,
-      kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
-      [.applicationPassword], nil)!
+                                                 kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
+                                                 [.applicationPassword],
+                                                 nil)!
 
+    // login token (random) under PIN protection
     try add(service: loginService,
             data: Data((0..<16).map { _ in UInt8.random(in: 0...255) }),
             pin: pin, access: access)
 
+    // seed phrase under PIN protection
     try add(service: seedService,
             data: Data(seed.utf8),
             pin: pin, access: access)
+
+    // plain flag (NOT protected) – lets us detect that seed exists without PIN
+    try add(service: flagService,
+            data: Data([1]),
+            pin: pin, access: nil)
 
     try setAttempts(0)
   }
 
   private func resetVault() throws {
-    let qLogin: [String: Any] = [
-      kSecClass       as String: kSecClassGenericPassword,
-      kSecAttrService as String: loginService
-    ]
-    let qSeed: [String: Any] = [
-      kSecClass       as String: kSecClassGenericPassword,
-      kSecAttrService as String: seedService
-    ]
-    try kc(SecItemDelete(qLogin as CFDictionary))
-    try kc(SecItemDelete(qSeed  as CFDictionary))
+    let services = [loginService, seedService, flagService]
+    for svc in services {
+      let q: [String: Any] = [
+        kSecClass       as String: kSecClassGenericPassword,
+        kSecAttrService as String: svc
+      ]
+      try kc(SecItemDelete(q as CFDictionary))
+    }
     try setAttempts(0)
   }
 
-  // MARK: - Keychain helpers
-  private func add(service: String, data: Data, pin: String, access: SecAccessControl) throws {
-    let q: [String: Any] = [
-      kSecClass               as String: kSecClassGenericPassword,
-      kSecAttrService         as String: service,
-      kSecAttrAccessControl   as String: access,
-      kSecUseAuthenticationContext as String: ctx(pin),
-      kSecValueData           as String: data
+  // MARK: - Generic add helper (access may be nil)
+  private func add(service: String, data: Data, pin: String, access: SecAccessControl?) throws {
+    var q: [String: Any] = [
+      kSecClass       as String: kSecClassGenericPassword,
+      kSecAttrService as String: service,
+      kSecValueData   as String: data
     ]
+    if let access = access {
+      q[kSecAttrAccessControl as String] = access
+      q[kSecUseAuthenticationContext as String] = ctx(pin)
+    }
     SecItemDelete(q as CFDictionary) // overwrite if exists
     try kc(SecItemAdd(q as CFDictionary, nil))
-  }
-
-  private func kc(_ status: OSStatus) throws {
-    guard status == errSecSuccess else {
-      throw NSError(domain: NSOSStatusErrorDomain, code: Int(status))
-    }
   }
 
   // MARK: - Attempts tracking
@@ -123,7 +130,8 @@ public class SecureVaultPlugin: NSObject, FlutterPlugin {
     let q: [String: Any] = [
       kSecClass       as String: kSecClassGenericPassword,
       kSecAttrService as String: attemptsService,
-      kSecReturnData  as String: true
+      kSecReturnData  as String: true,
+      kSecUseAuthenticationUI as String: kSecUseAuthenticationUIFail
     ]
     let status = SecItemCopyMatching(q as CFDictionary, &item)
     guard status == errSecSuccess else { return 0 }
@@ -132,8 +140,8 @@ public class SecureVaultPlugin: NSObject, FlutterPlugin {
 
   private func setAttempts(_ n: Int) throws {
     let access = SecAccessControlCreateWithFlags(nil,
-      kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
-      [], nil)!
+                                                 kSecAttrAccessibleWhenUnlockedThisDeviceOnly,
+                                                 [], nil)!
     let q: [String: Any] = [
       kSecClass             as String: kSecClassGenericPassword,
       kSecAttrService       as String: attemptsService,
@@ -149,16 +157,20 @@ public class SecureVaultPlugin: NSObject, FlutterPlugin {
     return max(attemptLimit - used, 0)
   }
 
-  // MARK: - Public operations
+  // MARK: - Public helpers
+
+  /// Cheap check: was seed ever saved?
   private func hasSeed() -> Bool {
     let q: [String: Any] = [
       kSecClass       as String: kSecClassGenericPassword,
-      kSecAttrService as String: seedService,
-      kSecReturnData  as String: false
+      kSecAttrService as String: flagService,
+      kSecReturnData  as String: false,
+      kSecMatchLimit  as String: kSecMatchLimitOne
     ]
     return SecItemCopyMatching(q as CFDictionary, nil) == errSecSuccess
   }
 
+  /// Validate PIN; throws `Err.locked` if limit reached
   private func check(pin: String) throws -> Bool {
     let used = try attempts()
     guard used < attemptLimit else { throw Err.locked }
@@ -167,7 +179,8 @@ public class SecureVaultPlugin: NSObject, FlutterPlugin {
       kSecClass               as String: kSecClassGenericPassword,
       kSecAttrService         as String: loginService,
       kSecReturnData          as String: false,
-      kSecUseAuthenticationContext as String: ctx(pin)
+      kSecUseAuthenticationContext as String: ctx(pin),
+      kSecUseAuthenticationUI as String: kSecUseAuthenticationUIFail
     ]
     if SecItemCopyMatching(q as CFDictionary, nil) == errSecSuccess {
       try setAttempts(0)
@@ -178,6 +191,7 @@ public class SecureVaultPlugin: NSObject, FlutterPlugin {
     }
   }
 
+  /// Return seed phrase if PIN correct; counts attempts & locks
   private func getSeed(pin: String) throws -> String {
     let used = try attempts()
     guard used < attemptLimit else { throw Err.locked }
@@ -187,7 +201,8 @@ public class SecureVaultPlugin: NSObject, FlutterPlugin {
       kSecClass               as String: kSecClassGenericPassword,
       kSecAttrService         as String: seedService,
       kSecReturnData          as String: true,
-      kSecUseAuthenticationContext as String: ctx(pin)
+      kSecUseAuthenticationContext as String: ctx(pin),
+      kSecUseAuthenticationUI as String: kSecUseAuthenticationUIFail
     ]
     let status = SecItemCopyMatching(q as CFDictionary, &item)
 
@@ -200,7 +215,14 @@ public class SecureVaultPlugin: NSObject, FlutterPlugin {
     }
   }
 
-  // MARK: - Errors
+  // MARK: - Keychain status helper
+  private func kc(_ status: OSStatus) throws {
+    guard status == errSecSuccess else {
+      throw NSError(domain: NSOSStatusErrorDomain, code: Int(status))
+    }
+  }
+
+  // MARK: - Internal errors
   enum Err: Error {
     case args
     case locked

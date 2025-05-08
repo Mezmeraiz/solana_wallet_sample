@@ -234,6 +234,7 @@ abstract class _PinChanged implements EnterPinEvent {
 mixin _$EnterPinState {
   String get pin => throw _privateConstructorUsedError;
   String? get enteredPin => throw _privateConstructorUsedError;
+  int? get remainingAttempts => throw _privateConstructorUsedError;
   EnterPinStatus get status => throw _privateConstructorUsedError;
   EnterPinAction get action => throw _privateConstructorUsedError;
 
@@ -253,6 +254,7 @@ abstract class $EnterPinStateCopyWith<$Res> {
   $Res call(
       {String pin,
       String? enteredPin,
+      int? remainingAttempts,
       EnterPinStatus status,
       EnterPinAction action});
 }
@@ -274,6 +276,7 @@ class _$EnterPinStateCopyWithImpl<$Res, $Val extends EnterPinState>
   $Res call({
     Object? pin = null,
     Object? enteredPin = freezed,
+    Object? remainingAttempts = freezed,
     Object? status = null,
     Object? action = null,
   }) {
@@ -286,6 +289,10 @@ class _$EnterPinStateCopyWithImpl<$Res, $Val extends EnterPinState>
           ? _value.enteredPin
           : enteredPin // ignore: cast_nullable_to_non_nullable
               as String?,
+      remainingAttempts: freezed == remainingAttempts
+          ? _value.remainingAttempts
+          : remainingAttempts // ignore: cast_nullable_to_non_nullable
+              as int?,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -309,6 +316,7 @@ abstract class _$$EnterPinStateImplCopyWith<$Res>
   $Res call(
       {String pin,
       String? enteredPin,
+      int? remainingAttempts,
       EnterPinStatus status,
       EnterPinAction action});
 }
@@ -328,6 +336,7 @@ class __$$EnterPinStateImplCopyWithImpl<$Res>
   $Res call({
     Object? pin = null,
     Object? enteredPin = freezed,
+    Object? remainingAttempts = freezed,
     Object? status = null,
     Object? action = null,
   }) {
@@ -340,6 +349,10 @@ class __$$EnterPinStateImplCopyWithImpl<$Res>
           ? _value.enteredPin
           : enteredPin // ignore: cast_nullable_to_non_nullable
               as String?,
+      remainingAttempts: freezed == remainingAttempts
+          ? _value.remainingAttempts
+          : remainingAttempts // ignore: cast_nullable_to_non_nullable
+              as int?,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -358,6 +371,7 @@ class _$EnterPinStateImpl implements _EnterPinState {
   const _$EnterPinStateImpl(
       {this.pin = '',
       this.enteredPin,
+      this.remainingAttempts,
       this.status = EnterPinStatus.idle,
       this.action = EnterPinAction.none});
 
@@ -367,6 +381,8 @@ class _$EnterPinStateImpl implements _EnterPinState {
   @override
   final String? enteredPin;
   @override
+  final int? remainingAttempts;
+  @override
   @JsonKey()
   final EnterPinStatus status;
   @override
@@ -375,7 +391,7 @@ class _$EnterPinStateImpl implements _EnterPinState {
 
   @override
   String toString() {
-    return 'EnterPinState(pin: $pin, enteredPin: $enteredPin, status: $status, action: $action)';
+    return 'EnterPinState(pin: $pin, enteredPin: $enteredPin, remainingAttempts: $remainingAttempts, status: $status, action: $action)';
   }
 
   @override
@@ -386,12 +402,15 @@ class _$EnterPinStateImpl implements _EnterPinState {
             (identical(other.pin, pin) || other.pin == pin) &&
             (identical(other.enteredPin, enteredPin) ||
                 other.enteredPin == enteredPin) &&
+            (identical(other.remainingAttempts, remainingAttempts) ||
+                other.remainingAttempts == remainingAttempts) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.action, action) || other.action == action));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, pin, enteredPin, status, action);
+  int get hashCode => Object.hash(
+      runtimeType, pin, enteredPin, remainingAttempts, status, action);
 
   /// Create a copy of EnterPinState
   /// with the given fields replaced by the non-null parameter values.
@@ -406,6 +425,7 @@ abstract class _EnterPinState implements EnterPinState {
   const factory _EnterPinState(
       {final String pin,
       final String? enteredPin,
+      final int? remainingAttempts,
       final EnterPinStatus status,
       final EnterPinAction action}) = _$EnterPinStateImpl;
 
@@ -413,6 +433,8 @@ abstract class _EnterPinState implements EnterPinState {
   String get pin;
   @override
   String? get enteredPin;
+  @override
+  int? get remainingAttempts;
   @override
   EnterPinStatus get status;
   @override

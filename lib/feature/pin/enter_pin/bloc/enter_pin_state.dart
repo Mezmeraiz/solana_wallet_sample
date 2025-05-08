@@ -5,6 +5,7 @@ class EnterPinState with _$EnterPinState {
   const factory EnterPinState({
     @Default('') String pin,
     String? enteredPin,
+    int? remainingAttempts,
     @Default(EnterPinStatus.idle) EnterPinStatus status,
     @Default(EnterPinAction.none) EnterPinAction action,
   }) = _EnterPinState;

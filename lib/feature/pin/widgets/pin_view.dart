@@ -63,6 +63,7 @@ class _PinViewState extends State<PinView> {
               if (widget.error != null)
                 Text(
                   widget.error!,
+                  textAlign: TextAlign.center,
                   style: const TextStyle(color: Colors.red),
                 ),
               SizedBox(

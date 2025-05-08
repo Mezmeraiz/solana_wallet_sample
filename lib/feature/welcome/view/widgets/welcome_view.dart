@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solana_wallet_sample/common/extensions/context_extensions.dart';
+import 'package:solana_wallet_sample/feature/home/view/home_screen.dart';
 import 'package:solana_wallet_sample/feature/pin/set_pin/view/set_pin_screen.dart';
 import 'package:solana_wallet_sample/feature/welcome/bloc/welcome/welcome_bloc.dart';
 
@@ -20,8 +21,11 @@ class _WelcomeViewState extends State<WelcomeView> {
           if (state.action == WelcomeAction.requestPin) {
             _requestPin();
           } else if (state.action == WelcomeAction.dataSaved) {
-            //context.pop();
-            context.showSnackBar(message: 'Saved');
+            context.pushReplacement(
+              const HomeScreen(
+                requestPin: false,
+              ),
+            );
           } else if (state.action == WelcomeAction.saveError) {
             context.showSnackBar(message: 'Failed to save data');
           }

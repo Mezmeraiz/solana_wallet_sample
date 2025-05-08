@@ -31,7 +31,9 @@ class _EnterPinViewState extends State<EnterPinView> {
         builder: (context, state) => PinView(
           pin: state.pin,
           title: 'Enter password',
-          error: state.status == EnterPinStatus.wrongPin ? 'Wrong Password' : null,
+          error: state.status == EnterPinStatus.wrongPin
+              ? 'Wrong Password \n Remaining attemps: ${state.remainingAttempts}'
+              : null,
           onPinChanged: _onPinChanged,
         ),
       );

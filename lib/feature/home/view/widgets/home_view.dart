@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solana_wallet_sample/common/extensions/context_extensions.dart';
 import 'package:solana_wallet_sample/feature/home/bloc/home_bloc.dart';
+import 'package:solana_wallet_sample/feature/pin/enter_pin/view/enter_pin_screen.dart';
 import 'package:solana_wallet_sample/feature/pin/enter_pin/view/widgets/enter_pin_view.dart';
 
 class HomeView extends StatefulWidget {
@@ -23,7 +24,9 @@ class _HomeViewState extends State<HomeView> {
   void initState() {
     super.initState();
     if (widget.requestPin) {
-      _requestPin();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _requestPin();
+      });
     }
   }
 
@@ -34,8 +37,10 @@ class _HomeViewState extends State<HomeView> {
             Navigator.of(context).pop(state.enteredPin!);
           }
         },
-        builder: (context, state) => Center(
-          child: ElevatedButton(onPressed: _onAddPressed, child: const Text('Add')),
+        builder: (context, state) => Scaffold(
+          body: Center(
+            child: ElevatedButton(onPressed: _onAddPressed, child: const Text('Add')),
+          ),
         ),
       );
 
@@ -52,7 +57,7 @@ class _HomeViewState extends State<HomeView> {
 
   Future<void> _requestPin() async {
     final HomeBloc homeBloc = context.read<HomeBloc>();
-    final String? pin = await context.push(const EnterPinView());
+    final String? pin = await context.push(const EnterPinScreen());
     if (pin != null) {
       homeBloc.add(HomeEvent.pinChanged(pin: pin));
     }
