@@ -1,4 +1,5 @@
 import 'package:solana_wallet_sample/data/repository/blockchain_coin_data_repository.dart';
+import 'package:solana_wallet_sample/data/repository/coin_repository.dart';
 import 'package:solana_wallet_sample/data/repository/pin_repository.dart';
 import 'package:solana_wallet_sample/data/repository/wallet_repository.dart';
 import 'package:solana_wallet_sample/di/factory/database_factory.dart';
@@ -7,6 +8,8 @@ import 'package:solana_wallet_sample/di/factory/network_factory.dart';
 
 abstract interface class RepositoryFactory {
   WalletRepository get walletRepository;
+
+  CoinRepository get coinRepository;
 
   BlockchainCoinDataRepository get blockchainCoinDataRepository;
 
@@ -31,6 +34,12 @@ class RepositoryFactoryImpl implements RepositoryFactory {
   @override
   WalletRepository get walletRepository => _walletRepository ??= WalletRepositoryImpl(
         core: _dependencyFactory.core,
+      );
+
+  @override
+  CoinRepository get coinRepository => CoinRepositoryImpl(
+        coinApi: _networkFactory.coinApi,
+        coinDao: _databaseFactory.coinDao,
       );
 
   @override

@@ -15,6 +15,13 @@ class BlockchainCoinDataTable extends Table
       type: DriftSqlType.string,
       requiredDuringInsert: true,
       $customConstraints: 'NOT NULL PRIMARY KEY');
+  static const VerificationMeta _contractAddressMeta =
+      const VerificationMeta('contractAddress');
+  late final GeneratedColumn<String> contractAddress = GeneratedColumn<String>(
+      'contract_address', aliasedName, true,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      $customConstraints: '');
   static const VerificationMeta _decimalsMeta =
       const VerificationMeta('decimals');
   late final GeneratedColumn<int> decimals = GeneratedColumn<int>(
@@ -30,7 +37,8 @@ class BlockchainCoinDataTable extends Table
       requiredDuringInsert: true,
       $customConstraints: 'NOT NULL');
   @override
-  List<GeneratedColumn> get $columns => [id, decimals, balance];
+  List<GeneratedColumn> get $columns =>
+      [id, contractAddress, decimals, balance];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -46,6 +54,12 @@ class BlockchainCoinDataTable extends Table
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     } else if (isInserting) {
       context.missing(_idMeta);
+    }
+    if (data.containsKey('contract_address')) {
+      context.handle(
+          _contractAddressMeta,
+          contractAddress.isAcceptableOrUnknown(
+              data['contract_address']!, _contractAddressMeta));
     }
     if (data.containsKey('decimals')) {
       context.handle(_decimalsMeta,
@@ -71,6 +85,8 @@ class BlockchainCoinDataTable extends Table
     return BlockchainCoinDataTableData(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      contractAddress: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}contract_address']),
       decimals: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}decimals'])!,
       balance: attachedDatabase.typeMapping
@@ -90,14 +106,21 @@ class BlockchainCoinDataTable extends Table
 class BlockchainCoinDataTableData extends DataClass
     implements Insertable<BlockchainCoinDataTableData> {
   final String id;
+  final String? contractAddress;
   final int decimals;
   final String balance;
   const BlockchainCoinDataTableData(
-      {required this.id, required this.decimals, required this.balance});
+      {required this.id,
+      this.contractAddress,
+      required this.decimals,
+      required this.balance});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<String>(id);
+    if (!nullToAbsent || contractAddress != null) {
+      map['contract_address'] = Variable<String>(contractAddress);
+    }
     map['decimals'] = Variable<int>(decimals);
     map['balance'] = Variable<String>(balance);
     return map;
@@ -106,6 +129,9 @@ class BlockchainCoinDataTableData extends DataClass
   BlockchainCoinDataTableCompanion toCompanion(bool nullToAbsent) {
     return BlockchainCoinDataTableCompanion(
       id: Value(id),
+      contractAddress: contractAddress == null && nullToAbsent
+          ? const Value.absent()
+          : Value(contractAddress),
       decimals: Value(decimals),
       balance: Value(balance),
     );
@@ -116,6 +142,7 @@ class BlockchainCoinDataTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return BlockchainCoinDataTableData(
       id: serializer.fromJson<String>(json['id']),
+      contractAddress: serializer.fromJson<String?>(json['contract_address']),
       decimals: serializer.fromJson<int>(json['decimals']),
       balance: serializer.fromJson<String>(json['balance']),
     );
@@ -125,15 +152,22 @@ class BlockchainCoinDataTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<String>(id),
+      'contract_address': serializer.toJson<String?>(contractAddress),
       'decimals': serializer.toJson<int>(decimals),
       'balance': serializer.toJson<String>(balance),
     };
   }
 
   BlockchainCoinDataTableData copyWith(
-          {String? id, int? decimals, String? balance}) =>
+          {String? id,
+          Value<String?> contractAddress = const Value.absent(),
+          int? decimals,
+          String? balance}) =>
       BlockchainCoinDataTableData(
         id: id ?? this.id,
+        contractAddress: contractAddress.present
+            ? contractAddress.value
+            : this.contractAddress,
         decimals: decimals ?? this.decimals,
         balance: balance ?? this.balance,
       );
@@ -141,6 +175,9 @@ class BlockchainCoinDataTableData extends DataClass
       BlockchainCoinDataTableCompanion data) {
     return BlockchainCoinDataTableData(
       id: data.id.present ? data.id.value : this.id,
+      contractAddress: data.contractAddress.present
+          ? data.contractAddress.value
+          : this.contractAddress,
       decimals: data.decimals.present ? data.decimals.value : this.decimals,
       balance: data.balance.present ? data.balance.value : this.balance,
     );
@@ -150,6 +187,7 @@ class BlockchainCoinDataTableData extends DataClass
   String toString() {
     return (StringBuffer('BlockchainCoinDataTableData(')
           ..write('id: $id, ')
+          ..write('contractAddress: $contractAddress, ')
           ..write('decimals: $decimals, ')
           ..write('balance: $balance')
           ..write(')'))
@@ -157,12 +195,13 @@ class BlockchainCoinDataTableData extends DataClass
   }
 
   @override
-  int get hashCode => Object.hash(id, decimals, balance);
+  int get hashCode => Object.hash(id, contractAddress, decimals, balance);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is BlockchainCoinDataTableData &&
           other.id == this.id &&
+          other.contractAddress == this.contractAddress &&
           other.decimals == this.decimals &&
           other.balance == this.balance);
 }
@@ -170,17 +209,20 @@ class BlockchainCoinDataTableData extends DataClass
 class BlockchainCoinDataTableCompanion
     extends UpdateCompanion<BlockchainCoinDataTableData> {
   final Value<String> id;
+  final Value<String?> contractAddress;
   final Value<int> decimals;
   final Value<String> balance;
   final Value<int> rowid;
   const BlockchainCoinDataTableCompanion({
     this.id = const Value.absent(),
+    this.contractAddress = const Value.absent(),
     this.decimals = const Value.absent(),
     this.balance = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   BlockchainCoinDataTableCompanion.insert({
     required String id,
+    this.contractAddress = const Value.absent(),
     required int decimals,
     required String balance,
     this.rowid = const Value.absent(),
@@ -189,12 +231,14 @@ class BlockchainCoinDataTableCompanion
         balance = Value(balance);
   static Insertable<BlockchainCoinDataTableData> custom({
     Expression<String>? id,
+    Expression<String>? contractAddress,
     Expression<int>? decimals,
     Expression<String>? balance,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
+      if (contractAddress != null) 'contract_address': contractAddress,
       if (decimals != null) 'decimals': decimals,
       if (balance != null) 'balance': balance,
       if (rowid != null) 'rowid': rowid,
@@ -203,11 +247,13 @@ class BlockchainCoinDataTableCompanion
 
   BlockchainCoinDataTableCompanion copyWith(
       {Value<String>? id,
+      Value<String?>? contractAddress,
       Value<int>? decimals,
       Value<String>? balance,
       Value<int>? rowid}) {
     return BlockchainCoinDataTableCompanion(
       id: id ?? this.id,
+      contractAddress: contractAddress ?? this.contractAddress,
       decimals: decimals ?? this.decimals,
       balance: balance ?? this.balance,
       rowid: rowid ?? this.rowid,
@@ -219,6 +265,9 @@ class BlockchainCoinDataTableCompanion
     final map = <String, Expression>{};
     if (id.present) {
       map['id'] = Variable<String>(id.value);
+    }
+    if (contractAddress.present) {
+      map['contract_address'] = Variable<String>(contractAddress.value);
     }
     if (decimals.present) {
       map['decimals'] = Variable<int>(decimals.value);
@@ -236,6 +285,7 @@ class BlockchainCoinDataTableCompanion
   String toString() {
     return (StringBuffer('BlockchainCoinDataTableCompanion(')
           ..write('id: $id, ')
+          ..write('contractAddress: $contractAddress, ')
           ..write('decimals: $decimals, ')
           ..write('balance: $balance, ')
           ..write('rowid: $rowid')
@@ -754,6 +804,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
 typedef $BlockchainCoinDataTableCreateCompanionBuilder
     = BlockchainCoinDataTableCompanion Function({
   required String id,
+  Value<String?> contractAddress,
   required int decimals,
   required String balance,
   Value<int> rowid,
@@ -761,6 +812,7 @@ typedef $BlockchainCoinDataTableCreateCompanionBuilder
 typedef $BlockchainCoinDataTableUpdateCompanionBuilder
     = BlockchainCoinDataTableCompanion Function({
   Value<String> id,
+  Value<String?> contractAddress,
   Value<int> decimals,
   Value<String> balance,
   Value<int> rowid,
@@ -777,6 +829,10 @@ class $BlockchainCoinDataTableFilterComposer
   });
   ColumnFilters<String> get id => $composableBuilder(
       column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get contractAddress => $composableBuilder(
+      column: $table.contractAddress,
+      builder: (column) => ColumnFilters(column));
 
   ColumnFilters<int> get decimals => $composableBuilder(
       column: $table.decimals, builder: (column) => ColumnFilters(column));
@@ -797,6 +853,10 @@ class $BlockchainCoinDataTableOrderingComposer
   ColumnOrderings<String> get id => $composableBuilder(
       column: $table.id, builder: (column) => ColumnOrderings(column));
 
+  ColumnOrderings<String> get contractAddress => $composableBuilder(
+      column: $table.contractAddress,
+      builder: (column) => ColumnOrderings(column));
+
   ColumnOrderings<int> get decimals => $composableBuilder(
       column: $table.decimals, builder: (column) => ColumnOrderings(column));
 
@@ -815,6 +875,9 @@ class $BlockchainCoinDataTableAnnotationComposer
   });
   GeneratedColumn<String> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get contractAddress => $composableBuilder(
+      column: $table.contractAddress, builder: (column) => column);
 
   GeneratedColumn<int> get decimals =>
       $composableBuilder(column: $table.decimals, builder: (column) => column);
@@ -853,24 +916,28 @@ class $BlockchainCoinDataTableTableManager extends RootTableManager<
                   $db: db, $table: table),
           updateCompanionCallback: ({
             Value<String> id = const Value.absent(),
+            Value<String?> contractAddress = const Value.absent(),
             Value<int> decimals = const Value.absent(),
             Value<String> balance = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               BlockchainCoinDataTableCompanion(
             id: id,
+            contractAddress: contractAddress,
             decimals: decimals,
             balance: balance,
             rowid: rowid,
           ),
           createCompanionCallback: ({
             required String id,
+            Value<String?> contractAddress = const Value.absent(),
             required int decimals,
             required String balance,
             Value<int> rowid = const Value.absent(),
           }) =>
               BlockchainCoinDataTableCompanion.insert(
             id: id,
+            contractAddress: contractAddress,
             decimals: decimals,
             balance: balance,
             rowid: rowid,

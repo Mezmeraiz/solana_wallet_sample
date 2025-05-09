@@ -49,10 +49,11 @@ class CoinRepositoryImpl implements CoinRepository {
   Future<void> _loadImageCoinData() async {
     while (true) {
       final List<String> ids = await _coinDao.getCoinIdsWithoutIcon();
-      ;
+      print(ids.length);
       if (ids.isEmpty) break;
 
       final List<IconCoinData> coins = await _coinApi.getCoinIcons(ids);
+      await Future.delayed(const Duration(seconds: 10));
       await _coinDao.updateCoinIcons(coins);
     }
   }

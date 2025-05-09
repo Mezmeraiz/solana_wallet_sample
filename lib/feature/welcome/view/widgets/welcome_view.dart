@@ -22,8 +22,8 @@ class _WelcomeViewState extends State<WelcomeView> {
             _requestPin();
           } else if (state.action == WelcomeAction.dataSaved) {
             context.pushReplacement(
-              const HomeScreen(
-                requestPin: false,
+              HomeScreen(
+                pin: state.pin,
               ),
             );
           } else if (state.action == WelcomeAction.saveError) {

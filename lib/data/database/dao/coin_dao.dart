@@ -20,6 +20,8 @@ abstract class CoinDao {
 
   Future<List<String>> getCoinIdsWithoutIcon({int limit});
 
+  Future<List<BaseCoinData>> getBaseCoinDataByContracts(List<String> contractAddresses);
+
   Future<void> saveActiveCoins(List<String> ids);
 
   Future<void> saveBlockchainCoinData(List<BlockchainCoinData> list);
@@ -144,6 +146,28 @@ class CoinDaoImpl implements CoinDao {
   }
 
   @override
+  Future<List<BaseCoinData>> getBaseCoinDataByContracts(List<String> contractAddresses) async {
+    if (contractAddresses.isEmpty) return [];
+
+    final query = database.select(database.baseCoinDataTable)
+      ..where((tbl) => tbl.contractAddress.isIn(contractAddresses));
+
+    final rows = await query.get();
+
+    return rows
+        .map(
+          (row) => BaseCoinData(
+            id: row.id,
+            contractAddress: row.contractAddress,
+            ticker: row.ticker,
+            iconUrl: row.iconUrl,
+            type: CoinType.fromString(row.type),
+          ),
+        )
+        .toList();
+  }
+
+  @override
   Future<void> saveActiveCoins(List<String> ids) async => database.batch((batch) {
         batch.deleteAll(database.activeCoinsTable);
         batch.insertAll(
@@ -169,6 +193,7 @@ class CoinDaoImpl implements CoinDao {
               .map(
                 (e) => BlockchainCoinDataTableCompanion.insert(
                   id: e.id,
+                  contractAddress: Value(e.contractAddress),
                   decimals: e.decimals,
                   balance: e.balance.toString(),
                 ),
@@ -187,6 +212,7 @@ class CoinDaoImpl implements CoinDao {
         .map(
           (row) => BlockchainCoinData(
             id: row.id,
+            contractAddress: row.contractAddress,
             decimals: row.decimals,
             balance: BigInt.parse(row.balance),
           ),

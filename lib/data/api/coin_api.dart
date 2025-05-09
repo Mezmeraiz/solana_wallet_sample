@@ -28,13 +28,14 @@ class CoinApiImpl implements CoinApi {
     final solanaCoins = <BaseCoinData>[];
 
     for (final item in response) {
-      if (item.platforms.containsKey('solana')) {
+      final platforms = item['platforms'] as Map<String, Object?>;
+      if (platforms.containsKey('solana')) {
         solanaCoins.add(
           BaseCoinData(
-            id: item.id,
-            ticker: (item.symbol as String).toUpperCase(),
+            id: item['id'] as String,
+            ticker: (item['symbol'] as String).toUpperCase(),
             type: CoinType.token,
-            contractAddress: item.platforms['solana'],
+            contractAddress: platforms['solana'] as String,
           ),
         );
       }
@@ -52,13 +53,12 @@ class CoinApiImpl implements CoinApi {
       queryParams: {
         'vs_currency': 'usd',
         'ids': ids.join(','),
+        'per_page': '250',
+        'page': '1',
       },
-      // headers: {
-      //   'x-cg-pro-api-key': myApiKey, // если используешь Pro‑ключ
-      // },
     );
 
-    final result = (response as List<Map<String, Object?>>).map((e) => IconCoinData.fromJson(e)).toList();
+    final result = (response as List).map((e) => IconCoinData.fromJson(e)).toList();
 
     return result;
 

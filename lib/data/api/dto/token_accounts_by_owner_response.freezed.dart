@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'blockchain_coin_data.dart';
+part of 'token_accounts_by_owner_response.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,65 +14,63 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-BlockchainCoinData _$BlockchainCoinDataFromJson(Map<String, dynamic> json) {
-  return _BlockchainCoinData.fromJson(json);
+TokenAccountsByOwnerResponse _$TokenAccountsByOwnerResponseFromJson(
+    Map<String, dynamic> json) {
+  return _TokenAccountsByOwnerResponse.fromJson(json);
 }
 
 /// @nodoc
-mixin _$BlockchainCoinData {
-  String get id => throw _privateConstructorUsedError;
-  String? get contractAddress => throw _privateConstructorUsedError;
+mixin _$TokenAccountsByOwnerResponse {
+  String get contractAddress => throw _privateConstructorUsedError;
   BigInt get balance => throw _privateConstructorUsedError;
   int get decimals => throw _privateConstructorUsedError;
 
-  /// Serializes this BlockchainCoinData to a JSON map.
+  /// Serializes this TokenAccountsByOwnerResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of BlockchainCoinData
+  /// Create a copy of TokenAccountsByOwnerResponse
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $BlockchainCoinDataCopyWith<BlockchainCoinData> get copyWith =>
-      throw _privateConstructorUsedError;
+  $TokenAccountsByOwnerResponseCopyWith<TokenAccountsByOwnerResponse>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $BlockchainCoinDataCopyWith<$Res> {
-  factory $BlockchainCoinDataCopyWith(
-          BlockchainCoinData value, $Res Function(BlockchainCoinData) then) =
-      _$BlockchainCoinDataCopyWithImpl<$Res, BlockchainCoinData>;
+abstract class $TokenAccountsByOwnerResponseCopyWith<$Res> {
+  factory $TokenAccountsByOwnerResponseCopyWith(
+          TokenAccountsByOwnerResponse value,
+          $Res Function(TokenAccountsByOwnerResponse) then) =
+      _$TokenAccountsByOwnerResponseCopyWithImpl<$Res,
+          TokenAccountsByOwnerResponse>;
   @useResult
-  $Res call({String id, String? contractAddress, BigInt balance, int decimals});
+  $Res call({String contractAddress, BigInt balance, int decimals});
 }
 
 /// @nodoc
-class _$BlockchainCoinDataCopyWithImpl<$Res, $Val extends BlockchainCoinData>
-    implements $BlockchainCoinDataCopyWith<$Res> {
-  _$BlockchainCoinDataCopyWithImpl(this._value, this._then);
+class _$TokenAccountsByOwnerResponseCopyWithImpl<$Res,
+        $Val extends TokenAccountsByOwnerResponse>
+    implements $TokenAccountsByOwnerResponseCopyWith<$Res> {
+  _$TokenAccountsByOwnerResponseCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of BlockchainCoinData
+  /// Create a copy of TokenAccountsByOwnerResponse
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? contractAddress = freezed,
+    Object? contractAddress = null,
     Object? balance = null,
     Object? decimals = null,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      contractAddress: freezed == contractAddress
+      contractAddress: null == contractAddress
           ? _value.contractAddress
           : contractAddress // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       balance: null == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
@@ -86,43 +84,41 @@ class _$BlockchainCoinDataCopyWithImpl<$Res, $Val extends BlockchainCoinData>
 }
 
 /// @nodoc
-abstract class _$$BlockchainCoinDataImplCopyWith<$Res>
-    implements $BlockchainCoinDataCopyWith<$Res> {
-  factory _$$BlockchainCoinDataImplCopyWith(_$BlockchainCoinDataImpl value,
-          $Res Function(_$BlockchainCoinDataImpl) then) =
-      __$$BlockchainCoinDataImplCopyWithImpl<$Res>;
+abstract class _$$TokenAccountsByOwnerResponseImplCopyWith<$Res>
+    implements $TokenAccountsByOwnerResponseCopyWith<$Res> {
+  factory _$$TokenAccountsByOwnerResponseImplCopyWith(
+          _$TokenAccountsByOwnerResponseImpl value,
+          $Res Function(_$TokenAccountsByOwnerResponseImpl) then) =
+      __$$TokenAccountsByOwnerResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String? contractAddress, BigInt balance, int decimals});
+  $Res call({String contractAddress, BigInt balance, int decimals});
 }
 
 /// @nodoc
-class __$$BlockchainCoinDataImplCopyWithImpl<$Res>
-    extends _$BlockchainCoinDataCopyWithImpl<$Res, _$BlockchainCoinDataImpl>
-    implements _$$BlockchainCoinDataImplCopyWith<$Res> {
-  __$$BlockchainCoinDataImplCopyWithImpl(_$BlockchainCoinDataImpl _value,
-      $Res Function(_$BlockchainCoinDataImpl) _then)
+class __$$TokenAccountsByOwnerResponseImplCopyWithImpl<$Res>
+    extends _$TokenAccountsByOwnerResponseCopyWithImpl<$Res,
+        _$TokenAccountsByOwnerResponseImpl>
+    implements _$$TokenAccountsByOwnerResponseImplCopyWith<$Res> {
+  __$$TokenAccountsByOwnerResponseImplCopyWithImpl(
+      _$TokenAccountsByOwnerResponseImpl _value,
+      $Res Function(_$TokenAccountsByOwnerResponseImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of BlockchainCoinData
+  /// Create a copy of TokenAccountsByOwnerResponse
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? contractAddress = freezed,
+    Object? contractAddress = null,
     Object? balance = null,
     Object? decimals = null,
   }) {
-    return _then(_$BlockchainCoinDataImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      contractAddress: freezed == contractAddress
+    return _then(_$TokenAccountsByOwnerResponseImpl(
+      contractAddress: null == contractAddress
           ? _value.contractAddress
           : contractAddress // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       balance: null == balance
           ? _value.balance
           : balance // ignore: cast_nullable_to_non_nullable
@@ -137,21 +133,19 @@ class __$$BlockchainCoinDataImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$BlockchainCoinDataImpl extends _BlockchainCoinData {
-  const _$BlockchainCoinDataImpl(
-      {required this.id,
-      this.contractAddress,
+class _$TokenAccountsByOwnerResponseImpl
+    implements _TokenAccountsByOwnerResponse {
+  const _$TokenAccountsByOwnerResponseImpl(
+      {required this.contractAddress,
       required this.balance,
-      required this.decimals})
-      : super._();
+      required this.decimals});
 
-  factory _$BlockchainCoinDataImpl.fromJson(Map<String, dynamic> json) =>
-      _$$BlockchainCoinDataImplFromJson(json);
+  factory _$TokenAccountsByOwnerResponseImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$TokenAccountsByOwnerResponseImplFromJson(json);
 
   @override
-  final String id;
-  @override
-  final String? contractAddress;
+  final String contractAddress;
   @override
   final BigInt balance;
   @override
@@ -159,15 +153,14 @@ class _$BlockchainCoinDataImpl extends _BlockchainCoinData {
 
   @override
   String toString() {
-    return 'BlockchainCoinData(id: $id, contractAddress: $contractAddress, balance: $balance, decimals: $decimals)';
+    return 'TokenAccountsByOwnerResponse(contractAddress: $contractAddress, balance: $balance, decimals: $decimals)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$BlockchainCoinDataImpl &&
-            (identical(other.id, id) || other.id == id) &&
+            other is _$TokenAccountsByOwnerResponseImpl &&
             (identical(other.contractAddress, contractAddress) ||
                 other.contractAddress == contractAddress) &&
             (identical(other.balance, balance) || other.balance == balance) &&
@@ -178,49 +171,48 @@ class _$BlockchainCoinDataImpl extends _BlockchainCoinData {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, contractAddress, balance, decimals);
+      Object.hash(runtimeType, contractAddress, balance, decimals);
 
-  /// Create a copy of BlockchainCoinData
+  /// Create a copy of TokenAccountsByOwnerResponse
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$BlockchainCoinDataImplCopyWith<_$BlockchainCoinDataImpl> get copyWith =>
-      __$$BlockchainCoinDataImplCopyWithImpl<_$BlockchainCoinDataImpl>(
-          this, _$identity);
+  _$$TokenAccountsByOwnerResponseImplCopyWith<
+          _$TokenAccountsByOwnerResponseImpl>
+      get copyWith => __$$TokenAccountsByOwnerResponseImplCopyWithImpl<
+          _$TokenAccountsByOwnerResponseImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$BlockchainCoinDataImplToJson(
+    return _$$TokenAccountsByOwnerResponseImplToJson(
       this,
     );
   }
 }
 
-abstract class _BlockchainCoinData extends BlockchainCoinData {
-  const factory _BlockchainCoinData(
-      {required final String id,
-      final String? contractAddress,
+abstract class _TokenAccountsByOwnerResponse
+    implements TokenAccountsByOwnerResponse {
+  const factory _TokenAccountsByOwnerResponse(
+      {required final String contractAddress,
       required final BigInt balance,
-      required final int decimals}) = _$BlockchainCoinDataImpl;
-  const _BlockchainCoinData._() : super._();
+      required final int decimals}) = _$TokenAccountsByOwnerResponseImpl;
 
-  factory _BlockchainCoinData.fromJson(Map<String, dynamic> json) =
-      _$BlockchainCoinDataImpl.fromJson;
+  factory _TokenAccountsByOwnerResponse.fromJson(Map<String, dynamic> json) =
+      _$TokenAccountsByOwnerResponseImpl.fromJson;
 
   @override
-  String get id;
-  @override
-  String? get contractAddress;
+  String get contractAddress;
   @override
   BigInt get balance;
   @override
   int get decimals;
 
-  /// Create a copy of BlockchainCoinData
+  /// Create a copy of TokenAccountsByOwnerResponse
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$BlockchainCoinDataImplCopyWith<_$BlockchainCoinDataImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$TokenAccountsByOwnerResponseImplCopyWith<
+          _$TokenAccountsByOwnerResponseImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

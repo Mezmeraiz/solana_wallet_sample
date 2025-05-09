@@ -1,15 +1,16 @@
 import 'dart:convert';
 
 import 'package:solana_wallet_sample/common/utils.dart';
+import 'package:solana_wallet_sample/data/api/dto/token_accounts_by_owner_response.dart';
 import 'package:solana_wallet_sample/data/http_wrapper/http_wrapper.dart';
 
 abstract interface class SolanaApi {
-  Future<String> getTokenAccountsByOwner({
+  Future<List<TokenAccountsByOwnerResponse>> getTokenAccountsByOwner({
     required String url,
     required String address,
   });
 
-  Future<String> getBalance({
+  Future<int> getBalance({
     required String url,
     required String address,
   });
@@ -21,7 +22,7 @@ class SolanaApiImpl implements SolanaApi {
   const SolanaApiImpl({required HttpWrapper httpWrapper}) : _httpWrapper = httpWrapper;
 
   @override
-  Future<String> getTokenAccountsByOwner({
+  Future<List<TokenAccountsByOwnerResponse>> getTokenAccountsByOwner({
     required String url,
     required String address,
   }) async {
@@ -41,13 +42,21 @@ class SolanaApiImpl implements SolanaApi {
       )),
     );
 
-    print(response);
+    final List<dynamic> accounts = response['result']['value'];
 
-    return '';
+    return accounts.map((e) {
+      final info = e['account']['data']['parsed']['info'] as Map<String, dynamic>;
+
+      return TokenAccountsByOwnerResponse(
+        contractAddress: info['mint'] as String,
+        balance: BigInt.parse(info['tokenAmount']['amount'] as String),
+        decimals: info['tokenAmount']['decimals'] as int,
+      );
+    }).toList();
   }
 
   @override
-  Future<String> getBalance({
+  Future<int> getBalance({
     required String url,
     required String address,
   }) async {
@@ -61,8 +70,6 @@ class SolanaApiImpl implements SolanaApi {
       )),
     );
 
-    print(response);
-
-    return '';
+    return response['result']['value'] as int;
   }
 }

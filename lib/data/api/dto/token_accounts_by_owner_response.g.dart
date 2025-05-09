@@ -1,24 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'blockchain_coin_data.dart';
+part of 'token_accounts_by_owner_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$BlockchainCoinDataImpl _$$BlockchainCoinDataImplFromJson(
+_$TokenAccountsByOwnerResponseImpl _$$TokenAccountsByOwnerResponseImplFromJson(
         Map<String, dynamic> json) =>
-    _$BlockchainCoinDataImpl(
-      id: json['id'] as String,
-      contractAddress: json['contractAddress'] as String?,
+    _$TokenAccountsByOwnerResponseImpl(
+      contractAddress: json['contractAddress'] as String,
       balance: BigInt.parse(json['balance'] as String),
       decimals: (json['decimals'] as num).toInt(),
     );
 
-Map<String, dynamic> _$$BlockchainCoinDataImplToJson(
-        _$BlockchainCoinDataImpl instance) =>
+Map<String, dynamic> _$$TokenAccountsByOwnerResponseImplToJson(
+        _$TokenAccountsByOwnerResponseImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'contractAddress': instance.contractAddress,
       'balance': instance.balance.toString(),
       'decimals': instance.decimals,

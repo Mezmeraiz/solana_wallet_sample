@@ -3,14 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solana_wallet_sample/common/extensions/context_extensions.dart';
 import 'package:solana_wallet_sample/feature/home/bloc/home_bloc.dart';
 import 'package:solana_wallet_sample/feature/pin/enter_pin/view/enter_pin_screen.dart';
-import 'package:solana_wallet_sample/feature/pin/enter_pin/view/widgets/enter_pin_view.dart';
 
 class HomeView extends StatefulWidget {
-  final bool requestPin;
+  final String? pin;
 
   const HomeView({
     super.key,
-    required this.requestPin,
+    required this.pin,
   });
 
   @override
@@ -23,10 +22,12 @@ class _HomeViewState extends State<HomeView> {
   @override
   void initState() {
     super.initState();
-    if (widget.requestPin) {
+    if (widget.pin == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _requestPin();
       });
+    } else {
+      context.read<HomeBloc>().add(HomeEvent.init(pin: widget.pin!));
     }
   }
 
@@ -34,7 +35,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) => BlocConsumer<HomeBloc, HomeState>(
         listener: (context, state) {
           if (state.action == HomeAction.pinEntered) {
-            Navigator.of(context).pop(state.enteredPin!);
+            //Navigator.of(context).pop(state.enteredPin!);
           }
         },
         builder: (context, state) => Scaffold(
@@ -43,8 +44,6 @@ class _HomeViewState extends State<HomeView> {
           ),
         ),
       );
-
-  void _onPinChanged(String value) => context.read<HomeBloc>().add(HomeEvent.pinChanged(pin: value));
 
   void _onAddPressed() {
     // final homeBloc = context.read<HomeBloc>();
@@ -59,7 +58,15 @@ class _HomeViewState extends State<HomeView> {
     final HomeBloc homeBloc = context.read<HomeBloc>();
     final String? pin = await context.push(const EnterPinScreen());
     if (pin != null) {
-      homeBloc.add(HomeEvent.pinChanged(pin: pin));
+      homeBloc.add(HomeEvent.init(pin: pin));
+    }
+  }
+
+  Future<void> init(int pin) async {
+    final HomeBloc homeBloc = context.read<HomeBloc>();
+    final String? pin = await context.push(const EnterPinScreen());
+    if (pin != null) {
+      homeBloc.add(HomeEvent.init(pin: pin));
     }
   }
 

@@ -17,16 +17,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   })  : _walletRepository = walletRepository,
         _blockchainCoinDataRepository = blockchainCoinDataRepository,
         super(const HomeState()) {
-    on<_PinChanged>(_pinChanged);
+    on<_Init>(_init);
   }
 
-  void _pinChanged(
-    _PinChanged event,
+  Future<void> _init(
+    _Init event,
     Emitter<HomeState> emit,
-  ) =>
-      emit(
-        state.copyWith(
-          pin: event.pin,
-        ),
-      );
+  ) async {
+    await _blockchainCoinDataRepository.loadBlockchainCoinData(event.pin);
+  }
 }

@@ -9,6 +9,7 @@ sealed class BlockchainCoinData with _$BlockchainCoinData {
 
   const factory BlockchainCoinData({
     required String id,
+    String? contractAddress,
     required BigInt balance,
     required int decimals,
   }) = _BlockchainCoinData;

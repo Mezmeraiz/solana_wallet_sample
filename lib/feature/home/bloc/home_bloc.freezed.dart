@@ -19,33 +19,33 @@ mixin _$HomeEvent {
   String get pin => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String pin) pinChanged,
+    required TResult Function(String pin) init,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String pin)? pinChanged,
+    TResult? Function(String pin)? init,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String pin)? pinChanged,
+    TResult Function(String pin)? init,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_PinChanged value) pinChanged,
+    required TResult Function(_Init value) init,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_PinChanged value)? pinChanged,
+    TResult? Function(_Init value)? init,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_PinChanged value)? pinChanged,
+    TResult Function(_Init value)? init,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -92,22 +92,20 @@ class _$HomeEventCopyWithImpl<$Res, $Val extends HomeEvent>
 }
 
 /// @nodoc
-abstract class _$$PinChangedImplCopyWith<$Res>
-    implements $HomeEventCopyWith<$Res> {
-  factory _$$PinChangedImplCopyWith(
-          _$PinChangedImpl value, $Res Function(_$PinChangedImpl) then) =
-      __$$PinChangedImplCopyWithImpl<$Res>;
+abstract class _$$InitImplCopyWith<$Res> implements $HomeEventCopyWith<$Res> {
+  factory _$$InitImplCopyWith(
+          _$InitImpl value, $Res Function(_$InitImpl) then) =
+      __$$InitImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String pin});
 }
 
 /// @nodoc
-class __$$PinChangedImplCopyWithImpl<$Res>
-    extends _$HomeEventCopyWithImpl<$Res, _$PinChangedImpl>
-    implements _$$PinChangedImplCopyWith<$Res> {
-  __$$PinChangedImplCopyWithImpl(
-      _$PinChangedImpl _value, $Res Function(_$PinChangedImpl) _then)
+class __$$InitImplCopyWithImpl<$Res>
+    extends _$HomeEventCopyWithImpl<$Res, _$InitImpl>
+    implements _$$InitImplCopyWith<$Res> {
+  __$$InitImplCopyWithImpl(_$InitImpl _value, $Res Function(_$InitImpl) _then)
       : super(_value, _then);
 
   /// Create a copy of HomeEvent
@@ -117,7 +115,7 @@ class __$$PinChangedImplCopyWithImpl<$Res>
   $Res call({
     Object? pin = null,
   }) {
-    return _then(_$PinChangedImpl(
+    return _then(_$InitImpl(
       pin: null == pin
           ? _value.pin
           : pin // ignore: cast_nullable_to_non_nullable
@@ -128,22 +126,22 @@ class __$$PinChangedImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PinChangedImpl implements _PinChanged {
-  const _$PinChangedImpl({required this.pin});
+class _$InitImpl implements _Init {
+  const _$InitImpl({required this.pin});
 
   @override
   final String pin;
 
   @override
   String toString() {
-    return 'HomeEvent.pinChanged(pin: $pin)';
+    return 'HomeEvent.init(pin: $pin)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PinChangedImpl &&
+            other is _$InitImpl &&
             (identical(other.pin, pin) || other.pin == pin));
   }
 
@@ -155,33 +153,33 @@ class _$PinChangedImpl implements _PinChanged {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$PinChangedImplCopyWith<_$PinChangedImpl> get copyWith =>
-      __$$PinChangedImplCopyWithImpl<_$PinChangedImpl>(this, _$identity);
+  _$$InitImplCopyWith<_$InitImpl> get copyWith =>
+      __$$InitImplCopyWithImpl<_$InitImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String pin) pinChanged,
+    required TResult Function(String pin) init,
   }) {
-    return pinChanged(pin);
+    return init(pin);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String pin)? pinChanged,
+    TResult? Function(String pin)? init,
   }) {
-    return pinChanged?.call(pin);
+    return init?.call(pin);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String pin)? pinChanged,
+    TResult Function(String pin)? init,
     required TResult orElse(),
   }) {
-    if (pinChanged != null) {
-      return pinChanged(pin);
+    if (init != null) {
+      return init(pin);
     }
     return orElse();
   }
@@ -189,34 +187,34 @@ class _$PinChangedImpl implements _PinChanged {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_PinChanged value) pinChanged,
+    required TResult Function(_Init value) init,
   }) {
-    return pinChanged(this);
+    return init(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_PinChanged value)? pinChanged,
+    TResult? Function(_Init value)? init,
   }) {
-    return pinChanged?.call(this);
+    return init?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_PinChanged value)? pinChanged,
+    TResult Function(_Init value)? init,
     required TResult orElse(),
   }) {
-    if (pinChanged != null) {
-      return pinChanged(this);
+    if (init != null) {
+      return init(this);
     }
     return orElse();
   }
 }
 
-abstract class _PinChanged implements HomeEvent {
-  const factory _PinChanged({required final String pin}) = _$PinChangedImpl;
+abstract class _Init implements HomeEvent {
+  const factory _Init({required final String pin}) = _$InitImpl;
 
   @override
   String get pin;
@@ -225,14 +223,14 @@ abstract class _PinChanged implements HomeEvent {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$PinChangedImplCopyWith<_$PinChangedImpl> get copyWith =>
+  _$$InitImplCopyWith<_$InitImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 mixin _$HomeState {
-  String get pin => throw _privateConstructorUsedError;
-  String? get enteredPin => throw _privateConstructorUsedError;
+//@Default('') String pin,
+//String? enteredPin,
   HomeStatus get status => throw _privateConstructorUsedError;
   HomeAction get action => throw _privateConstructorUsedError;
 
@@ -248,8 +246,7 @@ abstract class $HomeStateCopyWith<$Res> {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) then) =
       _$HomeStateCopyWithImpl<$Res, HomeState>;
   @useResult
-  $Res call(
-      {String pin, String? enteredPin, HomeStatus status, HomeAction action});
+  $Res call({HomeStatus status, HomeAction action});
 }
 
 /// @nodoc
@@ -267,20 +264,10 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? pin = null,
-    Object? enteredPin = freezed,
     Object? status = null,
     Object? action = null,
   }) {
     return _then(_value.copyWith(
-      pin: null == pin
-          ? _value.pin
-          : pin // ignore: cast_nullable_to_non_nullable
-              as String,
-      enteredPin: freezed == enteredPin
-          ? _value.enteredPin
-          : enteredPin // ignore: cast_nullable_to_non_nullable
-              as String?,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -301,8 +288,7 @@ abstract class _$$HomeStateImplCopyWith<$Res>
       __$$HomeStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String pin, String? enteredPin, HomeStatus status, HomeAction action});
+  $Res call({HomeStatus status, HomeAction action});
 }
 
 /// @nodoc
@@ -318,20 +304,10 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? pin = null,
-    Object? enteredPin = freezed,
     Object? status = null,
     Object? action = null,
   }) {
     return _then(_$HomeStateImpl(
-      pin: null == pin
-          ? _value.pin
-          : pin // ignore: cast_nullable_to_non_nullable
-              as String,
-      enteredPin: freezed == enteredPin
-          ? _value.enteredPin
-          : enteredPin // ignore: cast_nullable_to_non_nullable
-              as String?,
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -348,16 +324,10 @@ class __$$HomeStateImplCopyWithImpl<$Res>
 
 class _$HomeStateImpl implements _HomeState {
   const _$HomeStateImpl(
-      {this.pin = '',
-      this.enteredPin,
-      this.status = HomeStatus.idle,
-      this.action = HomeAction.none});
+      {this.status = HomeStatus.idle, this.action = HomeAction.none});
 
-  @override
-  @JsonKey()
-  final String pin;
-  @override
-  final String? enteredPin;
+//@Default('') String pin,
+//String? enteredPin,
   @override
   @JsonKey()
   final HomeStatus status;
@@ -367,7 +337,7 @@ class _$HomeStateImpl implements _HomeState {
 
   @override
   String toString() {
-    return 'HomeState(pin: $pin, enteredPin: $enteredPin, status: $status, action: $action)';
+    return 'HomeState(status: $status, action: $action)';
   }
 
   @override
@@ -375,15 +345,12 @@ class _$HomeStateImpl implements _HomeState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HomeStateImpl &&
-            (identical(other.pin, pin) || other.pin == pin) &&
-            (identical(other.enteredPin, enteredPin) ||
-                other.enteredPin == enteredPin) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.action, action) || other.action == action));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, pin, enteredPin, status, action);
+  int get hashCode => Object.hash(runtimeType, status, action);
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -395,16 +362,11 @@ class _$HomeStateImpl implements _HomeState {
 }
 
 abstract class _HomeState implements HomeState {
-  const factory _HomeState(
-      {final String pin,
-      final String? enteredPin,
-      final HomeStatus status,
-      final HomeAction action}) = _$HomeStateImpl;
+  const factory _HomeState({final HomeStatus status, final HomeAction action}) =
+      _$HomeStateImpl;
 
-  @override
-  String get pin;
-  @override
-  String? get enteredPin;
+//@Default('') String pin,
+//String? enteredPin,
   @override
   HomeStatus get status;
   @override

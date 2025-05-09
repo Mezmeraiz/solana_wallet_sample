@@ -43,6 +43,8 @@ class InitializationHelperImpl extends InitializationHelper {
       databaseFactory: databaseFactory,
     );
 
+    repositoryFactory.coinRepository.init();
+
     final domainServiceFactory = ServiceFactoryImpl(repositoryFactory: repositoryFactory);
 
     final blocFactory = BlocFactoryImpl(
