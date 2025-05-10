@@ -16,44 +16,49 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$HomeEvent {
-  String get pin => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String pin) init,
+    required TResult Function(
+            List<BlockchainCoinData> blockchainData, List<String> activeCoinIds)
+        dataChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String pin)? init,
+    TResult? Function(List<BlockchainCoinData> blockchainData,
+            List<String> activeCoinIds)?
+        dataChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String pin)? init,
+    TResult Function(List<BlockchainCoinData> blockchainData,
+            List<String> activeCoinIds)?
+        dataChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Init value) init,
+    required TResult Function(_DataChanged value) dataChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Init value)? init,
+    TResult? Function(_DataChanged value)? dataChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Init value)? init,
+    TResult Function(_DataChanged value)? dataChanged,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  /// Create a copy of HomeEvent
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  $HomeEventCopyWith<HomeEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -61,8 +66,6 @@ mixin _$HomeEvent {
 abstract class $HomeEventCopyWith<$Res> {
   factory $HomeEventCopyWith(HomeEvent value, $Res Function(HomeEvent) then) =
       _$HomeEventCopyWithImpl<$Res, HomeEvent>;
-  @useResult
-  $Res call({String pin});
 }
 
 /// @nodoc
@@ -77,26 +80,13 @@ class _$HomeEventCopyWithImpl<$Res, $Val extends HomeEvent>
 
   /// Create a copy of HomeEvent
   /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? pin = null,
-  }) {
-    return _then(_value.copyWith(
-      pin: null == pin
-          ? _value.pin
-          : pin // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
 }
 
 /// @nodoc
-abstract class _$$InitImplCopyWith<$Res> implements $HomeEventCopyWith<$Res> {
+abstract class _$$InitImplCopyWith<$Res> {
   factory _$$InitImplCopyWith(
           _$InitImpl value, $Res Function(_$InitImpl) then) =
       __$$InitImplCopyWithImpl<$Res>;
-  @override
   @useResult
   $Res call({String pin});
 }
@@ -160,6 +150,9 @@ class _$InitImpl implements _Init {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String pin) init,
+    required TResult Function(
+            List<BlockchainCoinData> blockchainData, List<String> activeCoinIds)
+        dataChanged,
   }) {
     return init(pin);
   }
@@ -168,6 +161,9 @@ class _$InitImpl implements _Init {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String pin)? init,
+    TResult? Function(List<BlockchainCoinData> blockchainData,
+            List<String> activeCoinIds)?
+        dataChanged,
   }) {
     return init?.call(pin);
   }
@@ -176,6 +172,9 @@ class _$InitImpl implements _Init {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String pin)? init,
+    TResult Function(List<BlockchainCoinData> blockchainData,
+            List<String> activeCoinIds)?
+        dataChanged,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -188,6 +187,7 @@ class _$InitImpl implements _Init {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Init value) init,
+    required TResult Function(_DataChanged value) dataChanged,
   }) {
     return init(this);
   }
@@ -196,6 +196,7 @@ class _$InitImpl implements _Init {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Init value)? init,
+    TResult? Function(_DataChanged value)? dataChanged,
   }) {
     return init?.call(this);
   }
@@ -204,6 +205,7 @@ class _$InitImpl implements _Init {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Init value)? init,
+    TResult Function(_DataChanged value)? dataChanged,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -216,14 +218,190 @@ class _$InitImpl implements _Init {
 abstract class _Init implements HomeEvent {
   const factory _Init({required final String pin}) = _$InitImpl;
 
-  @override
   String get pin;
 
   /// Create a copy of HomeEvent
   /// with the given fields replaced by the non-null parameter values.
-  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$InitImplCopyWith<_$InitImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$DataChangedImplCopyWith<$Res> {
+  factory _$$DataChangedImplCopyWith(
+          _$DataChangedImpl value, $Res Function(_$DataChangedImpl) then) =
+      __$$DataChangedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call(
+      {List<BlockchainCoinData> blockchainData, List<String> activeCoinIds});
+}
+
+/// @nodoc
+class __$$DataChangedImplCopyWithImpl<$Res>
+    extends _$HomeEventCopyWithImpl<$Res, _$DataChangedImpl>
+    implements _$$DataChangedImplCopyWith<$Res> {
+  __$$DataChangedImplCopyWithImpl(
+      _$DataChangedImpl _value, $Res Function(_$DataChangedImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of HomeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? blockchainData = null,
+    Object? activeCoinIds = null,
+  }) {
+    return _then(_$DataChangedImpl(
+      blockchainData: null == blockchainData
+          ? _value._blockchainData
+          : blockchainData // ignore: cast_nullable_to_non_nullable
+              as List<BlockchainCoinData>,
+      activeCoinIds: null == activeCoinIds
+          ? _value._activeCoinIds
+          : activeCoinIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$DataChangedImpl implements _DataChanged {
+  const _$DataChangedImpl(
+      {required final List<BlockchainCoinData> blockchainData,
+      required final List<String> activeCoinIds})
+      : _blockchainData = blockchainData,
+        _activeCoinIds = activeCoinIds;
+
+  final List<BlockchainCoinData> _blockchainData;
+  @override
+  List<BlockchainCoinData> get blockchainData {
+    if (_blockchainData is EqualUnmodifiableListView) return _blockchainData;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_blockchainData);
+  }
+
+  final List<String> _activeCoinIds;
+  @override
+  List<String> get activeCoinIds {
+    if (_activeCoinIds is EqualUnmodifiableListView) return _activeCoinIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_activeCoinIds);
+  }
+
+  @override
+  String toString() {
+    return 'HomeEvent.dataChanged(blockchainData: $blockchainData, activeCoinIds: $activeCoinIds)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$DataChangedImpl &&
+            const DeepCollectionEquality()
+                .equals(other._blockchainData, _blockchainData) &&
+            const DeepCollectionEquality()
+                .equals(other._activeCoinIds, _activeCoinIds));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_blockchainData),
+      const DeepCollectionEquality().hash(_activeCoinIds));
+
+  /// Create a copy of HomeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$DataChangedImplCopyWith<_$DataChangedImpl> get copyWith =>
+      __$$DataChangedImplCopyWithImpl<_$DataChangedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String pin) init,
+    required TResult Function(
+            List<BlockchainCoinData> blockchainData, List<String> activeCoinIds)
+        dataChanged,
+  }) {
+    return dataChanged(blockchainData, activeCoinIds);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String pin)? init,
+    TResult? Function(List<BlockchainCoinData> blockchainData,
+            List<String> activeCoinIds)?
+        dataChanged,
+  }) {
+    return dataChanged?.call(blockchainData, activeCoinIds);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String pin)? init,
+    TResult Function(List<BlockchainCoinData> blockchainData,
+            List<String> activeCoinIds)?
+        dataChanged,
+    required TResult orElse(),
+  }) {
+    if (dataChanged != null) {
+      return dataChanged(blockchainData, activeCoinIds);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Init value) init,
+    required TResult Function(_DataChanged value) dataChanged,
+  }) {
+    return dataChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Init value)? init,
+    TResult? Function(_DataChanged value)? dataChanged,
+  }) {
+    return dataChanged?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Init value)? init,
+    TResult Function(_DataChanged value)? dataChanged,
+    required TResult orElse(),
+  }) {
+    if (dataChanged != null) {
+      return dataChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _DataChanged implements HomeEvent {
+  const factory _DataChanged(
+      {required final List<BlockchainCoinData> blockchainData,
+      required final List<String> activeCoinIds}) = _$DataChangedImpl;
+
+  List<BlockchainCoinData> get blockchainData;
+  List<String> get activeCoinIds;
+
+  /// Create a copy of HomeEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$DataChangedImplCopyWith<_$DataChangedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -231,8 +409,7 @@ abstract class _Init implements HomeEvent {
 mixin _$HomeState {
 //@Default('') String pin,
 //String? enteredPin,
-  HomeStatus get status => throw _privateConstructorUsedError;
-  HomeAction get action => throw _privateConstructorUsedError;
+  ProgressStatus get progressStatus => throw _privateConstructorUsedError;
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -246,7 +423,7 @@ abstract class $HomeStateCopyWith<$Res> {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) then) =
       _$HomeStateCopyWithImpl<$Res, HomeState>;
   @useResult
-  $Res call({HomeStatus status, HomeAction action});
+  $Res call({ProgressStatus progressStatus});
 }
 
 /// @nodoc
@@ -264,18 +441,13 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = null,
-    Object? action = null,
+    Object? progressStatus = null,
   }) {
     return _then(_value.copyWith(
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as HomeStatus,
-      action: null == action
-          ? _value.action
-          : action // ignore: cast_nullable_to_non_nullable
-              as HomeAction,
+      progressStatus: null == progressStatus
+          ? _value.progressStatus
+          : progressStatus // ignore: cast_nullable_to_non_nullable
+              as ProgressStatus,
     ) as $Val);
   }
 }
@@ -288,7 +460,7 @@ abstract class _$$HomeStateImplCopyWith<$Res>
       __$$HomeStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({HomeStatus status, HomeAction action});
+  $Res call({ProgressStatus progressStatus});
 }
 
 /// @nodoc
@@ -304,18 +476,13 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? status = null,
-    Object? action = null,
+    Object? progressStatus = null,
   }) {
     return _then(_$HomeStateImpl(
-      status: null == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as HomeStatus,
-      action: null == action
-          ? _value.action
-          : action // ignore: cast_nullable_to_non_nullable
-              as HomeAction,
+      progressStatus: null == progressStatus
+          ? _value.progressStatus
+          : progressStatus // ignore: cast_nullable_to_non_nullable
+              as ProgressStatus,
     ));
   }
 }
@@ -323,21 +490,17 @@ class __$$HomeStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$HomeStateImpl implements _HomeState {
-  const _$HomeStateImpl(
-      {this.status = HomeStatus.idle, this.action = HomeAction.none});
+  const _$HomeStateImpl({this.progressStatus = ProgressStatus.idle});
 
 //@Default('') String pin,
 //String? enteredPin,
   @override
   @JsonKey()
-  final HomeStatus status;
-  @override
-  @JsonKey()
-  final HomeAction action;
+  final ProgressStatus progressStatus;
 
   @override
   String toString() {
-    return 'HomeState(status: $status, action: $action)';
+    return 'HomeState(progressStatus: $progressStatus)';
   }
 
   @override
@@ -345,12 +508,12 @@ class _$HomeStateImpl implements _HomeState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HomeStateImpl &&
-            (identical(other.status, status) || other.status == status) &&
-            (identical(other.action, action) || other.action == action));
+            (identical(other.progressStatus, progressStatus) ||
+                other.progressStatus == progressStatus));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status, action);
+  int get hashCode => Object.hash(runtimeType, progressStatus);
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -362,15 +525,13 @@ class _$HomeStateImpl implements _HomeState {
 }
 
 abstract class _HomeState implements HomeState {
-  const factory _HomeState({final HomeStatus status, final HomeAction action}) =
+  const factory _HomeState({final ProgressStatus progressStatus}) =
       _$HomeStateImpl;
 
 //@Default('') String pin,
 //String? enteredPin,
   @override
-  HomeStatus get status;
-  @override
-  HomeAction get action;
+  ProgressStatus get progressStatus;
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.

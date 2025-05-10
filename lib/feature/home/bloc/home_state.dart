@@ -5,17 +5,17 @@ class HomeState with _$HomeState {
   const factory HomeState({
     //@Default('') String pin,
     //String? enteredPin,
-    @Default(HomeStatus.idle) HomeStatus status,
-    @Default(HomeAction.none) HomeAction action,
+    @Default(ProgressStatus.idle) ProgressStatus progressStatus,
+    //@Default(HomeAction.none) HomeAction action,
   }) = _HomeState;
 }
 
-enum HomeStatus {
+enum ProgressStatus {
   idle,
-  pinDoesNotMatch,
+  loading,
 }
 
-enum HomeAction {
-  none,
-  pinEntered,
-}
+// enum HomeAction {
+//   none,
+//   pinEntered,
+// }

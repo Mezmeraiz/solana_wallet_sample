@@ -26,7 +26,7 @@ abstract class CoinDao {
 
   Future<void> saveBlockchainCoinData(List<BlockchainCoinData> list);
 
-  Future<List<BlockchainCoinData>> getBlockchainCoinDataByIds(List<String> ids);
+  Future<List<BlockchainCoinData>> getBlockchainCoinData();
 
   Future<List<String>> getActiveCoins();
 
@@ -202,11 +202,8 @@ class CoinDaoImpl implements CoinDao {
         );
       });
 
-  @override
-  Future<List<BlockchainCoinData>> getBlockchainCoinDataByIds(List<String> ids) async {
-    if (ids.isEmpty) return [];
-
-    final rows = await (database.select(database.blockchainCoinDataTable)..where((tbl) => tbl.id.isIn(ids))).get();
+  Future<List<BlockchainCoinData>> getBlockchainCoinData() async {
+    final rows = await database.select(database.blockchainCoinDataTable).get();
 
     return rows
         .map(

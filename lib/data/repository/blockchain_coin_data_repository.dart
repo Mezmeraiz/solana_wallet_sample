@@ -13,9 +13,15 @@ import 'package:solana_wallet_sample/ffigen_output/generated_bindings.dart';
 const String _solanaUrl = 'https://api.mainnet-beta.solana.com';
 
 abstract class BlockchainCoinDataRepository {
-  ValueStream<List<BlockchainCoinData>> get stream;
+  ValueStream<List<BlockchainCoinData>> get blockchainCoinDataStream;
+
+  ValueStream<List<String>> get activeCoinsStream;
+
+  ValueStream<bool> get blockchainCoinDataUpdatedStream;
 
   Future<void> loadBlockchainCoinData(String pin);
+
+  Future<void> setActiveCoins(List<String> ids);
 }
 
 class BlockchainCoinDataRepositoryImpl implements BlockchainCoinDataRepository {
@@ -37,13 +43,25 @@ class BlockchainCoinDataRepositoryImpl implements BlockchainCoinDataRepository {
         _commonStorage = commonStorage,
         _walletRepository = walletRepository;
 
-  @override
-  ValueStream<List<BlockchainCoinData>> get stream => _controller.stream;
+  final BehaviorSubject<List<BlockchainCoinData>> _blockchainCoinDataController = BehaviorSubject.seeded([]);
 
-  final BehaviorSubject<List<BlockchainCoinData>> _controller = BehaviorSubject<List<BlockchainCoinData>>.seeded([]);
+  final BehaviorSubject<bool> _blockchainCoinDataUpdatedController = BehaviorSubject.seeded(false);
+
+  final BehaviorSubject<List<String>> _activeCoinsController = BehaviorSubject.seeded([]);
+
+  @override
+  ValueStream<List<BlockchainCoinData>> get blockchainCoinDataStream => _blockchainCoinDataController.stream;
+
+  @override
+  ValueStream<List<String>> get activeCoinsStream => _activeCoinsController.stream;
+
+  @override
+  ValueStream<bool> get blockchainCoinDataUpdatedStream => _blockchainCoinDataUpdatedController.stream;
 
   @override
   Future<void> loadBlockchainCoinData(String pin) async {
+    _blockchainCoinDataController.add(await _coinDao.getBlockchainCoinData());
+
     final String? seed = await _secureVault.loadSeed(pin);
     if (seed == null) {
       throw Exception('Seed not found');
@@ -55,68 +73,26 @@ class BlockchainCoinDataRepositoryImpl implements BlockchainCoinDataRepository {
       coinType: TWCoinType.TWCoinTypeSolana,
     );
 
-    final List<TokenAccountsByOwnerResponse> tokens = await _solanaApi.getTokenAccountsByOwner(
-      url: _solanaUrl,
-      address: address,
-    );
+    final res = await Future.wait([
+      _getCoinBlockchainCoinData(address: address),
+      _getTokensBlockchainCoinData(address: address),
+    ]);
 
-    final tokenMap = {
-      for (final t in tokens) t.contractAddress: t,
-    };
-
-    final List<BaseCoinData> base = await _coinDao.getBaseCoinDataByContracts(
-      tokenMap.keys.toList(),
-    );
-
-    final List<BlockchainCoinData> blockchainCoinData = [
-      for (final b in base)
-        if (tokenMap.containsKey(b.contractAddress))
-          BlockchainCoinData(
-            id: b.id,
-            contractAddress: b.contractAddress,
-            balance: tokenMap[b.contractAddress]!.balance,
-            decimals: tokenMap[b.contractAddress]!.decimals,
-          )
+    final blockchainCoinData = [
+      res[0] as BlockchainCoinData,
+      ...res[1] as List<BlockchainCoinData>,
     ];
-
-    // await _coinDao.saveBlockchainCoinData(list);
-
-    final int solBalance = await _solanaApi.getBalance(
-      url: _solanaUrl,
-      address: address,
-    );
-
-    blockchainCoinData.add(
-      BlockchainCoinData(
-        id: Constants.solanaCoinId,
-        balance: BigInt.from(solBalance),
-        decimals: Constants.solanaCoinDecimals,
-      ),
-    );
 
     _coinDao.saveBlockchainCoinData(blockchainCoinData);
 
-    // tokensBlockchainData.add(
-    //   BlockchainCoinData(
-    //     id: Constants.solanaCoinId,
-    //     balance: 'd',
-    //     decimals: 9,
-    //   )
-    //
-    // )
-    // print(z);
-    // print(x);
-    // final List<BlockchainCoinData> coins = await _coinDao.getBlockchainCoinDataByIds(
-    //   await _coinDao.getActiveCoins(),
-    // );
-    //
-    // if (coins.isNotEmpty) {
-    //   _controller.add(coins);
-    // } else {
-    //   final List<BlockchainCoinData> coins = await _solanaApi.getBlockchainCoinData();
-    //   await _coinDao.saveBlockchainCoinData(coins);
-    //   _controller.add(coins);
-    // }
+    if (!_commonStorage.blockchainCoinDataLoaded) {
+      await _coinDao.saveActiveCoins(blockchainCoinData.map((e) => e.id).toList());
+      await _commonStorage.setBlockchainCoinDataLoaded(true);
+    }
+
+    _activeCoinsController.add(await _coinDao.getActiveCoins());
+    _blockchainCoinDataController.add(blockchainCoinData);
+    _blockchainCoinDataUpdatedController.add(true);
   }
 
   Future<List<BlockchainCoinData>> _getTokensBlockchainCoinData({
@@ -162,5 +138,11 @@ class BlockchainCoinDataRepositoryImpl implements BlockchainCoinDataRepository {
       balance: BigInt.from(solBalance),
       decimals: Constants.solanaCoinDecimals,
     );
+  }
+
+  @override
+  Future<void> setActiveCoins(List<String> ids) async {
+    await _coinDao.saveActiveCoins(ids);
+    _activeCoinsController.add(ids);
   }
 }

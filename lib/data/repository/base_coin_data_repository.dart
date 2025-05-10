@@ -1,28 +1,35 @@
-import 'dart:ffi';
-import 'dart:typed_data';
-
-import 'package:ffi/ffi.dart';
-import 'package:flutter/foundation.dart';
-import 'package:solana_wallet_sample/common/extensions/wallet_extension.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:solana_wallet_sample/data/api/coin_api.dart';
 import 'package:solana_wallet_sample/data/database/dao/coin_dao.dart';
 import 'package:solana_wallet_sample/data/model/coin/base_coin_data.dart';
 import 'package:solana_wallet_sample/data/model/coin/icon_coin_data.dart';
-import 'package:solana_wallet_sample/ffigen_output/generated_bindings.dart';
 
-abstract class CoinRepository {
+enum BaseCoinDataRepositoryState {
+  loading,
+  baseDataLoaded,
+  iconsLoaded,
+}
+
+abstract class BaseCoinDataRepository {
+  ValueStream<BaseCoinDataRepositoryState> get stateStream;
   Future<void> init();
 }
 
-class CoinRepositoryImpl implements CoinRepository {
+class BaseCoinDataRepositoryImpl implements BaseCoinDataRepository {
   final CoinApi _coinApi;
   final CoinDao _coinDao;
 
-  CoinRepositoryImpl({
+  BaseCoinDataRepositoryImpl({
     required CoinApi coinApi,
     required CoinDao coinDao,
   })  : _coinApi = coinApi,
         _coinDao = coinDao;
+
+  final BehaviorSubject<BaseCoinDataRepositoryState> _stateController =
+      BehaviorSubject.seeded(BaseCoinDataRepositoryState.loading);
+
+  @override
+  ValueStream<BaseCoinDataRepositoryState> get stateStream => _stateController.stream;
 
   @override
   Future<void> init() async {
@@ -36,7 +43,11 @@ class CoinRepositoryImpl implements CoinRepository {
       await _loadCoinBaseData();
     }
 
+    _stateController.add(BaseCoinDataRepositoryState.baseDataLoaded);
+
     _loadImageCoinData();
+
+    _stateController.add(BaseCoinDataRepositoryState.iconsLoaded);
   }
 
   Future<List<BaseCoinData>> _loadCoinBaseData() async {
@@ -49,7 +60,6 @@ class CoinRepositoryImpl implements CoinRepository {
   Future<void> _loadImageCoinData() async {
     while (true) {
       final List<String> ids = await _coinDao.getCoinIdsWithoutIcon();
-      print(ids.length);
       if (ids.isEmpty) break;
 
       final List<IconCoinData> coins = await _coinApi.getCoinIcons(ids);

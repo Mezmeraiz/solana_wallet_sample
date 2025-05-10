@@ -1,4 +1,3 @@
-import 'package:solana_wallet_sample/data/repository/wallet_repository.dart';
 import 'package:solana_wallet_sample/di/factory/repository_factory.dart';
 import 'package:solana_wallet_sample/feature/coin_list/bloc/coin_list_bloc.dart';
 import 'package:solana_wallet_sample/feature/home/bloc/home_bloc.dart';
@@ -42,6 +41,7 @@ class BlocFactoryImpl implements BlocFactory {
   @override
   HomeBloc homeBloc() => HomeBloc(
         walletRepository: _repositoryFactory.walletRepository,
+        baseCoinDataRepository: _repositoryFactory.baseCoinDataRepository,
         blockchainCoinDataRepository: _repositoryFactory.blockchainCoinDataRepository,
       );
 
