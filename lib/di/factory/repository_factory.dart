@@ -31,19 +31,24 @@ class RepositoryFactoryImpl implements RepositoryFactory {
 
   WalletRepository? _walletRepository;
 
+  BaseCoinDataRepository? _baseCoinDataRepository;
+
+  BlockchainCoinDataRepository? _blockchainCoinDataRepository;
+
   @override
   WalletRepository get walletRepository => _walletRepository ??= WalletRepositoryImpl(
         core: _dependencyFactory.core,
       );
 
   @override
-  BaseCoinDataRepository get baseCoinDataRepository => BaseCoinDataRepositoryImpl(
+  BaseCoinDataRepository get baseCoinDataRepository => _baseCoinDataRepository ??= BaseCoinDataRepositoryImpl(
         coinApi: _networkFactory.coinApi,
         coinDao: _databaseFactory.coinDao,
       );
 
   @override
-  BlockchainCoinDataRepository get blockchainCoinDataRepository => BlockchainCoinDataRepositoryImpl(
+  BlockchainCoinDataRepository get blockchainCoinDataRepository =>
+      _blockchainCoinDataRepository ??= BlockchainCoinDataRepositoryImpl(
         solanaApi: _networkFactory.solanaApi,
         coinDao: _databaseFactory.coinDao,
         secureVault: _dependencyFactory.secureVault,

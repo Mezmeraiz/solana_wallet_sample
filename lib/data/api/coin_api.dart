@@ -58,10 +58,12 @@ class CoinApiImpl implements CoinApi {
       },
     );
 
-    final result = (response as List).map((e) => IconCoinData.fromJson(e)).toList();
+    final result = (response as List)
+        .map(
+          (e) => IconCoinData.fromJson(e),
+        )
+        .toList();
 
     return result;
-
-    //return (response as List<Map<String, Object?>>).map((e) => IconCoinData.fromJson(e)).toList();
   }
 }

@@ -17,8 +17,6 @@ abstract class BlockchainCoinDataRepository {
 
   ValueStream<List<String>> get activeCoinsStream;
 
-  //ValueStream<bool> get blockchainCoinDataUpdatedStream;
-
   Future<void> loadBlockchainCoinData(String pin);
 
   Future<void> setActiveCoins(List<String> ids);
@@ -44,8 +42,6 @@ class BlockchainCoinDataRepositoryImpl implements BlockchainCoinDataRepository {
         _walletRepository = walletRepository;
 
   final BehaviorSubject<List<BlockchainCoinData>> _blockchainCoinDataController = BehaviorSubject.seeded([]);
-  //
-  // final BehaviorSubject<bool> _blockchainCoinDataUpdatedController = BehaviorSubject.seeded(false);
 
   final BehaviorSubject<List<String>> _activeCoinsController = BehaviorSubject.seeded([]);
 
@@ -54,9 +50,6 @@ class BlockchainCoinDataRepositoryImpl implements BlockchainCoinDataRepository {
 
   @override
   ValueStream<List<String>> get activeCoinsStream => _activeCoinsController.stream;
-
-  // @override
-  // ValueStream<bool> get blockchainCoinDataUpdatedStream => _blockchainCoinDataUpdatedController.stream;
 
   @override
   Future<void> loadBlockchainCoinData(String pin) async {
@@ -92,7 +85,6 @@ class BlockchainCoinDataRepositoryImpl implements BlockchainCoinDataRepository {
 
     _activeCoinsController.add(await _coinDao.getActiveCoins());
     _blockchainCoinDataController.add(blockchainCoinData);
-    //_blockchainCoinDataUpdatedController.add(true);
   }
 
   Future<List<BlockchainCoinData>> _getTokensBlockchainCoinData({

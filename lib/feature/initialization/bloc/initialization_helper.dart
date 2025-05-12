@@ -71,6 +71,7 @@ class InitializationHelperImpl extends InitializationHelper {
   }
 }
 
+//TODO remove
 Future<void> _clearData() async {
   final sharedPreferences = await SharedPreferences.getInstance();
   await sharedPreferences.clear();

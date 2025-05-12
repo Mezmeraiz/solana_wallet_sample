@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:solana_wallet_sample/common/extensions/common_extensions.dart';
 import 'package:solana_wallet_sample/data/model/coin/base_coin_data.dart';
 import 'package:solana_wallet_sample/data/model/coin/blockchain_coin_data.dart';
 import 'package:solana_wallet_sample/data/repository/base_coin_data_repository.dart';
@@ -54,18 +55,19 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     _Init event,
     Emitter<HomeState> emit,
   ) async {
-    _initSubs();
-    _blockchainCoinDataRepository.loadBlockchainCoinData(event.pin);
+    emit(
+      state.copyWith(
+        progressStatus: ProgressStatus.loading,
+      ),
+    );
 
-    final coinDataLoaded = _baseCoinDataRepository.stateStream.firstWhere(
+    _initSubs();
+
+    final coinDataLoaded = _baseCoinDataRepository.stateStream.firstWhereOrValue(
       (state) => state != BaseCoinDataRepositoryState.loading,
     );
 
     final blockchainDataUpdated = _blockchainCoinDataRepository.loadBlockchainCoinData(event.pin);
-    //
-    // final blockchainDataLoaded = _blockchainCoinDataRepository.blockchainCoinDataUpdatedStream.firstWhere(
-    //   (state) => state,
-    // );
 
     await Future.wait([
       coinDataLoaded,

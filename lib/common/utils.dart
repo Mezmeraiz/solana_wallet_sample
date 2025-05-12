@@ -13,4 +13,10 @@ class Utils {
         'id': id ?? 1,
         if (params != null) 'params': params,
       };
+
+  static double minUnitToValue(
+    BigInt minUnit,
+    int decimals,
+  ) =>
+      minUnit.toDouble() / BigInt.from(10).pow(decimals).toDouble();
 }

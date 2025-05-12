@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:solana_wallet_sample/common/utils.dart';
+import 'package:solana_wallet_sample/data/model/coin/base_coin_data.dart';
 import 'package:solana_wallet_sample/feature/home/view/widgets/icon_place_holder.dart';
 import 'package:solana_wallet_sample/feature/home/vm/active_coin_vm.dart';
 import 'package:solana_wallet_sample/view/network_image/base_network_image.dart';
@@ -7,11 +8,15 @@ import 'package:solana_wallet_sample/view/network_image/base_network_image.dart'
 const _avatarSize = 18.0;
 
 class HomeItem extends StatelessWidget {
-  final ActiveCoinVM activeCoin;
+  final BaseCoinData baseCoinData;
+  final bool isSelected;
+  final ValueChanged<bool?> onChanged;
 
   const HomeItem({
     super.key,
-    required this.activeCoin,
+    required this.baseCoinData,
+    required this.isSelected,
+    required this.onChanged,
   });
 
   @override
@@ -19,20 +24,18 @@ class HomeItem extends StatelessWidget {
         leading: CircleAvatar(
           radius: _avatarSize / 2,
           child: BaseNetworkImage.square(
-            imageUrl: activeCoin.iconUrl,
+            imageUrl: baseCoinData.iconUrl,
             size: _avatarSize,
             placeholder: const IconPlaceHolder(),
           ),
         ),
         title: Text(
-          activeCoin.ticker,
+          baseCoinData.ticker,
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        trailing: Text(
-          activeCoin.balance != null && activeCoin.decimals != null
-              ? Utils.minUnitToValue(activeCoin.balance!, activeCoin.decimals!).toString()
-              : '0',
-          style: const TextStyle(fontSize: 16),
+        trailing: Checkbox(
+          value: isSelected,
+          onChanged: onChanged,
         ),
       );
 }

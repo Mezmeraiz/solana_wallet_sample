@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:solana_wallet_sample/data/api/coin_api.dart';
 import 'package:solana_wallet_sample/data/database/dao/coin_dao.dart';
@@ -59,7 +60,6 @@ class BaseCoinDataRepositoryImpl implements BaseCoinDataRepository {
       const BaseCoinData(
         id: 'solana',
         ticker: 'SOL',
-        // iconUrl: 'https://cryptologos.cc/logos/solana-sol-logo.png',
         type: CoinType.coin,
       ),
     );

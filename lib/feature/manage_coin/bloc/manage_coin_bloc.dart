@@ -2,23 +2,23 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:solana_wallet_sample/data/repository/wallet_repository.dart';
 
-part 'coin_list_bloc.freezed.dart';
-part 'coin_list_event.dart';
-part 'coin_list_state.dart';
+part 'manage_coin_bloc.freezed.dart';
+part 'manage_coin_event.dart';
+part 'manage_coin_state.dart';
 
-class CoinListBloc extends Bloc<CoinListEvent, CoinListState> {
+class ManageCoinBloc extends Bloc<ManageCoinEvent, ManageCoinState> {
   final WalletRepository _walletRepository;
 
-  CoinListBloc({
+  ManageCoinBloc({
     required WalletRepository walletRepository,
   })  : _walletRepository = walletRepository,
-        super(const CoinListState()) {
+        super(const ManageCoinState()) {
     //on<_PinChanged>(_pinChanged);
   }
   //
   // void _pinChanged(
   //   _PinChanged event,
-  //   Emitter<CoinListState> emit,
+  //   Emitter<ManageCoinState> emit,
   // ) {
   //   if (event.pin.length < pinLength) {
   //     emit(
@@ -37,14 +37,14 @@ class CoinListBloc extends Bloc<CoinListEvent, CoinListState> {
   //     emit(
   //       state.copyWith(
   //         pin: event.pin,
-  //         action: CoinListAction.pinEntered,
+  //         action: ManageCoinAction.pinEntered,
   //       ),
   //     );
   //   } else {
   //     emit(
   //       state.copyWith(
   //         pin: event.pin,
-  //         status: CoinListStatus.pinDoesNotMatch,
+  //         status: ManageCoinStatus.pinDoesNotMatch,
   //       ),
   //     );
   //   }
