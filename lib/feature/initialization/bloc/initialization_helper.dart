@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:solana_wallet_sample/di/factory/bloc_factory.dart';
 import 'package:solana_wallet_sample/di/factory/database_factory.dart';
@@ -22,6 +26,8 @@ class InitializationHelperImpl extends InitializationHelper {
 
   @override
   Future<InitializationResult> init() async {
+    //await _clearData();
+
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     final dependenciesFactory = DependencyFactoryImpl(
@@ -62,5 +68,21 @@ class InitializationHelperImpl extends InitializationHelper {
       databaseFactory: databaseFactory,
       hasSeedPhrase: hasSeedPhrase,
     );
+  }
+}
+
+Future<void> _clearData() async {
+  final sharedPreferences = await SharedPreferences.getInstance();
+  await sharedPreferences.clear();
+
+  await deleteDbFile();
+}
+
+Future<void> deleteDbFile() async {
+  final dir = await getApplicationDocumentsDirectory();
+  final dbPath = p.join(dir.path, 'solana.db');
+  final file = File(dbPath);
+  if (await file.exists()) {
+    await file.delete();
   }
 }

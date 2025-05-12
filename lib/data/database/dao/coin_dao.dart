@@ -88,6 +88,7 @@ class CoinDaoImpl implements CoinDao {
     int offset = 0,
     String? query,
   }) async {
+    //await database.customStatement('DROP TABLE IF EXISTS blockchain_coin_data_table');
     final stmt = database.select(database.baseCoinDataTable)..orderBy([(t) => OrderingTerm(expression: t.ticker)]);
 
     if (query != null && query.trim().isNotEmpty) {

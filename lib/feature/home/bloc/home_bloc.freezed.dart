@@ -409,6 +409,7 @@ abstract class _DataChanged implements HomeEvent {
 mixin _$HomeState {
 //@Default('') String pin,
 //String? enteredPin,
+  List<ActiveCoinVM> get activeCoins => throw _privateConstructorUsedError;
   ProgressStatus get progressStatus => throw _privateConstructorUsedError;
 
   /// Create a copy of HomeState
@@ -423,7 +424,7 @@ abstract class $HomeStateCopyWith<$Res> {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) then) =
       _$HomeStateCopyWithImpl<$Res, HomeState>;
   @useResult
-  $Res call({ProgressStatus progressStatus});
+  $Res call({List<ActiveCoinVM> activeCoins, ProgressStatus progressStatus});
 }
 
 /// @nodoc
@@ -441,9 +442,14 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? activeCoins = null,
     Object? progressStatus = null,
   }) {
     return _then(_value.copyWith(
+      activeCoins: null == activeCoins
+          ? _value.activeCoins
+          : activeCoins // ignore: cast_nullable_to_non_nullable
+              as List<ActiveCoinVM>,
       progressStatus: null == progressStatus
           ? _value.progressStatus
           : progressStatus // ignore: cast_nullable_to_non_nullable
@@ -460,7 +466,7 @@ abstract class _$$HomeStateImplCopyWith<$Res>
       __$$HomeStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({ProgressStatus progressStatus});
+  $Res call({List<ActiveCoinVM> activeCoins, ProgressStatus progressStatus});
 }
 
 /// @nodoc
@@ -476,9 +482,14 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? activeCoins = null,
     Object? progressStatus = null,
   }) {
     return _then(_$HomeStateImpl(
+      activeCoins: null == activeCoins
+          ? _value._activeCoins
+          : activeCoins // ignore: cast_nullable_to_non_nullable
+              as List<ActiveCoinVM>,
       progressStatus: null == progressStatus
           ? _value.progressStatus
           : progressStatus // ignore: cast_nullable_to_non_nullable
@@ -490,17 +501,31 @@ class __$$HomeStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$HomeStateImpl implements _HomeState {
-  const _$HomeStateImpl({this.progressStatus = ProgressStatus.idle});
+  const _$HomeStateImpl(
+      {final List<ActiveCoinVM> activeCoins = const [],
+      this.progressStatus = ProgressStatus.idle})
+      : _activeCoins = activeCoins;
 
 //@Default('') String pin,
 //String? enteredPin,
+  final List<ActiveCoinVM> _activeCoins;
+//@Default('') String pin,
+//String? enteredPin,
+  @override
+  @JsonKey()
+  List<ActiveCoinVM> get activeCoins {
+    if (_activeCoins is EqualUnmodifiableListView) return _activeCoins;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_activeCoins);
+  }
+
   @override
   @JsonKey()
   final ProgressStatus progressStatus;
 
   @override
   String toString() {
-    return 'HomeState(progressStatus: $progressStatus)';
+    return 'HomeState(activeCoins: $activeCoins, progressStatus: $progressStatus)';
   }
 
   @override
@@ -508,12 +533,15 @@ class _$HomeStateImpl implements _HomeState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HomeStateImpl &&
+            const DeepCollectionEquality()
+                .equals(other._activeCoins, _activeCoins) &&
             (identical(other.progressStatus, progressStatus) ||
                 other.progressStatus == progressStatus));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, progressStatus);
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(_activeCoins), progressStatus);
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -525,11 +553,14 @@ class _$HomeStateImpl implements _HomeState {
 }
 
 abstract class _HomeState implements HomeState {
-  const factory _HomeState({final ProgressStatus progressStatus}) =
-      _$HomeStateImpl;
+  const factory _HomeState(
+      {final List<ActiveCoinVM> activeCoins,
+      final ProgressStatus progressStatus}) = _$HomeStateImpl;
 
 //@Default('') String pin,
 //String? enteredPin,
+  @override
+  List<ActiveCoinVM> get activeCoins;
   @override
   ProgressStatus get progressStatus;
 

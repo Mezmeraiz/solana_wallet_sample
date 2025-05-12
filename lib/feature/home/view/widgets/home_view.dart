@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solana_wallet_sample/common/extensions/context_extensions.dart';
 import 'package:solana_wallet_sample/feature/home/bloc/home_bloc.dart';
+import 'package:solana_wallet_sample/feature/home/view/widgets/home_item.dart';
 import 'package:solana_wallet_sample/feature/pin/enter_pin/view/enter_pin_screen.dart';
 import 'package:solana_wallet_sample/view/progress_wrapper.dart';
 
@@ -42,8 +43,11 @@ class _HomeViewState extends State<HomeView> {
         builder: (context, state) => Scaffold(
           body: ProgressWrapper(
             isLoading: state.progressStatus == ProgressStatus.loading,
-            child: Center(
-              child: ElevatedButton(onPressed: _onAddPressed, child: const Text('Add')),
+            child: ListView.builder(
+              itemCount: state.activeCoins.length,
+              itemBuilder: (context, index) => HomeItem(
+                activeCoin: state.activeCoins[index],
+              ),
             ),
           ),
         ),

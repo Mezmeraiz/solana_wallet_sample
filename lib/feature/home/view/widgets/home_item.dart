@@ -1,30 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:solana_wallet_sample/feature/home/view/widgets/icon_place_holder.dart';
+import 'package:solana_wallet_sample/feature/home/vm/active_coin_vm.dart';
+import 'package:solana_wallet_sample/view/network_image/base_network_image.dart';
 
-class TokenListItem extends StatelessWidget {
-  final String iconUrl;
-  final String ticker;
-  final String amount;
+const _avatarSize = 18.0;
 
-  const TokenListItem({
+class HomeItem extends StatelessWidget {
+  final ActiveCoinVM activeCoin;
+
+  const HomeItem({
     super.key,
-    required this.iconUrl,
-    required this.ticker,
-    required this.amount,
+    required this.activeCoin,
   });
 
   @override
   Widget build(BuildContext context) => ListTile(
         leading: CircleAvatar(
-          radius: 20,
-          backgroundImage: NetworkImage(iconUrl),
-          backgroundColor: Colors.grey[200],
+          radius: _avatarSize / 2,
+          child: BaseNetworkImage.square(
+            imageUrl: activeCoin.iconUrl,
+            size: _avatarSize,
+            placeholder: const IconPlaceHolder(),
+          ),
         ),
         title: Text(
-          ticker.toUpperCase(),
+          activeCoin.ticker,
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         trailing: Text(
-          amount,
+          activeCoin.balance.toString(),
           style: const TextStyle(fontSize: 16),
         ),
       );

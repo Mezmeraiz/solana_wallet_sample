@@ -5,6 +5,7 @@ class HomeState with _$HomeState {
   const factory HomeState({
     //@Default('') String pin,
     //String? enteredPin,
+    @Default([]) List<ActiveCoinVM> activeCoins,
     @Default(ProgressStatus.idle) ProgressStatus progressStatus,
     //@Default(HomeAction.none) HomeAction action,
   }) = _HomeState;

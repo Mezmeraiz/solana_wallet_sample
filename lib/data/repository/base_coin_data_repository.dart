@@ -2,6 +2,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:solana_wallet_sample/data/api/coin_api.dart';
 import 'package:solana_wallet_sample/data/database/dao/coin_dao.dart';
 import 'package:solana_wallet_sample/data/model/coin/base_coin_data.dart';
+import 'package:solana_wallet_sample/data/model/coin/coin_type.dart';
 import 'package:solana_wallet_sample/data/model/coin/icon_coin_data.dart';
 
 enum BaseCoinDataRepositoryState {
@@ -13,6 +14,7 @@ enum BaseCoinDataRepositoryState {
 abstract class BaseCoinDataRepository {
   ValueStream<BaseCoinDataRepositoryState> get stateStream;
   Future<void> init();
+  Future<List<BaseCoinData>> getBaseCoinDataByIds({required List<String> ids});
 }
 
 class BaseCoinDataRepositoryImpl implements BaseCoinDataRepository {
@@ -52,6 +54,16 @@ class BaseCoinDataRepositoryImpl implements BaseCoinDataRepository {
 
   Future<List<BaseCoinData>> _loadCoinBaseData() async {
     final coins = await _coinApi.getBaseCoinData();
+
+    coins.add(
+      const BaseCoinData(
+        id: 'solana',
+        ticker: 'SOL',
+        // iconUrl: 'https://cryptologos.cc/logos/solana-sol-logo.png',
+        type: CoinType.coin,
+      ),
+    );
+
     await _coinDao.saveBaseCoinData(coins: coins);
 
     return coins;
@@ -67,4 +79,8 @@ class BaseCoinDataRepositoryImpl implements BaseCoinDataRepository {
       await _coinDao.updateCoinIcons(coins);
     }
   }
+
+  @override
+  Future<List<BaseCoinData>> getBaseCoinDataByIds({required List<String> ids}) =>
+      _coinDao.getBaseCoinDataByIds(ids: ids);
 }
