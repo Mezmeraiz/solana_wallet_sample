@@ -15,11 +15,11 @@ const String _solanaUrl = 'https://api.mainnet-beta.solana.com';
 abstract class BlockchainCoinDataRepository {
   ValueStream<List<BlockchainCoinData>> get blockchainCoinDataStream;
 
-  ValueStream<List<String>> get activeCoinsStream;
+  ValueStream<Set<String>> get activeCoinsStream;
 
   Future<void> loadBlockchainCoinData(String pin);
 
-  Future<void> setActiveCoins(List<String> ids);
+  Future<void> setActiveCoins(Set<String> ids);
 }
 
 class BlockchainCoinDataRepositoryImpl implements BlockchainCoinDataRepository {
@@ -43,13 +43,13 @@ class BlockchainCoinDataRepositoryImpl implements BlockchainCoinDataRepository {
 
   final BehaviorSubject<List<BlockchainCoinData>> _blockchainCoinDataController = BehaviorSubject.seeded([]);
 
-  final BehaviorSubject<List<String>> _activeCoinsController = BehaviorSubject.seeded([]);
+  final BehaviorSubject<Set<String>> _activeCoinsController = BehaviorSubject.seeded({});
 
   @override
   ValueStream<List<BlockchainCoinData>> get blockchainCoinDataStream => _blockchainCoinDataController.stream;
 
   @override
-  ValueStream<List<String>> get activeCoinsStream => _activeCoinsController.stream;
+  ValueStream<Set<String>> get activeCoinsStream => _activeCoinsController.stream;
 
   @override
   Future<void> loadBlockchainCoinData(String pin) async {
@@ -133,7 +133,7 @@ class BlockchainCoinDataRepositoryImpl implements BlockchainCoinDataRepository {
   }
 
   @override
-  Future<void> setActiveCoins(List<String> ids) async {
+  Future<void> setActiveCoins(Set<String> ids) async {
     await _coinDao.saveActiveCoins(ids);
     _activeCoinsController.add(ids);
   }

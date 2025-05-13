@@ -45,7 +45,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       add(
         HomeEvent.dataChanged(
           blockchainData: List.of(values[0] as List<BlockchainCoinData>),
-          activeCoinIds: List.of(values[1] as List<String>),
+          activeCoinIds: Set.of(values[1] as Set<String>),
         ),
       );
     });

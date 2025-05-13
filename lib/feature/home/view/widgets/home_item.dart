@@ -8,31 +8,36 @@ const _avatarSize = 18.0;
 
 class HomeItem extends StatelessWidget {
   final ActiveCoinVM activeCoin;
+  final VoidCallback onTap;
 
   const HomeItem({
     super.key,
     required this.activeCoin,
+    required this.onTap,
   });
 
   @override
-  Widget build(BuildContext context) => ListTile(
-        leading: CircleAvatar(
-          radius: _avatarSize / 2,
-          child: BaseNetworkImage.square(
-            imageUrl: activeCoin.iconUrl,
-            size: _avatarSize,
-            placeholder: const IconPlaceHolder(),
+  Widget build(BuildContext context) => InkWell(
+        onTap: onTap,
+        child: ListTile(
+          leading: CircleAvatar(
+            radius: _avatarSize / 2,
+            child: BaseNetworkImage.square(
+              imageUrl: activeCoin.iconUrl,
+              size: _avatarSize,
+              placeholder: const IconPlaceHolder(),
+            ),
           ),
-        ),
-        title: Text(
-          activeCoin.ticker,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-        trailing: Text(
-          activeCoin.balance != null && activeCoin.decimals != null
-              ? Utils.minUnitToValue(activeCoin.balance!, activeCoin.decimals!).toString()
-              : '0',
-          style: const TextStyle(fontSize: 16),
+          title: Text(
+            activeCoin.ticker,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          trailing: Text(
+            activeCoin.balance != null && activeCoin.decimals != null
+                ? Utils.minUnitToValue(activeCoin.balance!, activeCoin.decimals!).toString()
+                : '0',
+            style: const TextStyle(fontSize: 16),
+          ),
         ),
       );
 }

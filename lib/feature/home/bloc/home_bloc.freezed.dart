@@ -20,23 +20,23 @@ mixin _$HomeEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(String pin) init,
     required TResult Function(
-            List<BlockchainCoinData> blockchainData, List<String> activeCoinIds)
+            List<BlockchainCoinData> blockchainData, Set<String> activeCoinIds)
         dataChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String pin)? init,
-    TResult? Function(List<BlockchainCoinData> blockchainData,
-            List<String> activeCoinIds)?
+    TResult? Function(
+            List<BlockchainCoinData> blockchainData, Set<String> activeCoinIds)?
         dataChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String pin)? init,
-    TResult Function(List<BlockchainCoinData> blockchainData,
-            List<String> activeCoinIds)?
+    TResult Function(
+            List<BlockchainCoinData> blockchainData, Set<String> activeCoinIds)?
         dataChanged,
     required TResult orElse(),
   }) =>
@@ -151,7 +151,7 @@ class _$InitImpl implements _Init {
   TResult when<TResult extends Object?>({
     required TResult Function(String pin) init,
     required TResult Function(
-            List<BlockchainCoinData> blockchainData, List<String> activeCoinIds)
+            List<BlockchainCoinData> blockchainData, Set<String> activeCoinIds)
         dataChanged,
   }) {
     return init(pin);
@@ -161,8 +161,8 @@ class _$InitImpl implements _Init {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String pin)? init,
-    TResult? Function(List<BlockchainCoinData> blockchainData,
-            List<String> activeCoinIds)?
+    TResult? Function(
+            List<BlockchainCoinData> blockchainData, Set<String> activeCoinIds)?
         dataChanged,
   }) {
     return init?.call(pin);
@@ -172,8 +172,8 @@ class _$InitImpl implements _Init {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String pin)? init,
-    TResult Function(List<BlockchainCoinData> blockchainData,
-            List<String> activeCoinIds)?
+    TResult Function(
+            List<BlockchainCoinData> blockchainData, Set<String> activeCoinIds)?
         dataChanged,
     required TResult orElse(),
   }) {
@@ -234,7 +234,7 @@ abstract class _$$DataChangedImplCopyWith<$Res> {
       __$$DataChangedImplCopyWithImpl<$Res>;
   @useResult
   $Res call(
-      {List<BlockchainCoinData> blockchainData, List<String> activeCoinIds});
+      {List<BlockchainCoinData> blockchainData, Set<String> activeCoinIds});
 }
 
 /// @nodoc
@@ -261,7 +261,7 @@ class __$$DataChangedImplCopyWithImpl<$Res>
       activeCoinIds: null == activeCoinIds
           ? _value._activeCoinIds
           : activeCoinIds // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as Set<String>,
     ));
   }
 }
@@ -271,7 +271,7 @@ class __$$DataChangedImplCopyWithImpl<$Res>
 class _$DataChangedImpl implements _DataChanged {
   const _$DataChangedImpl(
       {required final List<BlockchainCoinData> blockchainData,
-      required final List<String> activeCoinIds})
+      required final Set<String> activeCoinIds})
       : _blockchainData = blockchainData,
         _activeCoinIds = activeCoinIds;
 
@@ -283,12 +283,12 @@ class _$DataChangedImpl implements _DataChanged {
     return EqualUnmodifiableListView(_blockchainData);
   }
 
-  final List<String> _activeCoinIds;
+  final Set<String> _activeCoinIds;
   @override
-  List<String> get activeCoinIds {
-    if (_activeCoinIds is EqualUnmodifiableListView) return _activeCoinIds;
+  Set<String> get activeCoinIds {
+    if (_activeCoinIds is EqualUnmodifiableSetView) return _activeCoinIds;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_activeCoinIds);
+    return EqualUnmodifiableSetView(_activeCoinIds);
   }
 
   @override
@@ -326,7 +326,7 @@ class _$DataChangedImpl implements _DataChanged {
   TResult when<TResult extends Object?>({
     required TResult Function(String pin) init,
     required TResult Function(
-            List<BlockchainCoinData> blockchainData, List<String> activeCoinIds)
+            List<BlockchainCoinData> blockchainData, Set<String> activeCoinIds)
         dataChanged,
   }) {
     return dataChanged(blockchainData, activeCoinIds);
@@ -336,8 +336,8 @@ class _$DataChangedImpl implements _DataChanged {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String pin)? init,
-    TResult? Function(List<BlockchainCoinData> blockchainData,
-            List<String> activeCoinIds)?
+    TResult? Function(
+            List<BlockchainCoinData> blockchainData, Set<String> activeCoinIds)?
         dataChanged,
   }) {
     return dataChanged?.call(blockchainData, activeCoinIds);
@@ -347,8 +347,8 @@ class _$DataChangedImpl implements _DataChanged {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String pin)? init,
-    TResult Function(List<BlockchainCoinData> blockchainData,
-            List<String> activeCoinIds)?
+    TResult Function(
+            List<BlockchainCoinData> blockchainData, Set<String> activeCoinIds)?
         dataChanged,
     required TResult orElse(),
   }) {
@@ -393,10 +393,10 @@ class _$DataChangedImpl implements _DataChanged {
 abstract class _DataChanged implements HomeEvent {
   const factory _DataChanged(
       {required final List<BlockchainCoinData> blockchainData,
-      required final List<String> activeCoinIds}) = _$DataChangedImpl;
+      required final Set<String> activeCoinIds}) = _$DataChangedImpl;
 
   List<BlockchainCoinData> get blockchainData;
-  List<String> get activeCoinIds;
+  Set<String> get activeCoinIds;
 
   /// Create a copy of HomeEvent
   /// with the given fields replaced by the non-null parameter values.

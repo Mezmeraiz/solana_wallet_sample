@@ -7,12 +7,12 @@ import 'package:solana_wallet_sample/view/network_image/base_network_image.dart'
 
 const _avatarSize = 18.0;
 
-class HomeItem extends StatelessWidget {
+class ManageCoinItem extends StatelessWidget {
   final BaseCoinData baseCoinData;
   final bool isSelected;
   final ValueChanged<bool?> onChanged;
 
-  const HomeItem({
+  const ManageCoinItem({
     super.key,
     required this.baseCoinData,
     required this.isSelected,
@@ -33,7 +33,7 @@ class HomeItem extends StatelessWidget {
           baseCoinData.ticker,
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        trailing: Checkbox(
+        trailing: Switch(
           value: isSelected,
           onChanged: onChanged,
         ),

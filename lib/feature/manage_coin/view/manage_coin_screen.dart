@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:solana_wallet_sample/common/extensions/context_extensions.dart';
+import 'package:solana_wallet_sample/feature/manage_coin/bloc/manage_coin_bloc.dart';
 import 'package:solana_wallet_sample/feature/manage_coin/view/widgets/manage_coin_view.dart';
 
 class ManageCoinScreen extends StatelessWidget {
@@ -10,7 +11,7 @@ class ManageCoinScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocProvider(
-        create: (context) => context.blocFactory.manageCoinBloc(),
+        create: (context) => context.blocFactory.manageCoinBloc()..add(const ManageCoinEvent.init()),
         child: const ManageCoinView(),
       );
 }

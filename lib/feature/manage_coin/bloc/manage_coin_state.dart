@@ -3,16 +3,20 @@ part of 'manage_coin_bloc.dart';
 @freezed
 class ManageCoinState with _$ManageCoinState {
   const factory ManageCoinState({
-    @Default('') String pin,
-    String? enteredPin,
-    @Default(ManageCoinStatus.idle) ManageCoinStatus status,
-    @Default(ManageCoinAction.none) ManageCoinAction action,
+    @Default([]) List<BaseCoinData> coins,
+    @Default([]) List<BaseCoinData> initialCoins,
+    @Default({}) Set<String> initialCoinIds,
+    @Default({}) Set<String> activeCoinIds,
+    @Default(0) int offset,
+    @Default('') String query,
+    @Default(ManageCoinLoadingStatus.idle) ManageCoinLoadingStatus loadingStatus,
+    // @Default(ManageCoinAction.none) ManageCoinAction action,
   }) = _ManageCoinState;
 }
 
-enum ManageCoinStatus {
+enum ManageCoinLoadingStatus {
   idle,
-  pinDoesNotMatch,
+  loading,
 }
 
 enum ManageCoinAction {

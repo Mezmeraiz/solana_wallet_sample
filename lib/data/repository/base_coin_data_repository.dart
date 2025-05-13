@@ -1,4 +1,3 @@
-import 'package:drift/drift.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:solana_wallet_sample/data/api/coin_api.dart';
 import 'package:solana_wallet_sample/data/database/dao/coin_dao.dart';
@@ -14,8 +13,17 @@ enum BaseCoinDataRepositoryState {
 
 abstract class BaseCoinDataRepository {
   ValueStream<BaseCoinDataRepositoryState> get stateStream;
+
   Future<void> init();
-  Future<List<BaseCoinData>> getBaseCoinDataByIds({required List<String> ids});
+
+  Future<List<BaseCoinData>> getBaseCoinDataByIds({required Set<String> ids});
+
+  Future<List<BaseCoinData>> getBaseCoinData({
+    int? limit,
+    int offset = 0,
+    String? query,
+    Set<String>? excludeIds,
+  });
 }
 
 class BaseCoinDataRepositoryImpl implements BaseCoinDataRepository {
@@ -81,6 +89,20 @@ class BaseCoinDataRepositoryImpl implements BaseCoinDataRepository {
   }
 
   @override
-  Future<List<BaseCoinData>> getBaseCoinDataByIds({required List<String> ids}) =>
+  Future<List<BaseCoinData>> getBaseCoinDataByIds({required Set<String> ids}) =>
       _coinDao.getBaseCoinDataByIds(ids: ids);
+
+  @override
+  Future<List<BaseCoinData>> getBaseCoinData({
+    int? limit,
+    int offset = 0,
+    String? query,
+    Set<String>? excludeIds,
+  }) =>
+      _coinDao.getBaseCoinData(
+        limit: limit,
+        offset: offset,
+        query: query,
+        excludeIds: excludeIds,
+      );
 }

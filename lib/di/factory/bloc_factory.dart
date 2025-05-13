@@ -36,6 +36,8 @@ class BlocFactoryImpl implements BlocFactory {
   @override
   ManageCoinBloc manageCoinBloc() => ManageCoinBloc(
         walletRepository: _repositoryFactory.walletRepository,
+        baseCoinDataRepository: _repositoryFactory.baseCoinDataRepository,
+        blockchainCoinDataRepository: _repositoryFactory.blockchainCoinDataRepository,
       );
 
   @override

@@ -14,21 +14,22 @@ abstract class CoinDao {
     int? limit,
     int offset = 0,
     String? query,
+    Set<String>? excludeIds,
   });
 
-  Future<List<BaseCoinData>> getBaseCoinDataByIds({required List<String> ids});
+  Future<List<BaseCoinData>> getBaseCoinDataByIds({required Set<String> ids});
 
   Future<List<String>> getCoinIdsWithoutIcon({int limit});
 
   Future<List<BaseCoinData>> getBaseCoinDataByContracts(List<String> contractAddresses);
 
-  Future<void> saveActiveCoins(List<String> ids);
+  Future<void> saveActiveCoins(Iterable<String> ids);
 
   Future<void> saveBlockchainCoinData(List<BlockchainCoinData> list);
 
   Future<List<BlockchainCoinData>> getBlockchainCoinData();
 
-  Future<List<String>> getActiveCoins();
+  Future<Set<String>> getActiveCoins();
 
   Future<void> updateCoinIcons(List<IconCoinData> list);
 
@@ -87,13 +88,28 @@ class CoinDaoImpl implements CoinDao {
     int? limit,
     int offset = 0,
     String? query,
+    Set<String>? excludeIds,
   }) async {
-    //await database.customStatement('DROP TABLE IF EXISTS blockchain_coin_data_table');
-    final stmt = database.select(database.baseCoinDataTable)..orderBy([(t) => OrderingTerm(expression: t.ticker)]);
+    final stmt = database.select(database.baseCoinDataTable)
+      ..orderBy(
+        [
+          (t) => OrderingTerm(
+                expression: t.ticker,
+              ),
+        ],
+      );
 
     if (query != null && query.trim().isNotEmpty) {
       final pattern = '%${query.toLowerCase()}%';
-      stmt.where((t) => t.ticker.lower().like(pattern));
+      stmt.where(
+        (t) => t.ticker.lower().like(pattern),
+      );
+    }
+
+    if (excludeIds != null && excludeIds.isNotEmpty) {
+      stmt.where(
+        (t) => t.id.isIn(excludeIds).not(),
+      );
     }
 
     if (limit != null) {
@@ -118,7 +134,7 @@ class CoinDaoImpl implements CoinDao {
   }
 
   @override
-  Future<List<BaseCoinData>> getBaseCoinDataByIds({required List<String> ids}) async {
+  Future<List<BaseCoinData>> getBaseCoinDataByIds({required Set<String> ids}) async {
     if (ids.isEmpty) return [];
 
     final rows = await (database.select(database.baseCoinDataTable)..where((tbl) => tbl.id.isIn(ids))).get();
@@ -169,7 +185,7 @@ class CoinDaoImpl implements CoinDao {
   }
 
   @override
-  Future<void> saveActiveCoins(List<String> ids) async => database.batch((batch) {
+  Future<void> saveActiveCoins(Iterable<String> ids) async => database.batch((batch) {
         batch.deleteAll(database.activeCoinsTable);
         batch.insertAll(
           database.activeCoinsTable,
@@ -179,10 +195,10 @@ class CoinDaoImpl implements CoinDao {
       });
 
   @override
-  Future<List<String>> getActiveCoins() async {
+  Future<Set<String>> getActiveCoins() async {
     final rows = await database.select(database.activeCoinsTable).get();
 
-    return rows.map((row) => row.id).toList();
+    return rows.map((row) => row.id).toSet();
   }
 
   @override
