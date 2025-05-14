@@ -21,6 +21,7 @@ TokenAccountsByOwnerResponse _$TokenAccountsByOwnerResponseFromJson(
 
 /// @nodoc
 mixin _$TokenAccountsByOwnerResponse {
+  String get pubkey => throw _privateConstructorUsedError;
   String get contractAddress => throw _privateConstructorUsedError;
   BigInt get balance => throw _privateConstructorUsedError;
   int get decimals => throw _privateConstructorUsedError;
@@ -43,7 +44,8 @@ abstract class $TokenAccountsByOwnerResponseCopyWith<$Res> {
       _$TokenAccountsByOwnerResponseCopyWithImpl<$Res,
           TokenAccountsByOwnerResponse>;
   @useResult
-  $Res call({String contractAddress, BigInt balance, int decimals});
+  $Res call(
+      {String pubkey, String contractAddress, BigInt balance, int decimals});
 }
 
 /// @nodoc
@@ -62,11 +64,16 @@ class _$TokenAccountsByOwnerResponseCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? pubkey = null,
     Object? contractAddress = null,
     Object? balance = null,
     Object? decimals = null,
   }) {
     return _then(_value.copyWith(
+      pubkey: null == pubkey
+          ? _value.pubkey
+          : pubkey // ignore: cast_nullable_to_non_nullable
+              as String,
       contractAddress: null == contractAddress
           ? _value.contractAddress
           : contractAddress // ignore: cast_nullable_to_non_nullable
@@ -92,7 +99,8 @@ abstract class _$$TokenAccountsByOwnerResponseImplCopyWith<$Res>
       __$$TokenAccountsByOwnerResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String contractAddress, BigInt balance, int decimals});
+  $Res call(
+      {String pubkey, String contractAddress, BigInt balance, int decimals});
 }
 
 /// @nodoc
@@ -110,11 +118,16 @@ class __$$TokenAccountsByOwnerResponseImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? pubkey = null,
     Object? contractAddress = null,
     Object? balance = null,
     Object? decimals = null,
   }) {
     return _then(_$TokenAccountsByOwnerResponseImpl(
+      pubkey: null == pubkey
+          ? _value.pubkey
+          : pubkey // ignore: cast_nullable_to_non_nullable
+              as String,
       contractAddress: null == contractAddress
           ? _value.contractAddress
           : contractAddress // ignore: cast_nullable_to_non_nullable
@@ -136,7 +149,8 @@ class __$$TokenAccountsByOwnerResponseImplCopyWithImpl<$Res>
 class _$TokenAccountsByOwnerResponseImpl
     implements _TokenAccountsByOwnerResponse {
   const _$TokenAccountsByOwnerResponseImpl(
-      {required this.contractAddress,
+      {required this.pubkey,
+      required this.contractAddress,
       required this.balance,
       required this.decimals});
 
@@ -144,6 +158,8 @@ class _$TokenAccountsByOwnerResponseImpl
           Map<String, dynamic> json) =>
       _$$TokenAccountsByOwnerResponseImplFromJson(json);
 
+  @override
+  final String pubkey;
   @override
   final String contractAddress;
   @override
@@ -153,7 +169,7 @@ class _$TokenAccountsByOwnerResponseImpl
 
   @override
   String toString() {
-    return 'TokenAccountsByOwnerResponse(contractAddress: $contractAddress, balance: $balance, decimals: $decimals)';
+    return 'TokenAccountsByOwnerResponse(pubkey: $pubkey, contractAddress: $contractAddress, balance: $balance, decimals: $decimals)';
   }
 
   @override
@@ -161,6 +177,7 @@ class _$TokenAccountsByOwnerResponseImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TokenAccountsByOwnerResponseImpl &&
+            (identical(other.pubkey, pubkey) || other.pubkey == pubkey) &&
             (identical(other.contractAddress, contractAddress) ||
                 other.contractAddress == contractAddress) &&
             (identical(other.balance, balance) || other.balance == balance) &&
@@ -171,7 +188,7 @@ class _$TokenAccountsByOwnerResponseImpl
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, contractAddress, balance, decimals);
+      Object.hash(runtimeType, pubkey, contractAddress, balance, decimals);
 
   /// Create a copy of TokenAccountsByOwnerResponse
   /// with the given fields replaced by the non-null parameter values.
@@ -194,13 +211,16 @@ class _$TokenAccountsByOwnerResponseImpl
 abstract class _TokenAccountsByOwnerResponse
     implements TokenAccountsByOwnerResponse {
   const factory _TokenAccountsByOwnerResponse(
-      {required final String contractAddress,
+      {required final String pubkey,
+      required final String contractAddress,
       required final BigInt balance,
       required final int decimals}) = _$TokenAccountsByOwnerResponseImpl;
 
   factory _TokenAccountsByOwnerResponse.fromJson(Map<String, dynamic> json) =
       _$TokenAccountsByOwnerResponseImpl.fromJson;
 
+  @override
+  String get pubkey;
   @override
   String get contractAddress;
   @override

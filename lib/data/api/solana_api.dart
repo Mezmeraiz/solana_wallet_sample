@@ -43,6 +43,7 @@ class SolanaApiImpl implements SolanaApi {
   Future<List<TokenAccountsByOwnerResponse>> getTokenAccountsByOwner({
     required String url,
     required String address,
+    String? mint,
   }) async {
     final response = await _httpWrapper.post(
       url,
@@ -50,12 +51,8 @@ class SolanaApiImpl implements SolanaApi {
         method: 'getTokenAccountsByOwner',
         params: [
           address,
-          {
-            'programId': 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA',
-          },
-          {
-            "encoding": "jsonParsed",
-          }
+          mint != null ? {'mint': mint} : {'programId': 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA'},
+          {'encoding': 'jsonParsed', 'commitment': 'confirmed'},
         ],
       )),
     );
@@ -66,6 +63,7 @@ class SolanaApiImpl implements SolanaApi {
       final info = e['account']['data']['parsed']['info'] as Map<String, dynamic>;
 
       return TokenAccountsByOwnerResponse(
+        pubkey: e['pubkey'] as String,
         contractAddress: info['mint'] as String,
         balance: BigInt.parse(info['tokenAmount']['amount'] as String),
         decimals: info['tokenAmount']['decimals'] as int,

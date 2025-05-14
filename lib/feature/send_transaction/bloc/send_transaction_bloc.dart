@@ -96,23 +96,28 @@ class SendTransactionBloc extends Bloc<SendTransactionEvent, SendTransactionStat
       ),
     );
 
-      try {
-        final result = await _solanaService.sendTransaction(type: type, toAddress: toAddress, amount: amount, seedPhrase: seedPhrase, decimals: decimals,);
+    try {
+      final String tnx = await _solanaService.sendTransaction(
+        type: state.baseCoinData.type,
+        blockchainCoinData: state.blockchainCoinData,
+        toAddress: state.address,
+        amount: state.amount,
+        pin: event.pin,
+      );
 
-        // emit(
-        //   state.copyWith(
-        //     status: SendTransactionStatus.success,
-        //     transactionHash: result.transactionHash,
-        //   ),
-        // );
-      } catch (e) {
-        // emit(
-        //   state.copyWith(
-        //     status: SendTransactionStatus.error,
-        //     errorMessage: e.toString(),
-        //   ),
-        // );
-      }
+      // emit(
+      //   state.copyWith(
+      //     status: SendTransactionStatus.success,
+      //     transactionHash: result.transactionHash,
+      //   ),
+      // );
+    } catch (e) {
+      // emit(
+      //   state.copyWith(
+      //     status: SendTransactionStatus.error,
+      //     errorMessage: e.toString(),
+      //   ),
+      // );
     }
   }
 

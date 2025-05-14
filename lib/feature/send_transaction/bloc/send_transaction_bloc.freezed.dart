@@ -1315,18 +1315,21 @@ mixin _$SendTransactionAction {
   TResult when<TResult extends Object?>({
     required TResult Function() none,
     required TResult Function(int fee) feeCalculated,
+    required TResult Function(String tnx) transactionSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? none,
     TResult? Function(int fee)? feeCalculated,
+    TResult? Function(String tnx)? transactionSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? none,
     TResult Function(int fee)? feeCalculated,
+    TResult Function(String tnx)? transactionSuccess,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -1334,18 +1337,22 @@ mixin _$SendTransactionAction {
   TResult map<TResult extends Object?>({
     required TResult Function(NoneAction value) none,
     required TResult Function(FeeCalculatedAction value) feeCalculated,
+    required TResult Function(TransactionSuccessAction value)
+        transactionSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(NoneAction value)? none,
     TResult? Function(FeeCalculatedAction value)? feeCalculated,
+    TResult? Function(TransactionSuccessAction value)? transactionSuccess,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(NoneAction value)? none,
     TResult Function(FeeCalculatedAction value)? feeCalculated,
+    TResult Function(TransactionSuccessAction value)? transactionSuccess,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -1416,6 +1423,7 @@ class _$NoneActionImpl implements NoneAction {
   TResult when<TResult extends Object?>({
     required TResult Function() none,
     required TResult Function(int fee) feeCalculated,
+    required TResult Function(String tnx) transactionSuccess,
   }) {
     return none();
   }
@@ -1425,6 +1433,7 @@ class _$NoneActionImpl implements NoneAction {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? none,
     TResult? Function(int fee)? feeCalculated,
+    TResult? Function(String tnx)? transactionSuccess,
   }) {
     return none?.call();
   }
@@ -1434,6 +1443,7 @@ class _$NoneActionImpl implements NoneAction {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? none,
     TResult Function(int fee)? feeCalculated,
+    TResult Function(String tnx)? transactionSuccess,
     required TResult orElse(),
   }) {
     if (none != null) {
@@ -1447,6 +1457,8 @@ class _$NoneActionImpl implements NoneAction {
   TResult map<TResult extends Object?>({
     required TResult Function(NoneAction value) none,
     required TResult Function(FeeCalculatedAction value) feeCalculated,
+    required TResult Function(TransactionSuccessAction value)
+        transactionSuccess,
   }) {
     return none(this);
   }
@@ -1456,6 +1468,7 @@ class _$NoneActionImpl implements NoneAction {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(NoneAction value)? none,
     TResult? Function(FeeCalculatedAction value)? feeCalculated,
+    TResult? Function(TransactionSuccessAction value)? transactionSuccess,
   }) {
     return none?.call(this);
   }
@@ -1465,6 +1478,7 @@ class _$NoneActionImpl implements NoneAction {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(NoneAction value)? none,
     TResult Function(FeeCalculatedAction value)? feeCalculated,
+    TResult Function(TransactionSuccessAction value)? transactionSuccess,
     required TResult orElse(),
   }) {
     if (none != null) {
@@ -1549,6 +1563,7 @@ class _$FeeCalculatedActionImpl implements FeeCalculatedAction {
   TResult when<TResult extends Object?>({
     required TResult Function() none,
     required TResult Function(int fee) feeCalculated,
+    required TResult Function(String tnx) transactionSuccess,
   }) {
     return feeCalculated(fee);
   }
@@ -1558,6 +1573,7 @@ class _$FeeCalculatedActionImpl implements FeeCalculatedAction {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? none,
     TResult? Function(int fee)? feeCalculated,
+    TResult? Function(String tnx)? transactionSuccess,
   }) {
     return feeCalculated?.call(fee);
   }
@@ -1567,6 +1583,7 @@ class _$FeeCalculatedActionImpl implements FeeCalculatedAction {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? none,
     TResult Function(int fee)? feeCalculated,
+    TResult Function(String tnx)? transactionSuccess,
     required TResult orElse(),
   }) {
     if (feeCalculated != null) {
@@ -1580,6 +1597,8 @@ class _$FeeCalculatedActionImpl implements FeeCalculatedAction {
   TResult map<TResult extends Object?>({
     required TResult Function(NoneAction value) none,
     required TResult Function(FeeCalculatedAction value) feeCalculated,
+    required TResult Function(TransactionSuccessAction value)
+        transactionSuccess,
   }) {
     return feeCalculated(this);
   }
@@ -1589,6 +1608,7 @@ class _$FeeCalculatedActionImpl implements FeeCalculatedAction {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(NoneAction value)? none,
     TResult? Function(FeeCalculatedAction value)? feeCalculated,
+    TResult? Function(TransactionSuccessAction value)? transactionSuccess,
   }) {
     return feeCalculated?.call(this);
   }
@@ -1598,6 +1618,7 @@ class _$FeeCalculatedActionImpl implements FeeCalculatedAction {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(NoneAction value)? none,
     TResult Function(FeeCalculatedAction value)? feeCalculated,
+    TResult Function(TransactionSuccessAction value)? transactionSuccess,
     required TResult orElse(),
   }) {
     if (feeCalculated != null) {
@@ -1617,4 +1638,156 @@ abstract class FeeCalculatedAction implements SendTransactionAction {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$FeeCalculatedActionImplCopyWith<_$FeeCalculatedActionImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$TransactionSuccessActionImplCopyWith<$Res> {
+  factory _$$TransactionSuccessActionImplCopyWith(
+          _$TransactionSuccessActionImpl value,
+          $Res Function(_$TransactionSuccessActionImpl) then) =
+      __$$TransactionSuccessActionImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String tnx});
+}
+
+/// @nodoc
+class __$$TransactionSuccessActionImplCopyWithImpl<$Res>
+    extends _$SendTransactionActionCopyWithImpl<$Res,
+        _$TransactionSuccessActionImpl>
+    implements _$$TransactionSuccessActionImplCopyWith<$Res> {
+  __$$TransactionSuccessActionImplCopyWithImpl(
+      _$TransactionSuccessActionImpl _value,
+      $Res Function(_$TransactionSuccessActionImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of SendTransactionAction
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? tnx = null,
+  }) {
+    return _then(_$TransactionSuccessActionImpl(
+      null == tnx
+          ? _value.tnx
+          : tnx // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$TransactionSuccessActionImpl implements TransactionSuccessAction {
+  const _$TransactionSuccessActionImpl(this.tnx);
+
+  @override
+  final String tnx;
+
+  @override
+  String toString() {
+    return 'SendTransactionAction.transactionSuccess(tnx: $tnx)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TransactionSuccessActionImpl &&
+            (identical(other.tnx, tnx) || other.tnx == tnx));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, tnx);
+
+  /// Create a copy of SendTransactionAction
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TransactionSuccessActionImplCopyWith<_$TransactionSuccessActionImpl>
+      get copyWith => __$$TransactionSuccessActionImplCopyWithImpl<
+          _$TransactionSuccessActionImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() none,
+    required TResult Function(int fee) feeCalculated,
+    required TResult Function(String tnx) transactionSuccess,
+  }) {
+    return transactionSuccess(tnx);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? none,
+    TResult? Function(int fee)? feeCalculated,
+    TResult? Function(String tnx)? transactionSuccess,
+  }) {
+    return transactionSuccess?.call(tnx);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? none,
+    TResult Function(int fee)? feeCalculated,
+    TResult Function(String tnx)? transactionSuccess,
+    required TResult orElse(),
+  }) {
+    if (transactionSuccess != null) {
+      return transactionSuccess(tnx);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(NoneAction value) none,
+    required TResult Function(FeeCalculatedAction value) feeCalculated,
+    required TResult Function(TransactionSuccessAction value)
+        transactionSuccess,
+  }) {
+    return transactionSuccess(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(NoneAction value)? none,
+    TResult? Function(FeeCalculatedAction value)? feeCalculated,
+    TResult? Function(TransactionSuccessAction value)? transactionSuccess,
+  }) {
+    return transactionSuccess?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(NoneAction value)? none,
+    TResult Function(FeeCalculatedAction value)? feeCalculated,
+    TResult Function(TransactionSuccessAction value)? transactionSuccess,
+    required TResult orElse(),
+  }) {
+    if (transactionSuccess != null) {
+      return transactionSuccess(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class TransactionSuccessAction implements SendTransactionAction {
+  const factory TransactionSuccessAction(final String tnx) =
+      _$TransactionSuccessActionImpl;
+
+  String get tnx;
+
+  /// Create a copy of SendTransactionAction
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$TransactionSuccessActionImplCopyWith<_$TransactionSuccessActionImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

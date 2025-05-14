@@ -1,11 +1,13 @@
 import 'dart:ffi';
 
 import 'package:fixnum/fixnum.dart' as fixnum;
+import 'package:secure_vault/secure_vault.dart';
 import 'package:solana_wallet_sample/common/utils.dart';
 import 'package:solana_wallet_sample/data/api/common/constants.dart';
 import 'package:solana_wallet_sample/data/api/dto/token_accounts_by_owner_response.dart';
 import 'package:solana_wallet_sample/data/api/solana_api.dart';
 import 'package:solana_wallet_sample/data/model/coin/base_coin_data.dart';
+import 'package:solana_wallet_sample/data/model/coin/blockchain_coin_data.dart';
 import 'package:solana_wallet_sample/data/model/coin/coin_type.dart';
 import 'package:solana_wallet_sample/data/repository/wallet_repository.dart';
 import 'package:solana_wallet_sample/data/storage/common_storage.dart';
@@ -22,10 +24,10 @@ abstract interface class SolanaService {
 
   Future<String> sendTransaction({
     required CoinType type,
+    required BlockchainCoinData blockchainCoinData,
     required String toAddress,
     required String amount,
-    required String seedPhrase,
-    required int decimals,
+    required String pin,
   });
 }
 
@@ -33,13 +35,16 @@ class SolanaServiceImpl implements SolanaService {
   final SolanaApi _solanaApi;
   final WalletRepository _walletRepository;
   final CommonStorage _commonStorage;
+  final SecureVault _secureVault;
 
   const SolanaServiceImpl({
     required SolanaApi solanaApi,
     required WalletRepository walletRepository,
     required CommonStorage commonStorage,
+    required SecureVault secureVault,
   })  : _commonStorage = commonStorage,
         _walletRepository = walletRepository,
+        _secureVault = secureVault,
         _solanaApi = solanaApi;
 
   @override
@@ -82,47 +87,30 @@ class SolanaServiceImpl implements SolanaService {
   @override
   Future<String> sendTransaction({
     required CoinType type,
+    required BlockchainCoinData blockchainCoinData,
     required String toAddress,
     required String amount,
-    required String seedPhrase,
-    required int decimals,
-  }) =>
-      switch (type) {
-        CoinType.coin => _sendCoinTransaction(
+    required String pin,
+  }) async {
+    final String? seedPhrase = await _secureVault.loadSeed(pin);
+
+    if (seedPhrase == null) {
+      throw Exception('Seed phrase not found');
+    }
+
+    final tnx = type == CoinType.coin
+        ? await _getCoinTransaction(
             toAddress,
             amount,
             seedPhrase,
-            decimals,
-          ),
-        CoinType.token => _sendTokenTransaction(
+            blockchainCoinData.decimals,
+          )
+        : await _getTokenTransaction(
             toAddress,
             amount,
             seedPhrase,
-            decimals,
-          ),
-      };
-
-  Future<String> _sendTokenTransaction(
-    String toAddress,
-    String amount,
-    String seedPhrase,
-    int decimals,
-  ) async {
-    throw UnimplementedError('Token transaction is not implemented yet');
-  }
-
-  Future<String> _sendCoinTransaction(
-    String toAddress,
-    String amount,
-    String? seedPhrase,
-    int decimals,
-  ) async {
-    final tnx = await _getCoinTransaction(
-      toAddress,
-      amount,
-      seedPhrase,
-      decimals,
-    );
+            blockchainCoinData,
+          );
 
     final response = await _solanaApi.sendTransaction(
       url: DefaultNodeUrl.solanaUrl,
@@ -136,10 +124,35 @@ class SolanaServiceImpl implements SolanaService {
     return response;
   }
 
+  // Future<String> _sendCoinTransaction(
+  //   String toAddress,
+  //   String amount,
+  //   String seedPhrase,
+  //   BlockchainCoinData blockchainCoinData,
+  // ) async {
+  //   final tnx = await _getCoinTransaction(
+  //     toAddress,
+  //     amount,
+  //     seedPhrase,
+  //     blockchainCoinData.decimals,
+  //   );
+  //
+  //   final response = await _solanaApi.sendTransaction(
+  //     url: DefaultNodeUrl.solanaUrl,
+  //     transaction: tnx,
+  //   );
+  //
+  //   if (response.isEmpty) {
+  //     throw Exception('Transaction failed');
+  //   }
+  //
+  //   return response;
+  // }
+
   Future<String> _getCoinTransaction(
     String toAddress,
     String amount,
-    String? seedPhrase,
+    String seedPhrase,
     int decimals,
   ) async {
     final amountInLamports = Utils.valueToMinUnit(
@@ -147,22 +160,7 @@ class SolanaServiceImpl implements SolanaService {
       decimals,
     );
 
-    final List<int> privateKey;
-
-    if (seedPhrase != null) {
-      final Pointer<TWHDWallet> wallet = _walletRepository.createWithMnemonic(seedPhrase!);
-
-      privateKey = _walletRepository
-          .getKeyForCoin(
-            coinType: TWCoinType.TWCoinTypeSolana,
-            wallet: wallet,
-          )
-          .toList();
-
-      _walletRepository.walletDelete(wallet);
-    } else {
-      privateKey = [];
-    }
+    final List<int> privateKey = _getPrivateKey(seedPhrase);
 
     final blockHash = await _solanaApi.getLatestBlockhash(
       url: DefaultNodeUrl.solanaUrl,
@@ -184,5 +182,102 @@ class SolanaServiceImpl implements SolanaService {
     final String base64Transaction = output.encoded;
 
     return base64Transaction;
+  }
+
+  Future<String> _getTokenTransaction(
+    String toAddress,
+    String amount,
+    String seedPhrase,
+    BlockchainCoinData blockchainCoinData,
+  ) async {
+    final recipientAccountsFuture = _solanaApi.getTokenAccountsByOwner(
+      url: DefaultNodeUrl.solanaUrl,
+      address: toAddress,
+    );
+
+    final senderAccountsFuture = _solanaApi.getTokenAccountsByOwner(
+      url: DefaultNodeUrl.solanaUrl,
+      address: _commonStorage.address!,
+    );
+
+    final latestHashFuture = _solanaApi.getLatestBlockhash(
+      url: DefaultNodeUrl.solanaUrl,
+    );
+
+    final result = await Future.wait([
+      recipientAccountsFuture,
+      senderAccountsFuture,
+      latestHashFuture,
+    ]);
+
+    final recipientAccounts = result[0] as List<TokenAccountsByOwnerResponse>;
+    final senderAccounts = result[1] as List<TokenAccountsByOwnerResponse>;
+    final latestHash = result[2] as String;
+
+    final amountInMinUnits = Utils.valueToMinUnit(
+      double.parse(amount),
+      blockchainCoinData.decimals,
+    );
+
+    final List<int> privateKey = _getPrivateKey(seedPhrase);
+
+    final String senderAta = senderAccounts.first.pubkey;
+
+    final solana.SigningInput input;
+
+    if (recipientAccounts.isNotEmpty) {
+      final String recipientAta = recipientAccounts.first.pubkey;
+
+      input = solana.SigningInput(
+        recentBlockhash: latestHash,
+        privateKey: privateKey,
+        tokenTransferTransaction: solana.TokenTransfer(
+          tokenMintAddress: blockchainCoinData.contractAddress!,
+          recipientTokenAddress: recipientAta,
+          senderTokenAddress: senderAta,
+          amount: fixnum.Int64(amountInMinUnits.toInt()),
+          decimals: blockchainCoinData.decimals,
+        ),
+      );
+    } else {
+      final recipientAta = _walletRepository.defaultTokenAddress(
+        toAddress,
+        blockchainCoinData.contractAddress!,
+      );
+
+      input = solana.SigningInput(
+        recentBlockhash: latestHash,
+        privateKey: privateKey,
+        createAndTransferTokenTransaction: solana.CreateAndTransferToken(
+          recipientMainAddress: toAddress,
+          tokenMintAddress: blockchainCoinData.contractAddress!,
+          recipientTokenAddress: recipientAta,
+          senderTokenAddress: senderAta,
+          amount: fixnum.Int64(amountInMinUnits.toInt()),
+          decimals: blockchainCoinData.decimals,
+        ),
+      );
+    }
+
+    final sign = _walletRepository.sign(input.writeToBuffer(), TWCoinType.TWCoinTypeSolana);
+    final output = solana.SigningOutput.fromBuffer(sign);
+    final base64Transaction = output.encoded;
+
+    return base64Transaction;
+  }
+
+  List<int> _getPrivateKey(String seedPhrase) {
+    final Pointer<TWHDWallet> wallet = _walletRepository.createWithMnemonic(seedPhrase);
+
+    final privateKey = _walletRepository
+        .getKeyForCoin(
+          coinType: TWCoinType.TWCoinTypeSolana,
+          wallet: wallet,
+        )
+        .toList();
+
+    _walletRepository.walletDelete(wallet);
+
+    return privateKey;
   }
 }

@@ -24,4 +24,6 @@ sealed class SendTransactionAction with _$SendTransactionAction {
   const factory SendTransactionAction.none() = NoneAction;
 
   const factory SendTransactionAction.feeCalculated(int fee) = FeeCalculatedAction;
+
+  const factory SendTransactionAction.transactionSuccess(String tnx) = TransactionSuccessAction;
 }
