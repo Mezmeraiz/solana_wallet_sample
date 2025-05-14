@@ -19,4 +19,7 @@ class Utils {
     int decimals,
   ) =>
       minUnit.toDouble() / BigInt.from(10).pow(decimals).toDouble();
+
+  static BigInt valueToMinUnit(double value, int decimals) =>
+      BigInt.from(value * BigInt.from(10).pow(decimals).toDouble());
 }

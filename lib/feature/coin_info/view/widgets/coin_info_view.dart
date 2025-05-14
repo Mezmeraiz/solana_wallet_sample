@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:solana_wallet_sample/common/extensions/context_extensions.dart';
 import 'package:solana_wallet_sample/common/utils.dart';
 import 'package:solana_wallet_sample/feature/coin_info/bloc/coin_info_bloc.dart';
+import 'package:solana_wallet_sample/feature/send_transaction/view/send_transaction_screen.dart';
 import 'package:solana_wallet_sample/view/coin/coin_image.dart';
 
 class CoinInfoView extends StatelessWidget {
@@ -38,7 +40,12 @@ class CoinInfoView extends StatelessWidget {
                           children: [
                             Expanded(
                               child: ElevatedButton(
-                                onPressed: state.blockchainCoinData != null ? _onSendPressed : null,
+                                onPressed: state.blockchainCoinData != null
+                                    ? () => _onSendPressed(
+                                          context,
+                                          state.coinId,
+                                        )
+                                    : null,
                                 child: const Text('Send'),
                               ),
                             ),
@@ -62,7 +69,13 @@ class CoinInfoView extends StatelessWidget {
         },
       );
 
-  void _onSendPressed() {}
+  void _onSendPressed(
+    BuildContext context,
+    String coinId,
+  ) =>
+      context.push(
+        SendTransactionScreen(coinId: coinId),
+      );
 
   void _onReceivePressed(
     BuildContext context,

@@ -14,5 +14,12 @@ sealed class BlockchainCoinData with _$BlockchainCoinData {
     required int decimals,
   }) = _BlockchainCoinData;
 
+  factory BlockchainCoinData.empty() => BlockchainCoinData(
+        id: '',
+        contractAddress: null,
+        balance: BigInt.zero,
+        decimals: 0,
+      );
+
   factory BlockchainCoinData.fromJson(Map<String, Object?> json) => _$BlockchainCoinDataFromJson(json);
 }

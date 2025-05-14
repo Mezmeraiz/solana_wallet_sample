@@ -54,6 +54,7 @@ class InitializationHelperImpl extends InitializationHelper {
     final serviceFactory = ServiceFactoryImpl(
       repositoryFactory: repositoryFactory,
       dependencyFactory: dependenciesFactory,
+      networkFactory: networkFactory,
     );
 
     final blocFactory = BlocFactoryImpl(

@@ -5,6 +5,7 @@ import 'package:solana_wallet_sample/feature/home/bloc/home_bloc.dart';
 import 'package:solana_wallet_sample/feature/manage_coin/bloc/manage_coin_bloc.dart';
 import 'package:solana_wallet_sample/feature/pin/enter_pin/bloc/enter_pin_bloc.dart';
 import 'package:solana_wallet_sample/feature/pin/set_pin/bloc/set_pin_bloc.dart';
+import 'package:solana_wallet_sample/feature/send_transaction/bloc/send_transaction_bloc.dart';
 import 'package:solana_wallet_sample/feature/welcome/bloc/welcome/welcome_bloc.dart';
 
 abstract interface class BlocFactory {
@@ -19,6 +20,8 @@ abstract interface class BlocFactory {
   EnterPinBloc enterPinBloc();
 
   CoinInfoBloc coinInfoBloc(String coinId);
+
+  SendTransactionBloc sendTransactionBloc(String coinId);
 }
 
 class BlocFactoryImpl implements BlocFactory {
@@ -65,6 +68,14 @@ class BlocFactoryImpl implements BlocFactory {
   @override
   CoinInfoBloc coinInfoBloc(String coinId) => CoinInfoBloc(
         walletService: _serviceFactory.walletService,
+        baseCoinDataRepository: _repositoryFactory.baseCoinDataRepository,
+        blockchainCoinDataRepository: _repositoryFactory.blockchainCoinDataRepository,
+        coinId: coinId,
+      );
+
+  @override
+  SendTransactionBloc sendTransactionBloc(String coinId) => SendTransactionBloc(
+        solanaService: _serviceFactory.solanaService,
         baseCoinDataRepository: _repositoryFactory.baseCoinDataRepository,
         blockchainCoinDataRepository: _repositoryFactory.blockchainCoinDataRepository,
         coinId: coinId,

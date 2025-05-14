@@ -27,6 +27,7 @@ dependencies:
   sqlite3_flutter_libs: ^0.5.24
   path_provider: ^2.0.0
   path: ^1.9.0
+  web3dart: ^2.6.1
   secure_vault:
     path: ./secure_vault
 

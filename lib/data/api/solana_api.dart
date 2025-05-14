@@ -14,6 +14,24 @@ abstract interface class SolanaApi {
     required String url,
     required String address,
   });
+
+  Future<int> getMinimumBalanceForRentExemption({
+    required String url,
+  });
+
+  Future<int> getFeeForMessage({
+    required String url,
+    required String message,
+  });
+
+  Future<String> getLatestBlockhash({
+    required String url,
+  });
+
+  Future<String> sendTransaction({
+    required String url,
+    required String transaction,
+  });
 }
 
 class SolanaApiImpl implements SolanaApi {
@@ -71,5 +89,90 @@ class SolanaApiImpl implements SolanaApi {
     );
 
     return response['result']['value'] as int;
+  }
+
+  @override
+  Future<int> getMinimumBalanceForRentExemption({
+    required String url,
+  }) async {
+    final response = await _httpWrapper.post(
+      url,
+      body: jsonEncode(
+        Utils.getJsonRpcData(
+          method: 'getMinimumBalanceForRentExemption',
+          params: [165],
+        ),
+      ),
+    );
+
+    final result = response['result'] as int;
+
+    return result;
+  }
+
+  @override
+  Future<int> getFeeForMessage({
+    required String url,
+    required String message,
+  }) async {
+    final response = await _httpWrapper.post(
+      url,
+      body: jsonEncode(
+        Utils.getJsonRpcData(
+          method: 'getFees',
+          params: [
+            message,
+            {
+              "commitment": "finalized",
+            }
+          ],
+        ),
+      ),
+    );
+
+    final result = response['result']['value'];
+
+    return result;
+  }
+
+  @override
+  Future<String> getLatestBlockhash({
+    required String url,
+  }) async {
+    final response = await _httpWrapper.post(
+      url,
+      body: jsonEncode(
+        Utils.getJsonRpcData(
+          method: 'getLatestBlockhash',
+          params: [
+            {"commitment": "finalized"}
+          ],
+        ),
+      ),
+    );
+
+    final result = response['result']['value']['blockhash'] as String;
+
+    return result;
+  }
+
+  @override
+  Future<String> sendTransaction({
+    required String url,
+    required String transaction,
+  }) async {
+    final response = await _httpWrapper.post(
+      url,
+      body: jsonEncode(
+        Utils.getJsonRpcData(
+          method: 'sendTransaction',
+          params: [transaction],
+        ),
+      ),
+    );
+
+    final result = response['result'] as String;
+
+    return result;
   }
 }

@@ -1,6 +1,7 @@
 import 'package:rxdart/rxdart.dart';
 import 'package:secure_vault/secure_vault.dart';
 import 'package:solana_wallet_sample/common/constants.dart';
+import 'package:solana_wallet_sample/data/api/common/constants.dart';
 import 'package:solana_wallet_sample/data/api/dto/token_accounts_by_owner_response.dart';
 import 'package:solana_wallet_sample/data/api/solana_api.dart';
 import 'package:solana_wallet_sample/data/database/dao/coin_dao.dart';
@@ -9,8 +10,6 @@ import 'package:solana_wallet_sample/data/model/coin/blockchain_coin_data.dart';
 import 'package:solana_wallet_sample/data/repository/wallet_repository.dart';
 import 'package:solana_wallet_sample/data/storage/common_storage.dart';
 import 'package:solana_wallet_sample/ffigen_output/generated_bindings.dart';
-
-const String _solanaUrl = 'https://api.mainnet-beta.solana.com';
 
 abstract class BlockchainCoinDataRepository {
   ValueStream<List<BlockchainCoinData>> get blockchainCoinDataStream;
@@ -93,7 +92,7 @@ class BlockchainCoinDataRepositoryImpl implements BlockchainCoinDataRepository {
     required String address,
   }) async {
     final List<TokenAccountsByOwnerResponse> tokens = await _solanaApi.getTokenAccountsByOwner(
-      url: _solanaUrl,
+      url: DefaultNodeUrl.solanaUrl,
       address: address,
     );
 
@@ -123,7 +122,7 @@ class BlockchainCoinDataRepositoryImpl implements BlockchainCoinDataRepository {
     required String address,
   }) async {
     final int solBalance = await _solanaApi.getBalance(
-      url: _solanaUrl,
+      url: DefaultNodeUrl.solanaUrl,
       address: address,
     );
 
