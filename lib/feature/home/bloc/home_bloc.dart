@@ -9,8 +9,6 @@ import 'package:solana_wallet_sample/data/model/coin/blockchain_coin_data.dart';
 import 'package:solana_wallet_sample/data/repository/base_coin_data_repository.dart';
 import 'package:solana_wallet_sample/data/repository/blockchain_coin_data_repository.dart';
 import 'package:solana_wallet_sample/data/repository/pin_repository.dart';
-import 'package:solana_wallet_sample/data/repository/wallet_repository.dart';
-import 'package:solana_wallet_sample/domain/wallet_service.dart';
 import 'package:solana_wallet_sample/feature/home/data/home_repository.dart';
 import 'package:solana_wallet_sample/feature/home/vm/active_coin_vm.dart';
 
@@ -124,7 +122,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) async {
     await _pinRepository.resetVault();
     await _homeRepository.clearData();
-    emit(state.copyWith(activeCoins: []));
+
+    emit(
+      state.copyWith(
+        action: HomeAction.logout,
+      ),
+    );
   }
 
   @override

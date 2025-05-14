@@ -13,7 +13,7 @@ class CoinInfoView extends StatelessWidget {
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
-              title: Text(state.baseCoinData.ticker),
+              title: Text(state.baseCoinData.name),
             ),
             body: state.loadingStatus == CoinInfoLoadingStatus.idle
                 ? Column(
@@ -25,12 +25,10 @@ class CoinInfoView extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        state.blockchainCoinData != null
-                            ? Utils.minUnitToValue(
-                                state.blockchainCoinData!.balance,
-                                state.blockchainCoinData!.decimals,
-                              ).toString()
-                            : '0',
+                        '${state.blockchainCoinData != null ? Utils.minUnitToValue(
+                            state.blockchainCoinData!.balance,
+                            state.blockchainCoinData!.decimals,
+                          ).toString() : '0'} ${state.baseCoinData.ticker}',
                         style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
                       ),
                       const Spacer(),

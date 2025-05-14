@@ -74,11 +74,13 @@ class _HomeViewState extends State<HomeView> {
                     child: const Center(
                       child: Padding(
                         padding: EdgeInsets.all(16.0),
-                        child: Text('Manage coins',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            )),
+                        child: Text(
+                          'Manage coins',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                   ),

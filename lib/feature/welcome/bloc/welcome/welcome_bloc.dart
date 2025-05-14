@@ -54,6 +54,7 @@ class WelcomeBloc extends Bloc<WelcomeEvent, WelcomeState> {
 
       emit(
         state.copyWith(
+          pin: event.pin,
           action: WelcomeAction.dataSaved,
         ),
       );
