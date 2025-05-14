@@ -21,6 +21,7 @@ BaseCoinData _$BaseCoinDataFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$BaseCoinData {
   String get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
   String get ticker => throw _privateConstructorUsedError;
   String? get iconUrl => throw _privateConstructorUsedError;
   String? get contractAddress => throw _privateConstructorUsedError;
@@ -44,6 +45,7 @@ abstract class $BaseCoinDataCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
+      String name,
       String ticker,
       String? iconUrl,
       String? contractAddress,
@@ -66,6 +68,7 @@ class _$BaseCoinDataCopyWithImpl<$Res, $Val extends BaseCoinData>
   @override
   $Res call({
     Object? id = null,
+    Object? name = null,
     Object? ticker = null,
     Object? iconUrl = freezed,
     Object? contractAddress = freezed,
@@ -75,6 +78,10 @@ class _$BaseCoinDataCopyWithImpl<$Res, $Val extends BaseCoinData>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
       ticker: null == ticker
           ? _value.ticker
@@ -106,6 +113,7 @@ abstract class _$$BaseCoinDataImplCopyWith<$Res>
   @useResult
   $Res call(
       {String id,
+      String name,
       String ticker,
       String? iconUrl,
       String? contractAddress,
@@ -126,6 +134,7 @@ class __$$BaseCoinDataImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? name = null,
     Object? ticker = null,
     Object? iconUrl = freezed,
     Object? contractAddress = freezed,
@@ -135,6 +144,10 @@ class __$$BaseCoinDataImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
               as String,
       ticker: null == ticker
           ? _value.ticker
@@ -161,6 +174,7 @@ class __$$BaseCoinDataImplCopyWithImpl<$Res>
 class _$BaseCoinDataImpl extends _BaseCoinData {
   const _$BaseCoinDataImpl(
       {required this.id,
+      required this.name,
       required this.ticker,
       this.iconUrl,
       this.contractAddress,
@@ -173,6 +187,8 @@ class _$BaseCoinDataImpl extends _BaseCoinData {
   @override
   final String id;
   @override
+  final String name;
+  @override
   final String ticker;
   @override
   final String? iconUrl;
@@ -183,7 +199,7 @@ class _$BaseCoinDataImpl extends _BaseCoinData {
 
   @override
   String toString() {
-    return 'BaseCoinData(id: $id, ticker: $ticker, iconUrl: $iconUrl, contractAddress: $contractAddress, type: $type)';
+    return 'BaseCoinData(id: $id, name: $name, ticker: $ticker, iconUrl: $iconUrl, contractAddress: $contractAddress, type: $type)';
   }
 
   @override
@@ -192,6 +208,7 @@ class _$BaseCoinDataImpl extends _BaseCoinData {
         (other.runtimeType == runtimeType &&
             other is _$BaseCoinDataImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
             (identical(other.ticker, ticker) || other.ticker == ticker) &&
             (identical(other.iconUrl, iconUrl) || other.iconUrl == iconUrl) &&
             (identical(other.contractAddress, contractAddress) ||
@@ -201,8 +218,8 @@ class _$BaseCoinDataImpl extends _BaseCoinData {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, ticker, iconUrl, contractAddress, type);
+  int get hashCode => Object.hash(
+      runtimeType, id, name, ticker, iconUrl, contractAddress, type);
 
   /// Create a copy of BaseCoinData
   /// with the given fields replaced by the non-null parameter values.
@@ -223,6 +240,7 @@ class _$BaseCoinDataImpl extends _BaseCoinData {
 abstract class _BaseCoinData extends BaseCoinData {
   const factory _BaseCoinData(
       {required final String id,
+      required final String name,
       required final String ticker,
       final String? iconUrl,
       final String? contractAddress,
@@ -234,6 +252,8 @@ abstract class _BaseCoinData extends BaseCoinData {
 
   @override
   String get id;
+  @override
+  String get name;
   @override
   String get ticker;
   @override

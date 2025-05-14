@@ -9,7 +9,7 @@ class DependencyScope extends StatefulWidget {
   final DependencyFactory dependenciesFactory;
   final BlocFactory blocFactory;
   final RepositoryFactory repositoryFactory;
-  final ServiceFactory domainServiceFactory;
+  final ServiceFactory serviceFactory;
   final NetworkFactory networkFactory;
   final Widget child;
 
@@ -18,7 +18,7 @@ class DependencyScope extends StatefulWidget {
     required this.dependenciesFactory,
     required this.repositoryFactory,
     required this.blocFactory,
-    required this.domainServiceFactory,
+    required this.serviceFactory,
     required this.networkFactory,
     required this.child,
   });
@@ -32,7 +32,7 @@ class DependencyScope extends StatefulWidget {
 
   static RepositoryFactory getRepositoryFactory(BuildContext context) => _scopeOf(context).repositoryFactory;
 
-  static ServiceFactory getDomainServiceFactory(BuildContext context) => _scopeOf(context).domainServiceFactory;
+  static ServiceFactory getDomainServiceFactory(BuildContext context) => _scopeOf(context).serviceFactory;
 
   static NetworkFactory getNetworkFactory(BuildContext context) => _scopeOf(context).networkFactory;
 

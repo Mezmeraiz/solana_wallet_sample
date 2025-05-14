@@ -66,6 +66,8 @@ class BlockchainCoinDataRepositoryImpl implements BlockchainCoinDataRepository {
       coinType: TWCoinType.TWCoinTypeSolana,
     );
 
+    _walletRepository.walletDelete(wallet);
+
     final res = await Future.wait([
       _getCoinBlockchainCoinData(address: address),
       _getTokensBlockchainCoinData(address: address),

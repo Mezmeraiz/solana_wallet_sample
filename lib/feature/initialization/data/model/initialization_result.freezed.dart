@@ -20,7 +20,7 @@ mixin _$InitializationResult {
       throw _privateConstructorUsedError;
   BlocFactory get blocFactory => throw _privateConstructorUsedError;
   RepositoryFactory get repositoryFactory => throw _privateConstructorUsedError;
-  ServiceFactory get domainServiceFactory => throw _privateConstructorUsedError;
+  ServiceFactory get serviceFactory => throw _privateConstructorUsedError;
   NetworkFactory get networkFactory => throw _privateConstructorUsedError;
   DatabaseFactory get databaseFactory => throw _privateConstructorUsedError;
   bool get hasSeedPhrase => throw _privateConstructorUsedError;
@@ -42,7 +42,7 @@ abstract class $InitializationResultCopyWith<$Res> {
       {DependencyFactory dependenciesFactory,
       BlocFactory blocFactory,
       RepositoryFactory repositoryFactory,
-      ServiceFactory domainServiceFactory,
+      ServiceFactory serviceFactory,
       NetworkFactory networkFactory,
       DatabaseFactory databaseFactory,
       bool hasSeedPhrase});
@@ -67,7 +67,7 @@ class _$InitializationResultCopyWithImpl<$Res,
     Object? dependenciesFactory = null,
     Object? blocFactory = null,
     Object? repositoryFactory = null,
-    Object? domainServiceFactory = null,
+    Object? serviceFactory = null,
     Object? networkFactory = null,
     Object? databaseFactory = null,
     Object? hasSeedPhrase = null,
@@ -85,9 +85,9 @@ class _$InitializationResultCopyWithImpl<$Res,
           ? _value.repositoryFactory
           : repositoryFactory // ignore: cast_nullable_to_non_nullable
               as RepositoryFactory,
-      domainServiceFactory: null == domainServiceFactory
-          ? _value.domainServiceFactory
-          : domainServiceFactory // ignore: cast_nullable_to_non_nullable
+      serviceFactory: null == serviceFactory
+          ? _value.serviceFactory
+          : serviceFactory // ignore: cast_nullable_to_non_nullable
               as ServiceFactory,
       networkFactory: null == networkFactory
           ? _value.networkFactory
@@ -117,7 +117,7 @@ abstract class _$$InitializationResultImplCopyWith<$Res>
       {DependencyFactory dependenciesFactory,
       BlocFactory blocFactory,
       RepositoryFactory repositoryFactory,
-      ServiceFactory domainServiceFactory,
+      ServiceFactory serviceFactory,
       NetworkFactory networkFactory,
       DatabaseFactory databaseFactory,
       bool hasSeedPhrase});
@@ -139,7 +139,7 @@ class __$$InitializationResultImplCopyWithImpl<$Res>
     Object? dependenciesFactory = null,
     Object? blocFactory = null,
     Object? repositoryFactory = null,
-    Object? domainServiceFactory = null,
+    Object? serviceFactory = null,
     Object? networkFactory = null,
     Object? databaseFactory = null,
     Object? hasSeedPhrase = null,
@@ -157,9 +157,9 @@ class __$$InitializationResultImplCopyWithImpl<$Res>
           ? _value.repositoryFactory
           : repositoryFactory // ignore: cast_nullable_to_non_nullable
               as RepositoryFactory,
-      domainServiceFactory: null == domainServiceFactory
-          ? _value.domainServiceFactory
-          : domainServiceFactory // ignore: cast_nullable_to_non_nullable
+      serviceFactory: null == serviceFactory
+          ? _value.serviceFactory
+          : serviceFactory // ignore: cast_nullable_to_non_nullable
               as ServiceFactory,
       networkFactory: null == networkFactory
           ? _value.networkFactory
@@ -184,7 +184,7 @@ class _$InitializationResultImpl extends _InitializationResult {
       {required this.dependenciesFactory,
       required this.blocFactory,
       required this.repositoryFactory,
-      required this.domainServiceFactory,
+      required this.serviceFactory,
       required this.networkFactory,
       required this.databaseFactory,
       required this.hasSeedPhrase})
@@ -197,7 +197,7 @@ class _$InitializationResultImpl extends _InitializationResult {
   @override
   final RepositoryFactory repositoryFactory;
   @override
-  final ServiceFactory domainServiceFactory;
+  final ServiceFactory serviceFactory;
   @override
   final NetworkFactory networkFactory;
   @override
@@ -207,7 +207,7 @@ class _$InitializationResultImpl extends _InitializationResult {
 
   @override
   String toString() {
-    return 'InitializationResult(dependenciesFactory: $dependenciesFactory, blocFactory: $blocFactory, repositoryFactory: $repositoryFactory, domainServiceFactory: $domainServiceFactory, networkFactory: $networkFactory, databaseFactory: $databaseFactory, hasSeedPhrase: $hasSeedPhrase)';
+    return 'InitializationResult(dependenciesFactory: $dependenciesFactory, blocFactory: $blocFactory, repositoryFactory: $repositoryFactory, serviceFactory: $serviceFactory, networkFactory: $networkFactory, databaseFactory: $databaseFactory, hasSeedPhrase: $hasSeedPhrase)';
   }
 
   @override
@@ -221,8 +221,8 @@ class _$InitializationResultImpl extends _InitializationResult {
                 other.blocFactory == blocFactory) &&
             (identical(other.repositoryFactory, repositoryFactory) ||
                 other.repositoryFactory == repositoryFactory) &&
-            (identical(other.domainServiceFactory, domainServiceFactory) ||
-                other.domainServiceFactory == domainServiceFactory) &&
+            (identical(other.serviceFactory, serviceFactory) ||
+                other.serviceFactory == serviceFactory) &&
             (identical(other.networkFactory, networkFactory) ||
                 other.networkFactory == networkFactory) &&
             (identical(other.databaseFactory, databaseFactory) ||
@@ -237,7 +237,7 @@ class _$InitializationResultImpl extends _InitializationResult {
       dependenciesFactory,
       blocFactory,
       repositoryFactory,
-      domainServiceFactory,
+      serviceFactory,
       networkFactory,
       databaseFactory,
       hasSeedPhrase);
@@ -258,7 +258,7 @@ abstract class _InitializationResult extends InitializationResult {
       {required final DependencyFactory dependenciesFactory,
       required final BlocFactory blocFactory,
       required final RepositoryFactory repositoryFactory,
-      required final ServiceFactory domainServiceFactory,
+      required final ServiceFactory serviceFactory,
       required final NetworkFactory networkFactory,
       required final DatabaseFactory databaseFactory,
       required final bool hasSeedPhrase}) = _$InitializationResultImpl;
@@ -271,7 +271,7 @@ abstract class _InitializationResult extends InitializationResult {
   @override
   RepositoryFactory get repositoryFactory;
   @override
-  ServiceFactory get domainServiceFactory;
+  ServiceFactory get serviceFactory;
   @override
   NetworkFactory get networkFactory;
   @override

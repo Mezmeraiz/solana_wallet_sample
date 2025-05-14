@@ -33,6 +33,10 @@ abstract class CoinDao {
 
   Future<void> updateCoinIcons(List<IconCoinData> list);
 
+  Future<void> clearBlockchainCoinData();
+
+  Future<void> clearActiveCoins();
+
   // for testing
   Future<void> clearAllTables();
 
@@ -57,6 +61,7 @@ class CoinDaoImpl implements CoinDao {
                     id: coin.id,
                     contractAddress: Value(coin.contractAddress),
                     ticker: coin.ticker,
+                    name: coin.name,
                     iconUrl: Value(coin.iconUrl),
                     type: coin.type.name,
                   ),
@@ -126,6 +131,7 @@ class CoinDaoImpl implements CoinDao {
             id: row.id,
             contractAddress: row.contractAddress,
             ticker: row.ticker,
+            name: row.name,
             iconUrl: row.iconUrl,
             type: CoinType.fromString(row.type),
           ),
@@ -145,6 +151,7 @@ class CoinDaoImpl implements CoinDao {
             id: row.id,
             contractAddress: row.contractAddress,
             ticker: row.ticker,
+            name: row.name,
             iconUrl: row.iconUrl,
             type: CoinType.fromString(row.type),
           ),
@@ -175,6 +182,7 @@ class CoinDaoImpl implements CoinDao {
         .map(
           (row) => BaseCoinData(
             id: row.id,
+            name: row.name,
             contractAddress: row.contractAddress,
             ticker: row.ticker,
             iconUrl: row.iconUrl,
@@ -219,6 +227,7 @@ class CoinDaoImpl implements CoinDao {
         );
       });
 
+  @override
   Future<List<BlockchainCoinData>> getBlockchainCoinData() async {
     final rows = await database.select(database.blockchainCoinDataTable).get();
 
@@ -233,6 +242,20 @@ class CoinDaoImpl implements CoinDao {
         )
         .toList();
   }
+
+  @override
+  Future<void> clearBlockchainCoinData() async => database.batch(
+        (batch) {
+          batch.deleteAll(database.blockchainCoinDataTable);
+        },
+      );
+
+  @override
+  Future<void> clearActiveCoins() async => database.batch(
+        (batch) {
+          batch.deleteAll(database.activeCoinsTable);
+        },
+      );
 
   // for testing
   @override

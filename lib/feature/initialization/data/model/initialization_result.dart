@@ -16,7 +16,7 @@ class InitializationResult with _$InitializationResult {
     required DependencyFactory dependenciesFactory,
     required BlocFactory blocFactory,
     required RepositoryFactory repositoryFactory,
-    required ServiceFactory domainServiceFactory,
+    required ServiceFactory serviceFactory,
     required NetworkFactory networkFactory,
     required DatabaseFactory databaseFactory,
     required bool hasSeedPhrase,

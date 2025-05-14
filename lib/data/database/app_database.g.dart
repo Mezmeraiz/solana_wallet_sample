@@ -319,6 +319,12 @@ class BaseCoinDataTable extends Table
       type: DriftSqlType.string,
       requiredDuringInsert: true,
       $customConstraints: 'NOT NULL');
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      $customConstraints: 'NOT NULL');
   static const VerificationMeta _typeMeta = const VerificationMeta('type');
   late final GeneratedColumn<String> type = GeneratedColumn<String>(
       'type', aliasedName, false,
@@ -334,7 +340,7 @@ class BaseCoinDataTable extends Table
       $customConstraints: '');
   @override
   List<GeneratedColumn> get $columns =>
-      [id, contractAddress, ticker, type, iconUrl];
+      [id, contractAddress, ticker, name, type, iconUrl];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -363,6 +369,12 @@ class BaseCoinDataTable extends Table
     } else if (isInserting) {
       context.missing(_tickerMeta);
     }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
     if (data.containsKey('type')) {
       context.handle(
           _typeMeta, type.isAcceptableOrUnknown(data['type']!, _typeMeta));
@@ -388,6 +400,8 @@ class BaseCoinDataTable extends Table
           DriftSqlType.string, data['${effectivePrefix}contract_address']),
       ticker: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}ticker'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
       type: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}type'])!,
       iconUrl: attachedDatabase.typeMapping
@@ -409,12 +423,14 @@ class BaseCoinDataTableData extends DataClass
   final String id;
   final String? contractAddress;
   final String ticker;
+  final String name;
   final String type;
   final String? iconUrl;
   const BaseCoinDataTableData(
       {required this.id,
       this.contractAddress,
       required this.ticker,
+      required this.name,
       required this.type,
       this.iconUrl});
   @override
@@ -425,6 +441,7 @@ class BaseCoinDataTableData extends DataClass
       map['contract_address'] = Variable<String>(contractAddress);
     }
     map['ticker'] = Variable<String>(ticker);
+    map['name'] = Variable<String>(name);
     map['type'] = Variable<String>(type);
     if (!nullToAbsent || iconUrl != null) {
       map['icon_url'] = Variable<String>(iconUrl);
@@ -439,6 +456,7 @@ class BaseCoinDataTableData extends DataClass
           ? const Value.absent()
           : Value(contractAddress),
       ticker: Value(ticker),
+      name: Value(name),
       type: Value(type),
       iconUrl: iconUrl == null && nullToAbsent
           ? const Value.absent()
@@ -453,6 +471,7 @@ class BaseCoinDataTableData extends DataClass
       id: serializer.fromJson<String>(json['id']),
       contractAddress: serializer.fromJson<String?>(json['contract_address']),
       ticker: serializer.fromJson<String>(json['ticker']),
+      name: serializer.fromJson<String>(json['name']),
       type: serializer.fromJson<String>(json['type']),
       iconUrl: serializer.fromJson<String?>(json['icon_url']),
     );
@@ -464,6 +483,7 @@ class BaseCoinDataTableData extends DataClass
       'id': serializer.toJson<String>(id),
       'contract_address': serializer.toJson<String?>(contractAddress),
       'ticker': serializer.toJson<String>(ticker),
+      'name': serializer.toJson<String>(name),
       'type': serializer.toJson<String>(type),
       'icon_url': serializer.toJson<String?>(iconUrl),
     };
@@ -473,6 +493,7 @@ class BaseCoinDataTableData extends DataClass
           {String? id,
           Value<String?> contractAddress = const Value.absent(),
           String? ticker,
+          String? name,
           String? type,
           Value<String?> iconUrl = const Value.absent()}) =>
       BaseCoinDataTableData(
@@ -481,6 +502,7 @@ class BaseCoinDataTableData extends DataClass
             ? contractAddress.value
             : this.contractAddress,
         ticker: ticker ?? this.ticker,
+        name: name ?? this.name,
         type: type ?? this.type,
         iconUrl: iconUrl.present ? iconUrl.value : this.iconUrl,
       );
@@ -491,6 +513,7 @@ class BaseCoinDataTableData extends DataClass
           ? data.contractAddress.value
           : this.contractAddress,
       ticker: data.ticker.present ? data.ticker.value : this.ticker,
+      name: data.name.present ? data.name.value : this.name,
       type: data.type.present ? data.type.value : this.type,
       iconUrl: data.iconUrl.present ? data.iconUrl.value : this.iconUrl,
     );
@@ -502,6 +525,7 @@ class BaseCoinDataTableData extends DataClass
           ..write('id: $id, ')
           ..write('contractAddress: $contractAddress, ')
           ..write('ticker: $ticker, ')
+          ..write('name: $name, ')
           ..write('type: $type, ')
           ..write('iconUrl: $iconUrl')
           ..write(')'))
@@ -509,7 +533,8 @@ class BaseCoinDataTableData extends DataClass
   }
 
   @override
-  int get hashCode => Object.hash(id, contractAddress, ticker, type, iconUrl);
+  int get hashCode =>
+      Object.hash(id, contractAddress, ticker, name, type, iconUrl);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -517,6 +542,7 @@ class BaseCoinDataTableData extends DataClass
           other.id == this.id &&
           other.contractAddress == this.contractAddress &&
           other.ticker == this.ticker &&
+          other.name == this.name &&
           other.type == this.type &&
           other.iconUrl == this.iconUrl);
 }
@@ -526,6 +552,7 @@ class BaseCoinDataTableCompanion
   final Value<String> id;
   final Value<String?> contractAddress;
   final Value<String> ticker;
+  final Value<String> name;
   final Value<String> type;
   final Value<String?> iconUrl;
   final Value<int> rowid;
@@ -533,6 +560,7 @@ class BaseCoinDataTableCompanion
     this.id = const Value.absent(),
     this.contractAddress = const Value.absent(),
     this.ticker = const Value.absent(),
+    this.name = const Value.absent(),
     this.type = const Value.absent(),
     this.iconUrl = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -541,16 +569,19 @@ class BaseCoinDataTableCompanion
     required String id,
     this.contractAddress = const Value.absent(),
     required String ticker,
+    required String name,
     required String type,
     this.iconUrl = const Value.absent(),
     this.rowid = const Value.absent(),
   })  : id = Value(id),
         ticker = Value(ticker),
+        name = Value(name),
         type = Value(type);
   static Insertable<BaseCoinDataTableData> custom({
     Expression<String>? id,
     Expression<String>? contractAddress,
     Expression<String>? ticker,
+    Expression<String>? name,
     Expression<String>? type,
     Expression<String>? iconUrl,
     Expression<int>? rowid,
@@ -559,6 +590,7 @@ class BaseCoinDataTableCompanion
       if (id != null) 'id': id,
       if (contractAddress != null) 'contract_address': contractAddress,
       if (ticker != null) 'ticker': ticker,
+      if (name != null) 'name': name,
       if (type != null) 'type': type,
       if (iconUrl != null) 'icon_url': iconUrl,
       if (rowid != null) 'rowid': rowid,
@@ -569,6 +601,7 @@ class BaseCoinDataTableCompanion
       {Value<String>? id,
       Value<String?>? contractAddress,
       Value<String>? ticker,
+      Value<String>? name,
       Value<String>? type,
       Value<String?>? iconUrl,
       Value<int>? rowid}) {
@@ -576,6 +609,7 @@ class BaseCoinDataTableCompanion
       id: id ?? this.id,
       contractAddress: contractAddress ?? this.contractAddress,
       ticker: ticker ?? this.ticker,
+      name: name ?? this.name,
       type: type ?? this.type,
       iconUrl: iconUrl ?? this.iconUrl,
       rowid: rowid ?? this.rowid,
@@ -593,6 +627,9 @@ class BaseCoinDataTableCompanion
     }
     if (ticker.present) {
       map['ticker'] = Variable<String>(ticker.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
     }
     if (type.present) {
       map['type'] = Variable<String>(type.value);
@@ -612,6 +649,7 @@ class BaseCoinDataTableCompanion
           ..write('id: $id, ')
           ..write('contractAddress: $contractAddress, ')
           ..write('ticker: $ticker, ')
+          ..write('name: $name, ')
           ..write('type: $type, ')
           ..write('iconUrl: $iconUrl, ')
           ..write('rowid: $rowid')
@@ -970,6 +1008,7 @@ typedef $BaseCoinDataTableCreateCompanionBuilder = BaseCoinDataTableCompanion
   required String id,
   Value<String?> contractAddress,
   required String ticker,
+  required String name,
   required String type,
   Value<String?> iconUrl,
   Value<int> rowid,
@@ -979,6 +1018,7 @@ typedef $BaseCoinDataTableUpdateCompanionBuilder = BaseCoinDataTableCompanion
   Value<String> id,
   Value<String?> contractAddress,
   Value<String> ticker,
+  Value<String> name,
   Value<String> type,
   Value<String?> iconUrl,
   Value<int> rowid,
@@ -1002,6 +1042,9 @@ class $BaseCoinDataTableFilterComposer
 
   ColumnFilters<String> get ticker => $composableBuilder(
       column: $table.ticker, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<String> get type => $composableBuilder(
       column: $table.type, builder: (column) => ColumnFilters(column));
@@ -1029,6 +1072,9 @@ class $BaseCoinDataTableOrderingComposer
   ColumnOrderings<String> get ticker => $composableBuilder(
       column: $table.ticker, builder: (column) => ColumnOrderings(column));
 
+  ColumnOrderings<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnOrderings(column));
+
   ColumnOrderings<String> get type => $composableBuilder(
       column: $table.type, builder: (column) => ColumnOrderings(column));
 
@@ -1053,6 +1099,9 @@ class $BaseCoinDataTableAnnotationComposer
 
   GeneratedColumn<String> get ticker =>
       $composableBuilder(column: $table.ticker, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
 
   GeneratedColumn<String> get type =>
       $composableBuilder(column: $table.type, builder: (column) => column);
@@ -1090,6 +1139,7 @@ class $BaseCoinDataTableTableManager extends RootTableManager<
             Value<String> id = const Value.absent(),
             Value<String?> contractAddress = const Value.absent(),
             Value<String> ticker = const Value.absent(),
+            Value<String> name = const Value.absent(),
             Value<String> type = const Value.absent(),
             Value<String?> iconUrl = const Value.absent(),
             Value<int> rowid = const Value.absent(),
@@ -1098,6 +1148,7 @@ class $BaseCoinDataTableTableManager extends RootTableManager<
             id: id,
             contractAddress: contractAddress,
             ticker: ticker,
+            name: name,
             type: type,
             iconUrl: iconUrl,
             rowid: rowid,
@@ -1106,6 +1157,7 @@ class $BaseCoinDataTableTableManager extends RootTableManager<
             required String id,
             Value<String?> contractAddress = const Value.absent(),
             required String ticker,
+            required String name,
             required String type,
             Value<String?> iconUrl = const Value.absent(),
             Value<int> rowid = const Value.absent(),
@@ -1114,6 +1166,7 @@ class $BaseCoinDataTableTableManager extends RootTableManager<
             id: id,
             contractAddress: contractAddress,
             ticker: ticker,
+            name: name,
             type: type,
             iconUrl: iconUrl,
             rowid: rowid,

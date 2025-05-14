@@ -7,4 +7,5 @@ class HomeEvent with _$HomeEvent {
     required List<BlockchainCoinData> blockchainData,
     required Set<String> activeCoinIds,
   }) = _DataChanged;
+  const factory HomeEvent.logout() = _Logout;
 }

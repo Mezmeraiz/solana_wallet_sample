@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:solana_wallet_sample/common/utils.dart';
 import 'package:solana_wallet_sample/data/model/coin/base_coin_data.dart';
-import 'package:solana_wallet_sample/feature/home/view/widgets/icon_place_holder.dart';
-import 'package:solana_wallet_sample/feature/home/vm/active_coin_vm.dart';
-import 'package:solana_wallet_sample/view/network_image/base_network_image.dart';
+import 'package:solana_wallet_sample/view/coin/coin_image.dart';
 
-const _avatarSize = 18.0;
+const _avatarSize = 48.0;
 
 class ManageCoinItem extends StatelessWidget {
   final BaseCoinData baseCoinData;
@@ -21,13 +18,9 @@ class ManageCoinItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListTile(
-        leading: CircleAvatar(
-          radius: _avatarSize / 2,
-          child: BaseNetworkImage.square(
-            imageUrl: baseCoinData.iconUrl,
-            size: _avatarSize,
-            placeholder: const IconPlaceHolder(),
-          ),
+        leading: CoinImage(
+          size: _avatarSize,
+          imageUrl: baseCoinData.iconUrl,
         ),
         title: Text(
           baseCoinData.ticker,

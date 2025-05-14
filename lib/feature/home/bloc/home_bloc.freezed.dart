@@ -22,6 +22,7 @@ mixin _$HomeEvent {
     required TResult Function(
             List<BlockchainCoinData> blockchainData, Set<String> activeCoinIds)
         dataChanged,
+    required TResult Function() logout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -30,6 +31,7 @@ mixin _$HomeEvent {
     TResult? Function(
             List<BlockchainCoinData> blockchainData, Set<String> activeCoinIds)?
         dataChanged,
+    TResult? Function()? logout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -38,6 +40,7 @@ mixin _$HomeEvent {
     TResult Function(
             List<BlockchainCoinData> blockchainData, Set<String> activeCoinIds)?
         dataChanged,
+    TResult Function()? logout,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -45,18 +48,21 @@ mixin _$HomeEvent {
   TResult map<TResult extends Object?>({
     required TResult Function(_Init value) init,
     required TResult Function(_DataChanged value) dataChanged,
+    required TResult Function(_Logout value) logout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Init value)? init,
     TResult? Function(_DataChanged value)? dataChanged,
+    TResult? Function(_Logout value)? logout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Init value)? init,
     TResult Function(_DataChanged value)? dataChanged,
+    TResult Function(_Logout value)? logout,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -153,6 +159,7 @@ class _$InitImpl implements _Init {
     required TResult Function(
             List<BlockchainCoinData> blockchainData, Set<String> activeCoinIds)
         dataChanged,
+    required TResult Function() logout,
   }) {
     return init(pin);
   }
@@ -164,6 +171,7 @@ class _$InitImpl implements _Init {
     TResult? Function(
             List<BlockchainCoinData> blockchainData, Set<String> activeCoinIds)?
         dataChanged,
+    TResult? Function()? logout,
   }) {
     return init?.call(pin);
   }
@@ -175,6 +183,7 @@ class _$InitImpl implements _Init {
     TResult Function(
             List<BlockchainCoinData> blockchainData, Set<String> activeCoinIds)?
         dataChanged,
+    TResult Function()? logout,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -188,6 +197,7 @@ class _$InitImpl implements _Init {
   TResult map<TResult extends Object?>({
     required TResult Function(_Init value) init,
     required TResult Function(_DataChanged value) dataChanged,
+    required TResult Function(_Logout value) logout,
   }) {
     return init(this);
   }
@@ -197,6 +207,7 @@ class _$InitImpl implements _Init {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Init value)? init,
     TResult? Function(_DataChanged value)? dataChanged,
+    TResult? Function(_Logout value)? logout,
   }) {
     return init?.call(this);
   }
@@ -206,6 +217,7 @@ class _$InitImpl implements _Init {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Init value)? init,
     TResult Function(_DataChanged value)? dataChanged,
+    TResult Function(_Logout value)? logout,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -328,6 +340,7 @@ class _$DataChangedImpl implements _DataChanged {
     required TResult Function(
             List<BlockchainCoinData> blockchainData, Set<String> activeCoinIds)
         dataChanged,
+    required TResult Function() logout,
   }) {
     return dataChanged(blockchainData, activeCoinIds);
   }
@@ -339,6 +352,7 @@ class _$DataChangedImpl implements _DataChanged {
     TResult? Function(
             List<BlockchainCoinData> blockchainData, Set<String> activeCoinIds)?
         dataChanged,
+    TResult? Function()? logout,
   }) {
     return dataChanged?.call(blockchainData, activeCoinIds);
   }
@@ -350,6 +364,7 @@ class _$DataChangedImpl implements _DataChanged {
     TResult Function(
             List<BlockchainCoinData> blockchainData, Set<String> activeCoinIds)?
         dataChanged,
+    TResult Function()? logout,
     required TResult orElse(),
   }) {
     if (dataChanged != null) {
@@ -363,6 +378,7 @@ class _$DataChangedImpl implements _DataChanged {
   TResult map<TResult extends Object?>({
     required TResult Function(_Init value) init,
     required TResult Function(_DataChanged value) dataChanged,
+    required TResult Function(_Logout value) logout,
   }) {
     return dataChanged(this);
   }
@@ -372,6 +388,7 @@ class _$DataChangedImpl implements _DataChanged {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Init value)? init,
     TResult? Function(_DataChanged value)? dataChanged,
+    TResult? Function(_Logout value)? logout,
   }) {
     return dataChanged?.call(this);
   }
@@ -381,6 +398,7 @@ class _$DataChangedImpl implements _DataChanged {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Init value)? init,
     TResult Function(_DataChanged value)? dataChanged,
+    TResult Function(_Logout value)? logout,
     required TResult orElse(),
   }) {
     if (dataChanged != null) {
@@ -406,11 +424,127 @@ abstract class _DataChanged implements HomeEvent {
 }
 
 /// @nodoc
+abstract class _$$LogoutImplCopyWith<$Res> {
+  factory _$$LogoutImplCopyWith(
+          _$LogoutImpl value, $Res Function(_$LogoutImpl) then) =
+      __$$LogoutImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$LogoutImplCopyWithImpl<$Res>
+    extends _$HomeEventCopyWithImpl<$Res, _$LogoutImpl>
+    implements _$$LogoutImplCopyWith<$Res> {
+  __$$LogoutImplCopyWithImpl(
+      _$LogoutImpl _value, $Res Function(_$LogoutImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of HomeEvent
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$LogoutImpl implements _Logout {
+  const _$LogoutImpl();
+
+  @override
+  String toString() {
+    return 'HomeEvent.logout()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$LogoutImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String pin) init,
+    required TResult Function(
+            List<BlockchainCoinData> blockchainData, Set<String> activeCoinIds)
+        dataChanged,
+    required TResult Function() logout,
+  }) {
+    return logout();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String pin)? init,
+    TResult? Function(
+            List<BlockchainCoinData> blockchainData, Set<String> activeCoinIds)?
+        dataChanged,
+    TResult? Function()? logout,
+  }) {
+    return logout?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String pin)? init,
+    TResult Function(
+            List<BlockchainCoinData> blockchainData, Set<String> activeCoinIds)?
+        dataChanged,
+    TResult Function()? logout,
+    required TResult orElse(),
+  }) {
+    if (logout != null) {
+      return logout();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Init value) init,
+    required TResult Function(_DataChanged value) dataChanged,
+    required TResult Function(_Logout value) logout,
+  }) {
+    return logout(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Init value)? init,
+    TResult? Function(_DataChanged value)? dataChanged,
+    TResult? Function(_Logout value)? logout,
+  }) {
+    return logout?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Init value)? init,
+    TResult Function(_DataChanged value)? dataChanged,
+    TResult Function(_Logout value)? logout,
+    required TResult orElse(),
+  }) {
+    if (logout != null) {
+      return logout(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Logout implements HomeEvent {
+  const factory _Logout() = _$LogoutImpl;
+}
+
+/// @nodoc
 mixin _$HomeState {
-//@Default('') String pin,
-//String? enteredPin,
   List<ActiveCoinVM> get activeCoins => throw _privateConstructorUsedError;
   ProgressStatus get progressStatus => throw _privateConstructorUsedError;
+  HomeAction get action => throw _privateConstructorUsedError;
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -424,7 +558,10 @@ abstract class $HomeStateCopyWith<$Res> {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) then) =
       _$HomeStateCopyWithImpl<$Res, HomeState>;
   @useResult
-  $Res call({List<ActiveCoinVM> activeCoins, ProgressStatus progressStatus});
+  $Res call(
+      {List<ActiveCoinVM> activeCoins,
+      ProgressStatus progressStatus,
+      HomeAction action});
 }
 
 /// @nodoc
@@ -444,6 +581,7 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   $Res call({
     Object? activeCoins = null,
     Object? progressStatus = null,
+    Object? action = null,
   }) {
     return _then(_value.copyWith(
       activeCoins: null == activeCoins
@@ -454,6 +592,10 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
           ? _value.progressStatus
           : progressStatus // ignore: cast_nullable_to_non_nullable
               as ProgressStatus,
+      action: null == action
+          ? _value.action
+          : action // ignore: cast_nullable_to_non_nullable
+              as HomeAction,
     ) as $Val);
   }
 }
@@ -466,7 +608,10 @@ abstract class _$$HomeStateImplCopyWith<$Res>
       __$$HomeStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<ActiveCoinVM> activeCoins, ProgressStatus progressStatus});
+  $Res call(
+      {List<ActiveCoinVM> activeCoins,
+      ProgressStatus progressStatus,
+      HomeAction action});
 }
 
 /// @nodoc
@@ -484,6 +629,7 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   $Res call({
     Object? activeCoins = null,
     Object? progressStatus = null,
+    Object? action = null,
   }) {
     return _then(_$HomeStateImpl(
       activeCoins: null == activeCoins
@@ -494,6 +640,10 @@ class __$$HomeStateImplCopyWithImpl<$Res>
           ? _value.progressStatus
           : progressStatus // ignore: cast_nullable_to_non_nullable
               as ProgressStatus,
+      action: null == action
+          ? _value.action
+          : action // ignore: cast_nullable_to_non_nullable
+              as HomeAction,
     ));
   }
 }
@@ -503,14 +653,11 @@ class __$$HomeStateImplCopyWithImpl<$Res>
 class _$HomeStateImpl implements _HomeState {
   const _$HomeStateImpl(
       {final List<ActiveCoinVM> activeCoins = const [],
-      this.progressStatus = ProgressStatus.idle})
+      this.progressStatus = ProgressStatus.idle,
+      this.action = HomeAction.none})
       : _activeCoins = activeCoins;
 
-//@Default('') String pin,
-//String? enteredPin,
   final List<ActiveCoinVM> _activeCoins;
-//@Default('') String pin,
-//String? enteredPin,
   @override
   @JsonKey()
   List<ActiveCoinVM> get activeCoins {
@@ -522,10 +669,13 @@ class _$HomeStateImpl implements _HomeState {
   @override
   @JsonKey()
   final ProgressStatus progressStatus;
+  @override
+  @JsonKey()
+  final HomeAction action;
 
   @override
   String toString() {
-    return 'HomeState(activeCoins: $activeCoins, progressStatus: $progressStatus)';
+    return 'HomeState(activeCoins: $activeCoins, progressStatus: $progressStatus, action: $action)';
   }
 
   @override
@@ -536,12 +686,16 @@ class _$HomeStateImpl implements _HomeState {
             const DeepCollectionEquality()
                 .equals(other._activeCoins, _activeCoins) &&
             (identical(other.progressStatus, progressStatus) ||
-                other.progressStatus == progressStatus));
+                other.progressStatus == progressStatus) &&
+            (identical(other.action, action) || other.action == action));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_activeCoins), progressStatus);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_activeCoins),
+      progressStatus,
+      action);
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -555,14 +709,15 @@ class _$HomeStateImpl implements _HomeState {
 abstract class _HomeState implements HomeState {
   const factory _HomeState(
       {final List<ActiveCoinVM> activeCoins,
-      final ProgressStatus progressStatus}) = _$HomeStateImpl;
+      final ProgressStatus progressStatus,
+      final HomeAction action}) = _$HomeStateImpl;
 
-//@Default('') String pin,
-//String? enteredPin,
   @override
   List<ActiveCoinVM> get activeCoins;
   @override
   ProgressStatus get progressStatus;
+  @override
+  HomeAction get action;
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.

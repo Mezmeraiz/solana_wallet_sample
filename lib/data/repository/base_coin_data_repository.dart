@@ -68,6 +68,7 @@ class BaseCoinDataRepositoryImpl implements BaseCoinDataRepository {
       const BaseCoinData(
         id: 'solana',
         ticker: 'SOL',
+        name: 'Solana',
         type: CoinType.coin,
       ),
     );

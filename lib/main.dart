@@ -29,7 +29,7 @@ void main() async {
             dependenciesFactory: result.dependenciesFactory,
             blocFactory: result.blocFactory,
             repositoryFactory: result.repositoryFactory,
-            domainServiceFactory: result.domainServiceFactory,
+            serviceFactory: result.serviceFactory,
             networkFactory: result.networkFactory,
             child: App(
               hasSeedPhrase: result.hasSeedPhrase,

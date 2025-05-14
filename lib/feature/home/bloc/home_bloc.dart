@@ -8,7 +8,10 @@ import 'package:solana_wallet_sample/data/model/coin/base_coin_data.dart';
 import 'package:solana_wallet_sample/data/model/coin/blockchain_coin_data.dart';
 import 'package:solana_wallet_sample/data/repository/base_coin_data_repository.dart';
 import 'package:solana_wallet_sample/data/repository/blockchain_coin_data_repository.dart';
+import 'package:solana_wallet_sample/data/repository/pin_repository.dart';
 import 'package:solana_wallet_sample/data/repository/wallet_repository.dart';
+import 'package:solana_wallet_sample/domain/wallet_service.dart';
+import 'package:solana_wallet_sample/feature/home/data/home_repository.dart';
 import 'package:solana_wallet_sample/feature/home/vm/active_coin_vm.dart';
 
 part 'home_bloc.freezed.dart';
@@ -16,20 +19,24 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  final WalletRepository _walletRepository;
+  final PinRepository _pinRepository;
+  final HomeRepository _homeRepository;
   final BlockchainCoinDataRepository _blockchainCoinDataRepository;
   final BaseCoinDataRepository _baseCoinDataRepository;
 
   HomeBloc({
-    required WalletRepository walletRepository,
+    required PinRepository pinRepository,
+    required HomeRepository homeRepository,
     required BlockchainCoinDataRepository blockchainCoinDataRepository,
     required BaseCoinDataRepository baseCoinDataRepository,
-  })  : _walletRepository = walletRepository,
+  })  : _pinRepository = pinRepository,
+        _homeRepository = homeRepository,
         _blockchainCoinDataRepository = blockchainCoinDataRepository,
         _baseCoinDataRepository = baseCoinDataRepository,
         super(const HomeState()) {
     on<_Init>(_init);
     on<_DataChanged>(_dataChanged);
+    on<_Logout>(_logout);
   }
 
   late final StreamSubscription<void> _blockchainDataSub;
@@ -109,6 +116,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         activeCoins: activeCoins,
       ),
     );
+  }
+
+  Future<void> _logout(
+    _Logout event,
+    Emitter<HomeState> emit,
+  ) async {
+    await _pinRepository.resetVault();
+    await _homeRepository.clearData();
+    emit(state.copyWith(activeCoins: []));
   }
 
   @override

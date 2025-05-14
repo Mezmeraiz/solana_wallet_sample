@@ -33,6 +33,7 @@ class CoinApiImpl implements CoinApi {
         solanaCoins.add(
           BaseCoinData(
             id: item['id'] as String,
+            name: item['name'] as String,
             ticker: (item['symbol'] as String).toUpperCase(),
             type: CoinType.token,
             contractAddress: platforms['solana'] as String,

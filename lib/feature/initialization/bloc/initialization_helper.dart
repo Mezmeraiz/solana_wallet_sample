@@ -51,10 +51,14 @@ class InitializationHelperImpl extends InitializationHelper {
 
     repositoryFactory.baseCoinDataRepository.init();
 
-    final domainServiceFactory = ServiceFactoryImpl(repositoryFactory: repositoryFactory);
+    final serviceFactory = ServiceFactoryImpl(
+      repositoryFactory: repositoryFactory,
+      dependencyFactory: dependenciesFactory,
+    );
 
     final blocFactory = BlocFactoryImpl(
       repositoryFactory: repositoryFactory,
+      serviceFactory: serviceFactory,
     );
 
     final bool hasSeedPhrase = await repositoryFactory.pinRepository.hasSeed() ?? false;
@@ -63,7 +67,7 @@ class InitializationHelperImpl extends InitializationHelper {
       dependenciesFactory: dependenciesFactory,
       blocFactory: blocFactory,
       repositoryFactory: repositoryFactory,
-      domainServiceFactory: domainServiceFactory,
+      serviceFactory: serviceFactory,
       networkFactory: networkFactory,
       databaseFactory: databaseFactory,
       hasSeedPhrase: hasSeedPhrase,

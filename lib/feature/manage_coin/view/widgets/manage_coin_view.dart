@@ -19,9 +19,6 @@ class _ManageCoinViewState extends State<ManageCoinView> {
   void initState() {
     super.initState();
     _scrollController.addListener(() {
-      print(
-          'pix = ${_scrollController.position.pixels} max = ${_scrollController.position.maxScrollExtent - Constants.loadMoreOffset}');
-
       if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - Constants.loadMoreOffset) {
         context.read<ManageCoinBloc>().add(const ManageCoinEvent.loadMore());
       }
@@ -32,12 +29,6 @@ class _ManageCoinViewState extends State<ManageCoinView> {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: const Text('Manage Coins'),
-          // actions: [
-          //   IconButton(
-          //     icon: const Icon(Icons.check),
-          //     onPressed: () => Navigator.of(context).pop(),
-          //   ),
-          // ],
         ),
         body: Column(
           children: [
@@ -56,7 +47,8 @@ class _ManageCoinViewState extends State<ManageCoinView> {
             Expanded(
               child: BlocBuilder<ManageCoinBloc, ManageCoinState>(
                 buildWhen: (prev, curr) => prev.coins != curr.coins || prev.activeCoinIds != curr.activeCoinIds,
-                builder: (context, state) => ListView.builder(
+                builder: (context, state) => ListView.separated(
+                  separatorBuilder: (_, __) => const Divider(),
                   controller: _scrollController,
                   itemCount: state.coins.length,
                   itemBuilder: (context, index) {
@@ -94,4 +86,11 @@ class _ManageCoinViewState extends State<ManageCoinView> {
               isSelected: isSelected,
             ),
           );
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
 }

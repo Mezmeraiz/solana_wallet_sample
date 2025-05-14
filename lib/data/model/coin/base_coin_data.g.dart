@@ -9,6 +9,7 @@ part of 'base_coin_data.dart';
 _$BaseCoinDataImpl _$$BaseCoinDataImplFromJson(Map<String, dynamic> json) =>
     _$BaseCoinDataImpl(
       id: json['id'] as String,
+      name: json['name'] as String,
       ticker: json['ticker'] as String,
       iconUrl: json['iconUrl'] as String?,
       contractAddress: json['contractAddress'] as String?,
@@ -18,6 +19,7 @@ _$BaseCoinDataImpl _$$BaseCoinDataImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$BaseCoinDataImplToJson(_$BaseCoinDataImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'name': instance.name,
       'ticker': instance.ticker,
       'iconUrl': instance.iconUrl,
       'contractAddress': instance.contractAddress,
