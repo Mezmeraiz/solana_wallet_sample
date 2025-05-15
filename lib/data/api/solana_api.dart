@@ -8,6 +8,7 @@ abstract interface class SolanaApi {
   Future<List<TokenAccountsByOwnerResponse>> getTokenAccountsByOwner({
     required String url,
     required String address,
+    String? mint,
   });
 
   Future<int> getBalance({
@@ -17,11 +18,6 @@ abstract interface class SolanaApi {
 
   Future<int> getMinimumBalanceForRentExemption({
     required String url,
-  });
-
-  Future<int> getFeeForMessage({
-    required String url,
-    required String message,
   });
 
   Future<String> getLatestBlockhash({
@@ -52,10 +48,12 @@ class SolanaApiImpl implements SolanaApi {
         params: [
           address,
           mint != null ? {'mint': mint} : {'programId': 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA'},
-          {'encoding': 'jsonParsed', 'commitment': 'confirmed'},
+          {'encoding': 'jsonParsed'},
         ],
       )),
     );
+
+    _checkError(response);
 
     final List<dynamic> accounts = response['result']['value'];
 
@@ -86,6 +84,8 @@ class SolanaApiImpl implements SolanaApi {
       )),
     );
 
+    _checkError(response);
+
     return response['result']['value'] as int;
   }
 
@@ -95,42 +95,20 @@ class SolanaApiImpl implements SolanaApi {
   }) async {
     final response = await _httpWrapper.post(
       url,
-      body: jsonEncode(
-        Utils.getJsonRpcData(
-          method: 'getMinimumBalanceForRentExemption',
-          params: [165],
-        ),
-      ),
+      body: jsonEncode(Utils.getJsonRpcData(
+        method: 'getMinimumBalanceForRentExemption',
+        params: [
+          165,
+          {'commitment': 'finalized'}
+        ],
+      )),
     );
 
-    final result = response['result'] as int;
+    _checkError(response);
 
-    return result;
-  }
+    final result = response['result'];
 
-  @override
-  Future<int> getFeeForMessage({
-    required String url,
-    required String message,
-  }) async {
-    final response = await _httpWrapper.post(
-      url,
-      body: jsonEncode(
-        Utils.getJsonRpcData(
-          method: 'getFees',
-          params: [
-            message,
-            {
-              "commitment": "finalized",
-            }
-          ],
-        ),
-      ),
-    );
-
-    final result = response['result']['value'];
-
-    return result;
+    return result is int ? result : result['value'] as int;
   }
 
   @override
@@ -149,6 +127,8 @@ class SolanaApiImpl implements SolanaApi {
       ),
     );
 
+    _checkError(response);
+
     final result = response['result']['value']['blockhash'] as String;
 
     return result;
@@ -161,16 +141,25 @@ class SolanaApiImpl implements SolanaApi {
   }) async {
     final response = await _httpWrapper.post(
       url,
-      body: jsonEncode(
-        Utils.getJsonRpcData(
-          method: 'sendTransaction',
-          params: [transaction],
-        ),
-      ),
+      body: jsonEncode(Utils.getJsonRpcData(
+        method: 'sendTransaction',
+        params: [
+          transaction,
+        ],
+      )),
     );
+
+    _checkError(response);
 
     final result = response['result'] as String;
 
     return result;
+  }
+
+  void _checkError(Map<String, dynamic> response) {
+    if (response['error'] != null) {
+      final err = response['error'];
+      throw Exception('RPC ${err['code']}: ${err['message']}');
+    }
   }
 }

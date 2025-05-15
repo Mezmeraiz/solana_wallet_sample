@@ -34,5 +34,6 @@ class ServiceFactoryImpl implements ServiceFactory {
         solanaApi: _networkFactory.solanaApi,
         walletRepository: _repositoryFactory.walletRepository,
         commonStorage: _dependencyFactory.commonStorage,
+        secureVault: _dependencyFactory.secureVault,
       );
 }

@@ -62,8 +62,6 @@ class SendTransactionBloc extends Bloc<SendTransactionEvent, SendTransactionStat
         blockchainCoinData: blockchainData,
       ),
     );
-
-    add(SendTransactionEvent.calculateFee());
   }
 
   void _addressChanged(
@@ -105,19 +103,13 @@ class SendTransactionBloc extends Bloc<SendTransactionEvent, SendTransactionStat
         pin: event.pin,
       );
 
-      // emit(
-      //   state.copyWith(
-      //     status: SendTransactionStatus.success,
-      //     transactionHash: result.transactionHash,
-      //   ),
-      // );
-    } catch (e) {
-      // emit(
-      //   state.copyWith(
-      //     status: SendTransactionStatus.error,
-      //     errorMessage: e.toString(),
-      //   ),
-      // );
+      emit(state.copyWith(action: SendTransactionAction.transactionSuccess(tnx)));
+    } catch (e, s) {
+      print(s);
+      emit(state.copyWith(action: const SendTransactionAction.tnxError()));
+    } finally {
+      emit(state.copyWith(action: const SendTransactionAction.none()));
+      emit(state.copyWith(loadingStatus: SendTransactionLoadingStatus.idle));
     }
   }
 
@@ -127,13 +119,10 @@ class SendTransactionBloc extends Bloc<SendTransactionEvent, SendTransactionStat
   ) async {
     final int fee = await _solanaService.calculateFee(
       baseCoinData: state.baseCoinData,
-      toAddress: '3fH2v6H4iCyVPD4C9HB4VAGh7pBGaWtxssEubX7Kztcn',
+      toAddress: state.address,
     );
 
-    emit(
-      state.copyWith(
-        action: SendTransactionAction.feeCalculated(fee),
-      ),
-    );
+    emit(state.copyWith(action: SendTransactionAction.feeCalculated(fee)));
+    emit(state.copyWith(action: const SendTransactionAction.none()));
   }
 }

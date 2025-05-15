@@ -19,32 +19,39 @@ mixin _$CoinInfoEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
+    required TResult Function(BlockchainCoinData? data) blockchainDataChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
+    TResult? Function(BlockchainCoinData? data)? blockchainDataChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
+    TResult Function(BlockchainCoinData? data)? blockchainDataChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Init value) init,
+    required TResult Function(_BlockchainDataChanged value)
+        blockchainDataChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Init value)? init,
+    TResult? Function(_BlockchainDataChanged value)? blockchainDataChanged,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Init value)? init,
+    TResult Function(_BlockchainDataChanged value)? blockchainDataChanged,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -112,6 +119,7 @@ class _$InitImpl implements _Init {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() init,
+    required TResult Function(BlockchainCoinData? data) blockchainDataChanged,
   }) {
     return init();
   }
@@ -120,6 +128,7 @@ class _$InitImpl implements _Init {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? init,
+    TResult? Function(BlockchainCoinData? data)? blockchainDataChanged,
   }) {
     return init?.call();
   }
@@ -128,6 +137,7 @@ class _$InitImpl implements _Init {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? init,
+    TResult Function(BlockchainCoinData? data)? blockchainDataChanged,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -140,6 +150,8 @@ class _$InitImpl implements _Init {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Init value) init,
+    required TResult Function(_BlockchainDataChanged value)
+        blockchainDataChanged,
   }) {
     return init(this);
   }
@@ -148,6 +160,7 @@ class _$InitImpl implements _Init {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Init value)? init,
+    TResult? Function(_BlockchainDataChanged value)? blockchainDataChanged,
   }) {
     return init?.call(this);
   }
@@ -156,6 +169,7 @@ class _$InitImpl implements _Init {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Init value)? init,
+    TResult Function(_BlockchainDataChanged value)? blockchainDataChanged,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -167,6 +181,166 @@ class _$InitImpl implements _Init {
 
 abstract class _Init implements CoinInfoEvent {
   const factory _Init() = _$InitImpl;
+}
+
+/// @nodoc
+abstract class _$$BlockchainDataChangedImplCopyWith<$Res> {
+  factory _$$BlockchainDataChangedImplCopyWith(
+          _$BlockchainDataChangedImpl value,
+          $Res Function(_$BlockchainDataChangedImpl) then) =
+      __$$BlockchainDataChangedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({BlockchainCoinData? data});
+
+  $BlockchainCoinDataCopyWith<$Res>? get data;
+}
+
+/// @nodoc
+class __$$BlockchainDataChangedImplCopyWithImpl<$Res>
+    extends _$CoinInfoEventCopyWithImpl<$Res, _$BlockchainDataChangedImpl>
+    implements _$$BlockchainDataChangedImplCopyWith<$Res> {
+  __$$BlockchainDataChangedImplCopyWithImpl(_$BlockchainDataChangedImpl _value,
+      $Res Function(_$BlockchainDataChangedImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of CoinInfoEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? data = freezed,
+  }) {
+    return _then(_$BlockchainDataChangedImpl(
+      freezed == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as BlockchainCoinData?,
+    ));
+  }
+
+  /// Create a copy of CoinInfoEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BlockchainCoinDataCopyWith<$Res>? get data {
+    if (_value.data == null) {
+      return null;
+    }
+
+    return $BlockchainCoinDataCopyWith<$Res>(_value.data!, (value) {
+      return _then(_value.copyWith(data: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$BlockchainDataChangedImpl implements _BlockchainDataChanged {
+  const _$BlockchainDataChangedImpl(this.data);
+
+  @override
+  final BlockchainCoinData? data;
+
+  @override
+  String toString() {
+    return 'CoinInfoEvent.blockchainDataChanged(data: $data)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$BlockchainDataChangedImpl &&
+            (identical(other.data, data) || other.data == data));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, data);
+
+  /// Create a copy of CoinInfoEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$BlockchainDataChangedImplCopyWith<_$BlockchainDataChangedImpl>
+      get copyWith => __$$BlockchainDataChangedImplCopyWithImpl<
+          _$BlockchainDataChangedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() init,
+    required TResult Function(BlockchainCoinData? data) blockchainDataChanged,
+  }) {
+    return blockchainDataChanged(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? init,
+    TResult? Function(BlockchainCoinData? data)? blockchainDataChanged,
+  }) {
+    return blockchainDataChanged?.call(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? init,
+    TResult Function(BlockchainCoinData? data)? blockchainDataChanged,
+    required TResult orElse(),
+  }) {
+    if (blockchainDataChanged != null) {
+      return blockchainDataChanged(data);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Init value) init,
+    required TResult Function(_BlockchainDataChanged value)
+        blockchainDataChanged,
+  }) {
+    return blockchainDataChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Init value)? init,
+    TResult? Function(_BlockchainDataChanged value)? blockchainDataChanged,
+  }) {
+    return blockchainDataChanged?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Init value)? init,
+    TResult Function(_BlockchainDataChanged value)? blockchainDataChanged,
+    required TResult orElse(),
+  }) {
+    if (blockchainDataChanged != null) {
+      return blockchainDataChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _BlockchainDataChanged implements CoinInfoEvent {
+  const factory _BlockchainDataChanged(final BlockchainCoinData? data) =
+      _$BlockchainDataChangedImpl;
+
+  BlockchainCoinData? get data;
+
+  /// Create a copy of CoinInfoEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$BlockchainDataChangedImplCopyWith<_$BlockchainDataChangedImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc

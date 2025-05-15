@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -34,32 +36,56 @@ class CoinInfoBloc extends Bloc<CoinInfoEvent, CoinInfoState> {
           ),
         ) {
     on<_Init>(_init);
-    // on<_Load>(_load);
-    // on<_LoadMore>(_loadMore);
-    // on<_Search>(_search);
-    // on<_CoinStateChanged>(_coinStateChanged);
+    on<_BlockchainDataChanged>(_blockchainDataChanged);
+  }
+
+  late final StreamSubscription<List<BlockchainCoinData>> _blockchainDataSub;
+
+  void _initSubs() {
+    _blockchainDataSub = _blockchainCoinDataRepository.blockchainCoinDataStream.listen(
+      (values) => add(
+        CoinInfoEvent.blockchainDataChanged(
+          values.firstWhereOrNull((coin) => coin.id == state.coinId),
+        ),
+      ),
+    );
   }
 
   void _init(
     _Init event,
     Emitter<CoinInfoState> emit,
   ) async {
+    _initSubs();
+
     final BaseCoinData baseData = (await _baseCoinDataRepository.getBaseCoinDataByIds(
       ids: {state.coinId},
     ))
         .first;
-    final BlockchainCoinData? blockchainData = _blockchainCoinDataRepository.blockchainCoinDataStream.value
-        .firstWhereOrNull((coin) => coin.id == state.coinId);
 
     final String address = _walletService.getAddress();
 
     emit(
       state.copyWith(
         baseCoinData: baseData,
-        blockchainCoinData: blockchainData,
         loadingStatus: CoinInfoLoadingStatus.idle,
         address: address,
       ),
     );
+  }
+
+  void _blockchainDataChanged(
+    _BlockchainDataChanged event,
+    Emitter<CoinInfoState> emit,
+  ) =>
+      emit(
+        state.copyWith(
+          blockchainCoinData: event.data,
+        ),
+      );
+
+  @override
+  Future<void> close() {
+    _blockchainDataSub.cancel();
+    return super.close();
   }
 }

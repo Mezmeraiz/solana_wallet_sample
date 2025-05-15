@@ -1,6 +1,7 @@
 import 'dart:ffi';
 import 'dart:typed_data';
 
+import 'package:ed25519_edwards/ed25519_edwards.dart' as ed;
 import 'package:ffi/ffi.dart';
 import 'package:flutter/foundation.dart';
 import 'package:solana_wallet_sample/common/extensions/wallet_extension.dart';
@@ -159,4 +160,27 @@ class WalletRepositoryImpl implements WalletRepository {
   }
 
   String _stringFromPtr(Pointer<TWString1> ptr) => _core.TWStringUTF8Bytes(ptr).toDartString();
+
+  // List<int> _getPrivateKey64(String seed) {
+  //   final walletPtr = createWithMnemonic(seed);
+  //
+  //   // 32-byte secret
+  //   final secret32 = getKeyForCoin(
+  //     coinType: TWCoinType.TWCoinTypeSolana,
+  //     wallet: walletPtr,
+  //   ).toList();
+  //
+  //   // ← public = TWPrivateKeyGetPublicKeyEd25519
+  //   final secretData = _core.TWDataCreateWithBytes(secret32.cast<Uint8>().asTypedList(32), 32);
+  //   final pkPtr = _core.TWPrivateKeyCreateWithData(secretData);
+  //   final pubKeyPtr = _core.TWPrivateKeyGetPublicKeyEd25519(pkPtr);
+  //   final pubKey = _core.TWDataBytes(_core.TWPublicKeyData(pubKeyPtr).ref).asTypedList(32);
+  //
+  //   // cleanup native
+  //   _core.TWPrivateKeyDelete(pkPtr);
+  //   _core.TWDataDelete(secretData);
+  //   walletDelete(walletPtr);
+  //
+  //   return [...secret32, ...pubKey]; // 64 байта
+  // }
 }

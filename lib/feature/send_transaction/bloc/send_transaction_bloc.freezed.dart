@@ -21,7 +21,6 @@ mixin _$SendTransactionEvent {
     required TResult Function() init,
     required TResult Function(String address) addressChanged,
     required TResult Function(String amount) amountChanged,
-    required TResult Function() send,
     required TResult Function() calculateFee,
     required TResult Function(String pin) pinReceived,
   }) =>
@@ -31,7 +30,6 @@ mixin _$SendTransactionEvent {
     TResult? Function()? init,
     TResult? Function(String address)? addressChanged,
     TResult? Function(String amount)? amountChanged,
-    TResult? Function()? send,
     TResult? Function()? calculateFee,
     TResult? Function(String pin)? pinReceived,
   }) =>
@@ -41,7 +39,6 @@ mixin _$SendTransactionEvent {
     TResult Function()? init,
     TResult Function(String address)? addressChanged,
     TResult Function(String amount)? amountChanged,
-    TResult Function()? send,
     TResult Function()? calculateFee,
     TResult Function(String pin)? pinReceived,
     required TResult orElse(),
@@ -52,7 +49,6 @@ mixin _$SendTransactionEvent {
     required TResult Function(_Init value) init,
     required TResult Function(_AddressChanged value) addressChanged,
     required TResult Function(_AmountChanged value) amountChanged,
-    required TResult Function(_Send value) send,
     required TResult Function(_CalculateFee value) calculateFee,
     required TResult Function(_PinReceived value) pinReceived,
   }) =>
@@ -62,7 +58,6 @@ mixin _$SendTransactionEvent {
     TResult? Function(_Init value)? init,
     TResult? Function(_AddressChanged value)? addressChanged,
     TResult? Function(_AmountChanged value)? amountChanged,
-    TResult? Function(_Send value)? send,
     TResult? Function(_CalculateFee value)? calculateFee,
     TResult? Function(_PinReceived value)? pinReceived,
   }) =>
@@ -72,7 +67,6 @@ mixin _$SendTransactionEvent {
     TResult Function(_Init value)? init,
     TResult Function(_AddressChanged value)? addressChanged,
     TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_Send value)? send,
     TResult Function(_CalculateFee value)? calculateFee,
     TResult Function(_PinReceived value)? pinReceived,
     required TResult orElse(),
@@ -145,7 +139,6 @@ class _$InitImpl implements _Init {
     required TResult Function() init,
     required TResult Function(String address) addressChanged,
     required TResult Function(String amount) amountChanged,
-    required TResult Function() send,
     required TResult Function() calculateFee,
     required TResult Function(String pin) pinReceived,
   }) {
@@ -158,7 +151,6 @@ class _$InitImpl implements _Init {
     TResult? Function()? init,
     TResult? Function(String address)? addressChanged,
     TResult? Function(String amount)? amountChanged,
-    TResult? Function()? send,
     TResult? Function()? calculateFee,
     TResult? Function(String pin)? pinReceived,
   }) {
@@ -171,7 +163,6 @@ class _$InitImpl implements _Init {
     TResult Function()? init,
     TResult Function(String address)? addressChanged,
     TResult Function(String amount)? amountChanged,
-    TResult Function()? send,
     TResult Function()? calculateFee,
     TResult Function(String pin)? pinReceived,
     required TResult orElse(),
@@ -188,7 +179,6 @@ class _$InitImpl implements _Init {
     required TResult Function(_Init value) init,
     required TResult Function(_AddressChanged value) addressChanged,
     required TResult Function(_AmountChanged value) amountChanged,
-    required TResult Function(_Send value) send,
     required TResult Function(_CalculateFee value) calculateFee,
     required TResult Function(_PinReceived value) pinReceived,
   }) {
@@ -201,7 +191,6 @@ class _$InitImpl implements _Init {
     TResult? Function(_Init value)? init,
     TResult? Function(_AddressChanged value)? addressChanged,
     TResult? Function(_AmountChanged value)? amountChanged,
-    TResult? Function(_Send value)? send,
     TResult? Function(_CalculateFee value)? calculateFee,
     TResult? Function(_PinReceived value)? pinReceived,
   }) {
@@ -214,7 +203,6 @@ class _$InitImpl implements _Init {
     TResult Function(_Init value)? init,
     TResult Function(_AddressChanged value)? addressChanged,
     TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_Send value)? send,
     TResult Function(_CalculateFee value)? calculateFee,
     TResult Function(_PinReceived value)? pinReceived,
     required TResult orElse(),
@@ -302,7 +290,6 @@ class _$AddressChangedImpl implements _AddressChanged {
     required TResult Function() init,
     required TResult Function(String address) addressChanged,
     required TResult Function(String amount) amountChanged,
-    required TResult Function() send,
     required TResult Function() calculateFee,
     required TResult Function(String pin) pinReceived,
   }) {
@@ -315,7 +302,6 @@ class _$AddressChangedImpl implements _AddressChanged {
     TResult? Function()? init,
     TResult? Function(String address)? addressChanged,
     TResult? Function(String amount)? amountChanged,
-    TResult? Function()? send,
     TResult? Function()? calculateFee,
     TResult? Function(String pin)? pinReceived,
   }) {
@@ -328,7 +314,6 @@ class _$AddressChangedImpl implements _AddressChanged {
     TResult Function()? init,
     TResult Function(String address)? addressChanged,
     TResult Function(String amount)? amountChanged,
-    TResult Function()? send,
     TResult Function()? calculateFee,
     TResult Function(String pin)? pinReceived,
     required TResult orElse(),
@@ -345,7 +330,6 @@ class _$AddressChangedImpl implements _AddressChanged {
     required TResult Function(_Init value) init,
     required TResult Function(_AddressChanged value) addressChanged,
     required TResult Function(_AmountChanged value) amountChanged,
-    required TResult Function(_Send value) send,
     required TResult Function(_CalculateFee value) calculateFee,
     required TResult Function(_PinReceived value) pinReceived,
   }) {
@@ -358,7 +342,6 @@ class _$AddressChangedImpl implements _AddressChanged {
     TResult? Function(_Init value)? init,
     TResult? Function(_AddressChanged value)? addressChanged,
     TResult? Function(_AmountChanged value)? amountChanged,
-    TResult? Function(_Send value)? send,
     TResult? Function(_CalculateFee value)? calculateFee,
     TResult? Function(_PinReceived value)? pinReceived,
   }) {
@@ -371,7 +354,6 @@ class _$AddressChangedImpl implements _AddressChanged {
     TResult Function(_Init value)? init,
     TResult Function(_AddressChanged value)? addressChanged,
     TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_Send value)? send,
     TResult Function(_CalculateFee value)? calculateFee,
     TResult Function(_PinReceived value)? pinReceived,
     required TResult orElse(),
@@ -466,7 +448,6 @@ class _$AmountChangedImpl implements _AmountChanged {
     required TResult Function() init,
     required TResult Function(String address) addressChanged,
     required TResult Function(String amount) amountChanged,
-    required TResult Function() send,
     required TResult Function() calculateFee,
     required TResult Function(String pin) pinReceived,
   }) {
@@ -479,7 +460,6 @@ class _$AmountChangedImpl implements _AmountChanged {
     TResult? Function()? init,
     TResult? Function(String address)? addressChanged,
     TResult? Function(String amount)? amountChanged,
-    TResult? Function()? send,
     TResult? Function()? calculateFee,
     TResult? Function(String pin)? pinReceived,
   }) {
@@ -492,7 +472,6 @@ class _$AmountChangedImpl implements _AmountChanged {
     TResult Function()? init,
     TResult Function(String address)? addressChanged,
     TResult Function(String amount)? amountChanged,
-    TResult Function()? send,
     TResult Function()? calculateFee,
     TResult Function(String pin)? pinReceived,
     required TResult orElse(),
@@ -509,7 +488,6 @@ class _$AmountChangedImpl implements _AmountChanged {
     required TResult Function(_Init value) init,
     required TResult Function(_AddressChanged value) addressChanged,
     required TResult Function(_AmountChanged value) amountChanged,
-    required TResult Function(_Send value) send,
     required TResult Function(_CalculateFee value) calculateFee,
     required TResult Function(_PinReceived value) pinReceived,
   }) {
@@ -522,7 +500,6 @@ class _$AmountChangedImpl implements _AmountChanged {
     TResult? Function(_Init value)? init,
     TResult? Function(_AddressChanged value)? addressChanged,
     TResult? Function(_AmountChanged value)? amountChanged,
-    TResult? Function(_Send value)? send,
     TResult? Function(_CalculateFee value)? calculateFee,
     TResult? Function(_PinReceived value)? pinReceived,
   }) {
@@ -535,7 +512,6 @@ class _$AmountChangedImpl implements _AmountChanged {
     TResult Function(_Init value)? init,
     TResult Function(_AddressChanged value)? addressChanged,
     TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_Send value)? send,
     TResult Function(_CalculateFee value)? calculateFee,
     TResult Function(_PinReceived value)? pinReceived,
     required TResult orElse(),
@@ -557,134 +533,6 @@ abstract class _AmountChanged implements SendTransactionEvent {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AmountChangedImplCopyWith<_$AmountChangedImpl> get copyWith =>
       throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$SendImplCopyWith<$Res> {
-  factory _$$SendImplCopyWith(
-          _$SendImpl value, $Res Function(_$SendImpl) then) =
-      __$$SendImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$SendImplCopyWithImpl<$Res>
-    extends _$SendTransactionEventCopyWithImpl<$Res, _$SendImpl>
-    implements _$$SendImplCopyWith<$Res> {
-  __$$SendImplCopyWithImpl(_$SendImpl _value, $Res Function(_$SendImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of SendTransactionEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$SendImpl implements _Send {
-  const _$SendImpl();
-
-  @override
-  String toString() {
-    return 'SendTransactionEvent.send()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SendImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() init,
-    required TResult Function(String address) addressChanged,
-    required TResult Function(String amount) amountChanged,
-    required TResult Function() send,
-    required TResult Function() calculateFee,
-    required TResult Function(String pin) pinReceived,
-  }) {
-    return send();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? init,
-    TResult? Function(String address)? addressChanged,
-    TResult? Function(String amount)? amountChanged,
-    TResult? Function()? send,
-    TResult? Function()? calculateFee,
-    TResult? Function(String pin)? pinReceived,
-  }) {
-    return send?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? init,
-    TResult Function(String address)? addressChanged,
-    TResult Function(String amount)? amountChanged,
-    TResult Function()? send,
-    TResult Function()? calculateFee,
-    TResult Function(String pin)? pinReceived,
-    required TResult orElse(),
-  }) {
-    if (send != null) {
-      return send();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Init value) init,
-    required TResult Function(_AddressChanged value) addressChanged,
-    required TResult Function(_AmountChanged value) amountChanged,
-    required TResult Function(_Send value) send,
-    required TResult Function(_CalculateFee value) calculateFee,
-    required TResult Function(_PinReceived value) pinReceived,
-  }) {
-    return send(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Init value)? init,
-    TResult? Function(_AddressChanged value)? addressChanged,
-    TResult? Function(_AmountChanged value)? amountChanged,
-    TResult? Function(_Send value)? send,
-    TResult? Function(_CalculateFee value)? calculateFee,
-    TResult? Function(_PinReceived value)? pinReceived,
-  }) {
-    return send?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Init value)? init,
-    TResult Function(_AddressChanged value)? addressChanged,
-    TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_Send value)? send,
-    TResult Function(_CalculateFee value)? calculateFee,
-    TResult Function(_PinReceived value)? pinReceived,
-    required TResult orElse(),
-  }) {
-    if (send != null) {
-      return send(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Send implements SendTransactionEvent {
-  const factory _Send() = _$SendImpl;
 }
 
 /// @nodoc
@@ -731,7 +579,6 @@ class _$CalculateFeeImpl implements _CalculateFee {
     required TResult Function() init,
     required TResult Function(String address) addressChanged,
     required TResult Function(String amount) amountChanged,
-    required TResult Function() send,
     required TResult Function() calculateFee,
     required TResult Function(String pin) pinReceived,
   }) {
@@ -744,7 +591,6 @@ class _$CalculateFeeImpl implements _CalculateFee {
     TResult? Function()? init,
     TResult? Function(String address)? addressChanged,
     TResult? Function(String amount)? amountChanged,
-    TResult? Function()? send,
     TResult? Function()? calculateFee,
     TResult? Function(String pin)? pinReceived,
   }) {
@@ -757,7 +603,6 @@ class _$CalculateFeeImpl implements _CalculateFee {
     TResult Function()? init,
     TResult Function(String address)? addressChanged,
     TResult Function(String amount)? amountChanged,
-    TResult Function()? send,
     TResult Function()? calculateFee,
     TResult Function(String pin)? pinReceived,
     required TResult orElse(),
@@ -774,7 +619,6 @@ class _$CalculateFeeImpl implements _CalculateFee {
     required TResult Function(_Init value) init,
     required TResult Function(_AddressChanged value) addressChanged,
     required TResult Function(_AmountChanged value) amountChanged,
-    required TResult Function(_Send value) send,
     required TResult Function(_CalculateFee value) calculateFee,
     required TResult Function(_PinReceived value) pinReceived,
   }) {
@@ -787,7 +631,6 @@ class _$CalculateFeeImpl implements _CalculateFee {
     TResult? Function(_Init value)? init,
     TResult? Function(_AddressChanged value)? addressChanged,
     TResult? Function(_AmountChanged value)? amountChanged,
-    TResult? Function(_Send value)? send,
     TResult? Function(_CalculateFee value)? calculateFee,
     TResult? Function(_PinReceived value)? pinReceived,
   }) {
@@ -800,7 +643,6 @@ class _$CalculateFeeImpl implements _CalculateFee {
     TResult Function(_Init value)? init,
     TResult Function(_AddressChanged value)? addressChanged,
     TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_Send value)? send,
     TResult Function(_CalculateFee value)? calculateFee,
     TResult Function(_PinReceived value)? pinReceived,
     required TResult orElse(),
@@ -887,7 +729,6 @@ class _$PinReceivedImpl implements _PinReceived {
     required TResult Function() init,
     required TResult Function(String address) addressChanged,
     required TResult Function(String amount) amountChanged,
-    required TResult Function() send,
     required TResult Function() calculateFee,
     required TResult Function(String pin) pinReceived,
   }) {
@@ -900,7 +741,6 @@ class _$PinReceivedImpl implements _PinReceived {
     TResult? Function()? init,
     TResult? Function(String address)? addressChanged,
     TResult? Function(String amount)? amountChanged,
-    TResult? Function()? send,
     TResult? Function()? calculateFee,
     TResult? Function(String pin)? pinReceived,
   }) {
@@ -913,7 +753,6 @@ class _$PinReceivedImpl implements _PinReceived {
     TResult Function()? init,
     TResult Function(String address)? addressChanged,
     TResult Function(String amount)? amountChanged,
-    TResult Function()? send,
     TResult Function()? calculateFee,
     TResult Function(String pin)? pinReceived,
     required TResult orElse(),
@@ -930,7 +769,6 @@ class _$PinReceivedImpl implements _PinReceived {
     required TResult Function(_Init value) init,
     required TResult Function(_AddressChanged value) addressChanged,
     required TResult Function(_AmountChanged value) amountChanged,
-    required TResult Function(_Send value) send,
     required TResult Function(_CalculateFee value) calculateFee,
     required TResult Function(_PinReceived value) pinReceived,
   }) {
@@ -943,7 +781,6 @@ class _$PinReceivedImpl implements _PinReceived {
     TResult? Function(_Init value)? init,
     TResult? Function(_AddressChanged value)? addressChanged,
     TResult? Function(_AmountChanged value)? amountChanged,
-    TResult? Function(_Send value)? send,
     TResult? Function(_CalculateFee value)? calculateFee,
     TResult? Function(_PinReceived value)? pinReceived,
   }) {
@@ -956,7 +793,6 @@ class _$PinReceivedImpl implements _PinReceived {
     TResult Function(_Init value)? init,
     TResult Function(_AddressChanged value)? addressChanged,
     TResult Function(_AmountChanged value)? amountChanged,
-    TResult Function(_Send value)? send,
     TResult Function(_CalculateFee value)? calculateFee,
     TResult Function(_PinReceived value)? pinReceived,
     required TResult orElse(),
@@ -988,7 +824,6 @@ mixin _$SendTransactionState {
       throw _privateConstructorUsedError;
   String get amount => throw _privateConstructorUsedError;
   String get address => throw _privateConstructorUsedError;
-  String get seedPhrase => throw _privateConstructorUsedError;
   SendTransactionLoadingStatus get loadingStatus =>
       throw _privateConstructorUsedError;
   SendTransactionAction get action => throw _privateConstructorUsedError;
@@ -1012,7 +847,6 @@ abstract class $SendTransactionStateCopyWith<$Res> {
       BlockchainCoinData blockchainCoinData,
       String amount,
       String address,
-      String seedPhrase,
       SendTransactionLoadingStatus loadingStatus,
       SendTransactionAction action});
 
@@ -1042,7 +876,6 @@ class _$SendTransactionStateCopyWithImpl<$Res,
     Object? blockchainCoinData = null,
     Object? amount = null,
     Object? address = null,
-    Object? seedPhrase = null,
     Object? loadingStatus = null,
     Object? action = null,
   }) {
@@ -1066,10 +899,6 @@ class _$SendTransactionStateCopyWithImpl<$Res,
       address: null == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
-              as String,
-      seedPhrase: null == seedPhrase
-          ? _value.seedPhrase
-          : seedPhrase // ignore: cast_nullable_to_non_nullable
               as String,
       loadingStatus: null == loadingStatus
           ? _value.loadingStatus
@@ -1128,7 +957,6 @@ abstract class _$$SendTransactionStateImplCopyWith<$Res>
       BlockchainCoinData blockchainCoinData,
       String amount,
       String address,
-      String seedPhrase,
       SendTransactionLoadingStatus loadingStatus,
       SendTransactionAction action});
 
@@ -1158,7 +986,6 @@ class __$$SendTransactionStateImplCopyWithImpl<$Res>
     Object? blockchainCoinData = null,
     Object? amount = null,
     Object? address = null,
-    Object? seedPhrase = null,
     Object? loadingStatus = null,
     Object? action = null,
   }) {
@@ -1183,10 +1010,6 @@ class __$$SendTransactionStateImplCopyWithImpl<$Res>
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
               as String,
-      seedPhrase: null == seedPhrase
-          ? _value.seedPhrase
-          : seedPhrase // ignore: cast_nullable_to_non_nullable
-              as String,
       loadingStatus: null == loadingStatus
           ? _value.loadingStatus
           : loadingStatus // ignore: cast_nullable_to_non_nullable
@@ -1208,7 +1031,6 @@ class _$SendTransactionStateImpl implements _SendTransactionState {
       required this.blockchainCoinData,
       this.amount = '',
       this.address = '',
-      this.seedPhrase = '',
       this.loadingStatus = SendTransactionLoadingStatus.idle,
       this.action = const SendTransactionAction.none()});
 
@@ -1226,9 +1048,6 @@ class _$SendTransactionStateImpl implements _SendTransactionState {
   final String address;
   @override
   @JsonKey()
-  final String seedPhrase;
-  @override
-  @JsonKey()
   final SendTransactionLoadingStatus loadingStatus;
   @override
   @JsonKey()
@@ -1236,7 +1055,7 @@ class _$SendTransactionStateImpl implements _SendTransactionState {
 
   @override
   String toString() {
-    return 'SendTransactionState(coinId: $coinId, baseCoinData: $baseCoinData, blockchainCoinData: $blockchainCoinData, amount: $amount, address: $address, seedPhrase: $seedPhrase, loadingStatus: $loadingStatus, action: $action)';
+    return 'SendTransactionState(coinId: $coinId, baseCoinData: $baseCoinData, blockchainCoinData: $blockchainCoinData, amount: $amount, address: $address, loadingStatus: $loadingStatus, action: $action)';
   }
 
   @override
@@ -1251,8 +1070,6 @@ class _$SendTransactionStateImpl implements _SendTransactionState {
                 other.blockchainCoinData == blockchainCoinData) &&
             (identical(other.amount, amount) || other.amount == amount) &&
             (identical(other.address, address) || other.address == address) &&
-            (identical(other.seedPhrase, seedPhrase) ||
-                other.seedPhrase == seedPhrase) &&
             (identical(other.loadingStatus, loadingStatus) ||
                 other.loadingStatus == loadingStatus) &&
             (identical(other.action, action) || other.action == action));
@@ -1260,7 +1077,7 @@ class _$SendTransactionStateImpl implements _SendTransactionState {
 
   @override
   int get hashCode => Object.hash(runtimeType, coinId, baseCoinData,
-      blockchainCoinData, amount, address, seedPhrase, loadingStatus, action);
+      blockchainCoinData, amount, address, loadingStatus, action);
 
   /// Create a copy of SendTransactionState
   /// with the given fields replaced by the non-null parameter values.
@@ -1280,7 +1097,6 @@ abstract class _SendTransactionState implements SendTransactionState {
       required final BlockchainCoinData blockchainCoinData,
       final String amount,
       final String address,
-      final String seedPhrase,
       final SendTransactionLoadingStatus loadingStatus,
       final SendTransactionAction action}) = _$SendTransactionStateImpl;
 
@@ -1294,8 +1110,6 @@ abstract class _SendTransactionState implements SendTransactionState {
   String get amount;
   @override
   String get address;
-  @override
-  String get seedPhrase;
   @override
   SendTransactionLoadingStatus get loadingStatus;
   @override
@@ -1314,6 +1128,7 @@ mixin _$SendTransactionAction {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() none,
+    required TResult Function() tnxError,
     required TResult Function(int fee) feeCalculated,
     required TResult Function(String tnx) transactionSuccess,
   }) =>
@@ -1321,6 +1136,7 @@ mixin _$SendTransactionAction {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? none,
+    TResult? Function()? tnxError,
     TResult? Function(int fee)? feeCalculated,
     TResult? Function(String tnx)? transactionSuccess,
   }) =>
@@ -1328,6 +1144,7 @@ mixin _$SendTransactionAction {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? none,
+    TResult Function()? tnxError,
     TResult Function(int fee)? feeCalculated,
     TResult Function(String tnx)? transactionSuccess,
     required TResult orElse(),
@@ -1336,6 +1153,7 @@ mixin _$SendTransactionAction {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(NoneAction value) none,
+    required TResult Function(tnxErrorAction value) tnxError,
     required TResult Function(FeeCalculatedAction value) feeCalculated,
     required TResult Function(TransactionSuccessAction value)
         transactionSuccess,
@@ -1344,6 +1162,7 @@ mixin _$SendTransactionAction {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(NoneAction value)? none,
+    TResult? Function(tnxErrorAction value)? tnxError,
     TResult? Function(FeeCalculatedAction value)? feeCalculated,
     TResult? Function(TransactionSuccessAction value)? transactionSuccess,
   }) =>
@@ -1351,6 +1170,7 @@ mixin _$SendTransactionAction {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(NoneAction value)? none,
+    TResult Function(tnxErrorAction value)? tnxError,
     TResult Function(FeeCalculatedAction value)? feeCalculated,
     TResult Function(TransactionSuccessAction value)? transactionSuccess,
     required TResult orElse(),
@@ -1422,6 +1242,7 @@ class _$NoneActionImpl implements NoneAction {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() none,
+    required TResult Function() tnxError,
     required TResult Function(int fee) feeCalculated,
     required TResult Function(String tnx) transactionSuccess,
   }) {
@@ -1432,6 +1253,7 @@ class _$NoneActionImpl implements NoneAction {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? none,
+    TResult? Function()? tnxError,
     TResult? Function(int fee)? feeCalculated,
     TResult? Function(String tnx)? transactionSuccess,
   }) {
@@ -1442,6 +1264,7 @@ class _$NoneActionImpl implements NoneAction {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? none,
+    TResult Function()? tnxError,
     TResult Function(int fee)? feeCalculated,
     TResult Function(String tnx)? transactionSuccess,
     required TResult orElse(),
@@ -1456,6 +1279,7 @@ class _$NoneActionImpl implements NoneAction {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(NoneAction value) none,
+    required TResult Function(tnxErrorAction value) tnxError,
     required TResult Function(FeeCalculatedAction value) feeCalculated,
     required TResult Function(TransactionSuccessAction value)
         transactionSuccess,
@@ -1467,6 +1291,7 @@ class _$NoneActionImpl implements NoneAction {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(NoneAction value)? none,
+    TResult? Function(tnxErrorAction value)? tnxError,
     TResult? Function(FeeCalculatedAction value)? feeCalculated,
     TResult? Function(TransactionSuccessAction value)? transactionSuccess,
   }) {
@@ -1477,6 +1302,7 @@ class _$NoneActionImpl implements NoneAction {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(NoneAction value)? none,
+    TResult Function(tnxErrorAction value)? tnxError,
     TResult Function(FeeCalculatedAction value)? feeCalculated,
     TResult Function(TransactionSuccessAction value)? transactionSuccess,
     required TResult orElse(),
@@ -1490,6 +1316,124 @@ class _$NoneActionImpl implements NoneAction {
 
 abstract class NoneAction implements SendTransactionAction {
   const factory NoneAction() = _$NoneActionImpl;
+}
+
+/// @nodoc
+abstract class _$$tnxErrorActionImplCopyWith<$Res> {
+  factory _$$tnxErrorActionImplCopyWith(_$tnxErrorActionImpl value,
+          $Res Function(_$tnxErrorActionImpl) then) =
+      __$$tnxErrorActionImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$tnxErrorActionImplCopyWithImpl<$Res>
+    extends _$SendTransactionActionCopyWithImpl<$Res, _$tnxErrorActionImpl>
+    implements _$$tnxErrorActionImplCopyWith<$Res> {
+  __$$tnxErrorActionImplCopyWithImpl(
+      _$tnxErrorActionImpl _value, $Res Function(_$tnxErrorActionImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of SendTransactionAction
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$tnxErrorActionImpl implements tnxErrorAction {
+  const _$tnxErrorActionImpl();
+
+  @override
+  String toString() {
+    return 'SendTransactionAction.tnxError()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$tnxErrorActionImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() none,
+    required TResult Function() tnxError,
+    required TResult Function(int fee) feeCalculated,
+    required TResult Function(String tnx) transactionSuccess,
+  }) {
+    return tnxError();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? none,
+    TResult? Function()? tnxError,
+    TResult? Function(int fee)? feeCalculated,
+    TResult? Function(String tnx)? transactionSuccess,
+  }) {
+    return tnxError?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? none,
+    TResult Function()? tnxError,
+    TResult Function(int fee)? feeCalculated,
+    TResult Function(String tnx)? transactionSuccess,
+    required TResult orElse(),
+  }) {
+    if (tnxError != null) {
+      return tnxError();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(NoneAction value) none,
+    required TResult Function(tnxErrorAction value) tnxError,
+    required TResult Function(FeeCalculatedAction value) feeCalculated,
+    required TResult Function(TransactionSuccessAction value)
+        transactionSuccess,
+  }) {
+    return tnxError(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(NoneAction value)? none,
+    TResult? Function(tnxErrorAction value)? tnxError,
+    TResult? Function(FeeCalculatedAction value)? feeCalculated,
+    TResult? Function(TransactionSuccessAction value)? transactionSuccess,
+  }) {
+    return tnxError?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(NoneAction value)? none,
+    TResult Function(tnxErrorAction value)? tnxError,
+    TResult Function(FeeCalculatedAction value)? feeCalculated,
+    TResult Function(TransactionSuccessAction value)? transactionSuccess,
+    required TResult orElse(),
+  }) {
+    if (tnxError != null) {
+      return tnxError(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class tnxErrorAction implements SendTransactionAction {
+  const factory tnxErrorAction() = _$tnxErrorActionImpl;
 }
 
 /// @nodoc
@@ -1562,6 +1506,7 @@ class _$FeeCalculatedActionImpl implements FeeCalculatedAction {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() none,
+    required TResult Function() tnxError,
     required TResult Function(int fee) feeCalculated,
     required TResult Function(String tnx) transactionSuccess,
   }) {
@@ -1572,6 +1517,7 @@ class _$FeeCalculatedActionImpl implements FeeCalculatedAction {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? none,
+    TResult? Function()? tnxError,
     TResult? Function(int fee)? feeCalculated,
     TResult? Function(String tnx)? transactionSuccess,
   }) {
@@ -1582,6 +1528,7 @@ class _$FeeCalculatedActionImpl implements FeeCalculatedAction {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? none,
+    TResult Function()? tnxError,
     TResult Function(int fee)? feeCalculated,
     TResult Function(String tnx)? transactionSuccess,
     required TResult orElse(),
@@ -1596,6 +1543,7 @@ class _$FeeCalculatedActionImpl implements FeeCalculatedAction {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(NoneAction value) none,
+    required TResult Function(tnxErrorAction value) tnxError,
     required TResult Function(FeeCalculatedAction value) feeCalculated,
     required TResult Function(TransactionSuccessAction value)
         transactionSuccess,
@@ -1607,6 +1555,7 @@ class _$FeeCalculatedActionImpl implements FeeCalculatedAction {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(NoneAction value)? none,
+    TResult? Function(tnxErrorAction value)? tnxError,
     TResult? Function(FeeCalculatedAction value)? feeCalculated,
     TResult? Function(TransactionSuccessAction value)? transactionSuccess,
   }) {
@@ -1617,6 +1566,7 @@ class _$FeeCalculatedActionImpl implements FeeCalculatedAction {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(NoneAction value)? none,
+    TResult Function(tnxErrorAction value)? tnxError,
     TResult Function(FeeCalculatedAction value)? feeCalculated,
     TResult Function(TransactionSuccessAction value)? transactionSuccess,
     required TResult orElse(),
@@ -1713,6 +1663,7 @@ class _$TransactionSuccessActionImpl implements TransactionSuccessAction {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() none,
+    required TResult Function() tnxError,
     required TResult Function(int fee) feeCalculated,
     required TResult Function(String tnx) transactionSuccess,
   }) {
@@ -1723,6 +1674,7 @@ class _$TransactionSuccessActionImpl implements TransactionSuccessAction {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? none,
+    TResult? Function()? tnxError,
     TResult? Function(int fee)? feeCalculated,
     TResult? Function(String tnx)? transactionSuccess,
   }) {
@@ -1733,6 +1685,7 @@ class _$TransactionSuccessActionImpl implements TransactionSuccessAction {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? none,
+    TResult Function()? tnxError,
     TResult Function(int fee)? feeCalculated,
     TResult Function(String tnx)? transactionSuccess,
     required TResult orElse(),
@@ -1747,6 +1700,7 @@ class _$TransactionSuccessActionImpl implements TransactionSuccessAction {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(NoneAction value) none,
+    required TResult Function(tnxErrorAction value) tnxError,
     required TResult Function(FeeCalculatedAction value) feeCalculated,
     required TResult Function(TransactionSuccessAction value)
         transactionSuccess,
@@ -1758,6 +1712,7 @@ class _$TransactionSuccessActionImpl implements TransactionSuccessAction {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(NoneAction value)? none,
+    TResult? Function(tnxErrorAction value)? tnxError,
     TResult? Function(FeeCalculatedAction value)? feeCalculated,
     TResult? Function(TransactionSuccessAction value)? transactionSuccess,
   }) {
@@ -1768,6 +1723,7 @@ class _$TransactionSuccessActionImpl implements TransactionSuccessAction {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(NoneAction value)? none,
+    TResult Function(tnxErrorAction value)? tnxError,
     TResult Function(FeeCalculatedAction value)? feeCalculated,
     TResult Function(TransactionSuccessAction value)? transactionSuccess,
     required TResult orElse(),

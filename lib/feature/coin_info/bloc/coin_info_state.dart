@@ -15,8 +15,3 @@ enum CoinInfoLoadingStatus {
   idle,
   loading,
 }
-//
-// enum CoinInfoAction {
-//   none,
-//   pinEntered,
-// }
