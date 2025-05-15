@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:solana_wallet_sample/di/dependency_scope.dart';
 import 'package:solana_wallet_sample/di/factory/bloc_factory.dart';
+import 'package:solana_wallet_sample/di/factory/database_factory.dart';
 import 'package:solana_wallet_sample/di/factory/dependency_factory.dart';
 import 'package:solana_wallet_sample/di/factory/domain_service_factory.dart';
 import 'package:solana_wallet_sample/di/factory/network_factory.dart';
@@ -16,6 +17,8 @@ extension DependencyExtension on BuildContext {
   ServiceFactory get domainServiceFactory => DependencyScope.getDomainServiceFactory(this);
 
   NetworkFactory get networkFactory => DependencyScope.getNetworkFactory(this);
+
+  DatabaseFactory get databaseFactory => DependencyScope.getDatabaseFactory(this);
 }
 
 extension NavigatorExtension on BuildContext {

@@ -35,6 +35,8 @@ class DependencyFactoryImpl implements DependencyFactory {
 
   AppDatabase? _appDatabase;
 
+  CommonStorage? _commonStorage;
+
   @override
   HttpWrapper get httpWrapper => _httpWrapper ??= HttpWrapperImpl();
 
@@ -48,7 +50,9 @@ class DependencyFactoryImpl implements DependencyFactory {
   AppDatabase get appDatabase => _appDatabase ?? AppDatabase();
 
   @override
-  CommonStorage get commonStorage => CommonStorageImpl(
+  CommonStorage get commonStorage =>
+      _commonStorage ??
+      CommonStorageImpl(
         sharedPreferences: _sharedPreferences,
       );
 

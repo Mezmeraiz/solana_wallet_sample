@@ -14,7 +14,7 @@ class ServiceFactoryImpl implements ServiceFactory {
   final DependencyFactory _dependencyFactory;
   final NetworkFactory _networkFactory;
 
-  const ServiceFactoryImpl({
+  ServiceFactoryImpl({
     required RepositoryFactory repositoryFactory,
     required DependencyFactory dependencyFactory,
     required NetworkFactory networkFactory,
@@ -22,15 +22,19 @@ class ServiceFactoryImpl implements ServiceFactory {
         _dependencyFactory = dependencyFactory,
         _networkFactory = networkFactory;
 
+  WalletService? _walletService;
+
+  SolanaService? _solanaService;
+
   @override
-  WalletService get walletService => WalletServiceImpl(
+  WalletService get walletService => _walletService ??= WalletServiceImpl(
+        walletRepository: _repositoryFactory.walletRepository,
         secureVault: _dependencyFactory.secureVault,
         commonStorage: _dependencyFactory.commonStorage,
-        walletRepository: _repositoryFactory.walletRepository,
       );
 
   @override
-  SolanaService get solanaService => SolanaServiceImpl(
+  SolanaService get solanaService => _solanaService ??= SolanaServiceImpl(
         solanaApi: _networkFactory.solanaApi,
         walletRepository: _repositoryFactory.walletRepository,
         commonStorage: _dependencyFactory.commonStorage,

@@ -60,11 +60,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     _Init event,
     Emitter<HomeState> emit,
   ) async {
-    emit(
-      state.copyWith(
-        progressStatus: ProgressStatus.loading,
-      ),
-    );
+    emit(state.copyWith(progressStatus: ProgressStatus.loading));
 
     _initSubs();
 
@@ -79,11 +75,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       blockchainDataUpdated,
     ]);
 
-    emit(
-      state.copyWith(
-        progressStatus: ProgressStatus.idle,
-      ),
-    );
+    emit(state.copyWith(progressStatus: ProgressStatus.idle));
   }
 
   Future<void> _dataChanged(
@@ -109,11 +101,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       },
     ).toList();
 
-    emit(
-      state.copyWith(
-        activeCoins: activeCoins,
-      ),
-    );
+    emit(state.copyWith(activeCoins: activeCoins));
   }
 
   Future<void> _logout(
@@ -122,12 +110,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) async {
     await _pinRepository.resetVault();
     await _homeRepository.clearData();
+    _blockchainCoinDataRepository.reset();
 
-    emit(
-      state.copyWith(
-        action: HomeAction.logout,
-      ),
-    );
+    emit(state.copyWith(action: HomeAction.logout));
   }
 
   @override

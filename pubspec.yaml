@@ -30,7 +30,6 @@ dependencies:
   web3dart: ^2.6.1
   secure_vault:
     path: ./secure_vault
-  ed25519_edwards: ^0.3.1
 
 dev_dependencies:
   flutter_test:

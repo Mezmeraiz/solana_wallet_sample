@@ -96,11 +96,7 @@ class ManageCoinBloc extends Bloc<ManageCoinEvent, ManageCoinState> {
     _Load event,
     Emitter<ManageCoinState> emit,
   ) async {
-    emit(
-      state.copyWith(
-        loadingStatus: ManageCoinLoadingStatus.loading,
-      ),
-    );
+    emit(state.copyWith(loadingStatus: ManageCoinLoadingStatus.loading));
 
     final List<BaseCoinData> filteredCoins = await _baseCoinDataRepository.getBaseCoinData(
       limit: loadLimit,
@@ -142,10 +138,6 @@ class ManageCoinBloc extends Bloc<ManageCoinEvent, ManageCoinState> {
 
     await _blockchainCoinDataRepository.setActiveCoins(activeIds);
 
-    emit(
-      state.copyWith(
-        activeCoinIds: activeIds,
-      ),
-    );
+    emit(state.copyWith(activeCoinIds: activeIds));
   }
 }

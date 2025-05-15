@@ -10,16 +10,10 @@ class ManageCoinState with _$ManageCoinState {
     @Default(0) int offset,
     @Default('') String query,
     @Default(ManageCoinLoadingStatus.idle) ManageCoinLoadingStatus loadingStatus,
-    // @Default(ManageCoinAction.none) ManageCoinAction action,
   }) = _ManageCoinState;
 }
 
 enum ManageCoinLoadingStatus {
   idle,
   loading,
-}
-
-enum ManageCoinAction {
-  none,
-  pinEntered,
 }

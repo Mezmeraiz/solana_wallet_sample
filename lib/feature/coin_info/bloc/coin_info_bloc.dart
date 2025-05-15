@@ -7,7 +7,6 @@ import 'package:solana_wallet_sample/data/model/coin/base_coin_data.dart';
 import 'package:solana_wallet_sample/data/model/coin/blockchain_coin_data.dart';
 import 'package:solana_wallet_sample/data/repository/base_coin_data_repository.dart';
 import 'package:solana_wallet_sample/data/repository/blockchain_coin_data_repository.dart';
-import 'package:solana_wallet_sample/data/repository/wallet_repository.dart';
 import 'package:solana_wallet_sample/domain/wallet_service.dart';
 
 part 'coin_info_bloc.freezed.dart';

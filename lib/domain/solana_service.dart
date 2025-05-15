@@ -1,12 +1,9 @@
 import 'dart:ffi';
-import 'dart:typed_data';
 
-import 'package:ed25519_edwards/ed25519_edwards.dart' as ed;
 import 'package:fixnum/fixnum.dart' as fixnum;
-import 'package:flutter/foundation.dart';
 import 'package:secure_vault/secure_vault.dart';
+import 'package:solana_wallet_sample/common/constants.dart';
 import 'package:solana_wallet_sample/common/utils.dart';
-import 'package:solana_wallet_sample/data/api/common/constants.dart';
 import 'package:solana_wallet_sample/data/api/dto/token_accounts_by_owner_response.dart';
 import 'package:solana_wallet_sample/data/api/solana_api.dart';
 import 'package:solana_wallet_sample/data/model/coin/base_coin_data.dart';
@@ -69,7 +66,7 @@ class SolanaServiceImpl implements SolanaService {
     String toAddress,
   ) async {
     final List<TokenAccountsByOwnerResponse> accounts = await _solanaApi.getTokenAccountsByOwner(
-      url: DefaultNodeUrl.solanaUrl,
+      url: Constants.solanaUrl,
       address: toAddress,
     );
 
@@ -79,7 +76,7 @@ class SolanaServiceImpl implements SolanaService {
 
     if (!hasAccount) {
       final ataFee = await _solanaApi.getMinimumBalanceForRentExemption(
-        url: DefaultNodeUrl.solanaUrl,
+        url: Constants.solanaUrl,
       );
 
       return ataFee + lamportsPerSignature;
@@ -117,7 +114,7 @@ class SolanaServiceImpl implements SolanaService {
           );
 
     final response = await _solanaApi.sendTransaction(
-      url: DefaultNodeUrl.solanaUrl,
+      url: Constants.solanaUrl,
       transaction: tnx,
     );
 
@@ -142,7 +139,7 @@ class SolanaServiceImpl implements SolanaService {
     final List<int> privateKey = _getPrivateKey(seedPhrase);
 
     final blockHash = await _solanaApi.getLatestBlockhash(
-      url: DefaultNodeUrl.solanaUrl,
+      url: Constants.solanaUrl,
     );
 
     final input = solana.SigningInput(
@@ -170,13 +167,13 @@ class SolanaServiceImpl implements SolanaService {
     BlockchainCoinData blockchainCoinData,
   ) async {
     final recipientAccountsFuture = _solanaApi.getTokenAccountsByOwner(
-      url: DefaultNodeUrl.solanaUrl,
+      url: Constants.solanaUrl,
       address: toAddress,
       mint: blockchainCoinData.contractAddress,
     );
 
     final senderAccountsFuture = _solanaApi.getTokenAccountsByOwner(
-      url: DefaultNodeUrl.solanaUrl,
+      url: Constants.solanaUrl,
       address: _commonStorage.address!,
       mint: blockchainCoinData.contractAddress,
     );
@@ -190,7 +187,7 @@ class SolanaServiceImpl implements SolanaService {
     final senderAccounts = result[1];
 
     final String latestHash = await _solanaApi.getLatestBlockhash(
-      url: DefaultNodeUrl.solanaUrl,
+      url: Constants.solanaUrl,
     );
 
     final amountInMinUnits = Utils.valueToMinUnit(
@@ -198,7 +195,6 @@ class SolanaServiceImpl implements SolanaService {
       blockchainCoinData.decimals,
     );
 
-    // final List<int> privateKey = _getPrivateKey64(seedPhrase);
     final List<int> privateKey = _getPrivateKey(seedPhrase);
 
     final String senderAta = senderAccounts.first.pubkey;
@@ -260,51 +256,4 @@ class SolanaServiceImpl implements SolanaService {
 
     return privateKey;
   }
-
-  List<int> _getPrivateKey64(String seedPhrase) {
-    // 1) вытаскиваем 32-байтный secret из Wallet Core
-    final walletPtr = _walletRepository.createWithMnemonic(seedPhrase);
-    final secret32 = _walletRepository
-        .getKeyForCoin(
-          coinType: TWCoinType.TWCoinTypeSolana,
-          wallet: walletPtr,
-        )
-        .toList();
-    _walletRepository.walletDelete(walletPtr);
-
-    // 2) превращаем в KeyPair (ed25519_edwards ≥ 2.0.0)
-    final seed = Uint8List.fromList(secret32);
-    final keyPair = ed.newKeyFromSeed(seed); // KeyPair(secret‖public)
-
-    // 3) bytes уже содержат 64 байта
-    return keyPair.bytes; // [secret(32), public(32)]
-  }
-
-  // List<int> _getPrivateKey64(String seed) {
-  //   final walletPtr = _walletRepository.createWithMnemonic(seed);
-  //
-  //   // 1) 32-byte секретный ключ из Wallet Core
-  //   final secret32 = _walletRepository
-  //       .getKeyForCoin(
-  //         coinType: TWCoinType.TWCoinTypeSolana,
-  //         wallet: walletPtr,
-  //       )
-  //       .toList();
-  //
-  //   _walletRepository.walletDelete(walletPtr); // освободили HD-кошелёк
-  //
-  //   final priv = ed.PrivateKey(Uint8List.fromList(secret32));
-  //
-  //   // 2) публичный ключ
-  //   //final pub = priv.publicKey;
-  //
-  //   // 2) вычисляем публичный ключ
-  //   final pub32 = ed.public(priv);
-  //
-  //   // 3) склеиваем [secret||public]  = 64 байта
-  //   return [
-  //     ...secret32,
-  //     ...pub32.bytes,
-  //   ];
-  // }
 }

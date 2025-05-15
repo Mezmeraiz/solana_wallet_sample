@@ -38,6 +38,10 @@ class RepositoryFactoryImpl implements RepositoryFactory {
 
   BlockchainCoinDataRepository? _blockchainCoinDataRepository;
 
+  PinRepository? _pinRepository;
+
+  HomeRepository? _homeRepository;
+
   @override
   WalletRepository get walletRepository => _walletRepository ??= WalletRepositoryImpl(
         core: _dependencyFactory.core,
@@ -60,12 +64,12 @@ class RepositoryFactoryImpl implements RepositoryFactory {
       );
 
   @override
-  PinRepository get pinRepository => PinRepositoryImpl(
+  PinRepository get pinRepository => _pinRepository ??= PinRepositoryImpl(
         secureVault: _dependencyFactory.secureVault,
       );
 
   @override
-  HomeRepository get homeRepository => HomeRepositoryImpl(
+  HomeRepository get homeRepository => _homeRepository ??= HomeRepositoryImpl(
         commonStorage: _dependencyFactory.commonStorage,
         coinDao: _databaseFactory.coinDao,
       );

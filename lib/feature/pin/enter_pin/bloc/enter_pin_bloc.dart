@@ -30,11 +30,7 @@ class EnterPinBloc extends Bloc<EnterPinEvent, EnterPinState> {
     Emitter<EnterPinState> emit,
   ) async {
     if (event.pin.length < PinConstants.pinLength) {
-      emit(
-        state.copyWith(
-          pin: event.pin,
-        ),
-      );
+      emit(state.copyWith(pin: event.pin));
     } else {
       final bool pinCorrect = await _pinRepository.checkPin(event.pin);
 
@@ -52,11 +48,7 @@ class EnterPinBloc extends Bloc<EnterPinEvent, EnterPinState> {
         if (remainingAttempts == 0) {
           await _pinRepository.resetVault();
 
-          emit(
-            state.copyWith(
-              action: EnterPinAction.logout,
-            ),
-          );
+          emit(state.copyWith(action: EnterPinAction.logout));
         } else {
           emit(
             state.copyWith(

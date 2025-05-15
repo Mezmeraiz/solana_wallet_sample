@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:solana_wallet_sample/di/factory/bloc_factory.dart';
+import 'package:solana_wallet_sample/di/factory/database_factory.dart';
 import 'package:solana_wallet_sample/di/factory/dependency_factory.dart';
 import 'package:solana_wallet_sample/di/factory/domain_service_factory.dart';
 import 'package:solana_wallet_sample/di/factory/network_factory.dart';
@@ -11,6 +12,7 @@ class DependencyScope extends StatefulWidget {
   final RepositoryFactory repositoryFactory;
   final ServiceFactory serviceFactory;
   final NetworkFactory networkFactory;
+  final DatabaseFactory databaseFactory;
   final Widget child;
 
   const DependencyScope({
@@ -20,6 +22,7 @@ class DependencyScope extends StatefulWidget {
     required this.blocFactory,
     required this.serviceFactory,
     required this.networkFactory,
+    required this.databaseFactory,
     required this.child,
   });
 
@@ -35,6 +38,8 @@ class DependencyScope extends StatefulWidget {
   static ServiceFactory getDomainServiceFactory(BuildContext context) => _scopeOf(context).serviceFactory;
 
   static NetworkFactory getNetworkFactory(BuildContext context) => _scopeOf(context).networkFactory;
+
+  static DatabaseFactory getDatabaseFactory(BuildContext context) => _scopeOf(context).databaseFactory;
 
   static DependencyScope _scopeOf(BuildContext context) =>
       (context.getElementForInheritedWidgetOfExactType<_InheritedDependencyScope>()!.widget

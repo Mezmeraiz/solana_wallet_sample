@@ -1,7 +1,6 @@
 import 'package:rxdart/rxdart.dart';
 import 'package:secure_vault/secure_vault.dart';
 import 'package:solana_wallet_sample/common/constants.dart';
-import 'package:solana_wallet_sample/data/api/common/constants.dart';
 import 'package:solana_wallet_sample/data/api/dto/token_accounts_by_owner_response.dart';
 import 'package:solana_wallet_sample/data/api/solana_api.dart';
 import 'package:solana_wallet_sample/data/database/dao/coin_dao.dart';
@@ -19,6 +18,8 @@ abstract class BlockchainCoinDataRepository {
   Future<void> loadBlockchainCoinData(String pin);
 
   Future<void> setActiveCoins(Set<String> ids);
+
+  void reset();
 }
 
 class BlockchainCoinDataRepositoryImpl implements BlockchainCoinDataRepository {
@@ -92,7 +93,7 @@ class BlockchainCoinDataRepositoryImpl implements BlockchainCoinDataRepository {
     required String address,
   }) async {
     final List<TokenAccountsByOwnerResponse> tokens = await _solanaApi.getTokenAccountsByOwner(
-      url: DefaultNodeUrl.solanaUrl,
+      url: Constants.solanaUrl,
       address: address,
     );
 
@@ -122,7 +123,7 @@ class BlockchainCoinDataRepositoryImpl implements BlockchainCoinDataRepository {
     required String address,
   }) async {
     final int solBalance = await _solanaApi.getBalance(
-      url: DefaultNodeUrl.solanaUrl,
+      url: Constants.solanaUrl,
       address: address,
     );
 
@@ -137,5 +138,11 @@ class BlockchainCoinDataRepositoryImpl implements BlockchainCoinDataRepository {
   Future<void> setActiveCoins(Set<String> ids) async {
     await _coinDao.saveActiveCoins(ids);
     _activeCoinsController.add(ids);
+  }
+
+  @override
+  void reset() {
+    _blockchainCoinDataController.add([]);
+    _activeCoinsController.add({});
   }
 }

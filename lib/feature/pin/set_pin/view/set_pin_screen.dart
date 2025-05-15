@@ -9,6 +9,6 @@ class SetPinScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => BlocProvider(
         create: (context) => context.blocFactory.setPinBloc(),
-        child: SetPinView(),
+        child: const SetPinView(),
       );
 }

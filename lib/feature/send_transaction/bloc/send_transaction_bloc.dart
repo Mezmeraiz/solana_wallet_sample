@@ -68,31 +68,19 @@ class SendTransactionBloc extends Bloc<SendTransactionEvent, SendTransactionStat
     _AddressChanged event,
     Emitter<SendTransactionState> emit,
   ) =>
-      emit(
-        state.copyWith(
-          address: event.address,
-        ),
-      );
+      emit(state.copyWith(address: event.address));
 
   void _amountChanged(
     _AmountChanged event,
     Emitter<SendTransactionState> emit,
   ) =>
-      emit(
-        state.copyWith(
-          amount: event.amount,
-        ),
-      );
+      emit(state.copyWith(amount: event.amount));
 
   Future<void> _pinReceived(
     _PinReceived event,
     Emitter<SendTransactionState> emit,
   ) async {
-    emit(
-      state.copyWith(
-        loadingStatus: SendTransactionLoadingStatus.loading,
-      ),
-    );
+    emit(state.copyWith(loadingStatus: SendTransactionLoadingStatus.loading));
 
     try {
       final String tnx = await _solanaService.sendTransaction(
@@ -104,8 +92,7 @@ class SendTransactionBloc extends Bloc<SendTransactionEvent, SendTransactionStat
       );
 
       emit(state.copyWith(action: SendTransactionAction.transactionSuccess(tnx)));
-    } catch (e, s) {
-      print(s);
+    } catch (e) {
       emit(state.copyWith(action: const SendTransactionAction.tnxError()));
     } finally {
       emit(state.copyWith(action: const SendTransactionAction.none()));

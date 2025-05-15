@@ -26,8 +26,6 @@ class InitializationHelperImpl extends InitializationHelper {
 
   @override
   Future<InitializationResult> init() async {
-    //await _clearData();
-
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     final dependenciesFactory = DependencyFactoryImpl(
@@ -73,22 +71,5 @@ class InitializationHelperImpl extends InitializationHelper {
       databaseFactory: databaseFactory,
       hasSeedPhrase: hasSeedPhrase,
     );
-  }
-}
-
-//TODO remove
-Future<void> _clearData() async {
-  final sharedPreferences = await SharedPreferences.getInstance();
-  await sharedPreferences.clear();
-
-  await deleteDbFile();
-}
-
-Future<void> deleteDbFile() async {
-  final dir = await getApplicationDocumentsDirectory();
-  final dbPath = p.join(dir.path, 'solana.db');
-  final file = File(dbPath);
-  if (await file.exists()) {
-    await file.delete();
   }
 }
